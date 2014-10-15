@@ -23,6 +23,12 @@ let g:airline_symbols.space = "\ua0"
 let g:airline_theme='luna'
 let g:airline#extensions#tabline#enabled = 1
 set t_Co=256
+if has("gui_running")
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+        set guifont=Inconsolata\ for\ Powerline:h15
+    endif
+endif
 
 " Toggle nerdtree with F10
 map <F10> :NERDTreeToggle<CR>
