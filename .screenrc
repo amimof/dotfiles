@@ -1,0 +1,23 @@
+# Use this shell
+#defshell /bin/bash
+
+# Keep scrollback n lines
+defscrollback 20000
+
+# Don't display the copyright page
+startup_message off
+
+# Screens titlebar
+#termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+#termcapinfo rxvt 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+#termcapinfo rxvt-cygwin-native ti@:te@
+#termcapinfo linux "ve=\E[?25h\E[?17;0;64c"
+
+# Show a title bar at the bottom of each screen
+caption always "%{= KG} [%S] %f %t %? ( %{rY} %u %{rW} ) %?"
+
+# Show a list of screens on the bottom of the window
+hardstatus alwayslastline '%{= bw} %{= bc}[%{-}Screens: [%-Lw%{= KW}%{+b} %50>%n%f* %t%{-b} %{= bw}%+Lw]%< %{= bc}]%{-} %{= bd}%-=%D %d %M %Y %c:%s%{-}'
+
+# Password when locking
+password 6zB01H8tNl2Mo
