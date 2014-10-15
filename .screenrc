@@ -21,3 +21,6 @@ hardstatus alwayslastline '%{= bw} %{= bc}[%{-}Screens: [%-Lw%{= KW}%{+b} %50>%n
 
 # Password when locking
 password 6zB01H8tNl2Mo
+
+# Don't clear screen after leaving for example vim
+altscreen on
