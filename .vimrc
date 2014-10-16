@@ -15,26 +15,25 @@ execute pathogen#infect()
 
 " Airline
 set laststatus=2
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
+    let g:airline_symbols = {}
 endif
-let g:airline_symbols.space = "\ua0"
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
 let g:airline_theme='luna'
 let g:airline#extensions#tabline#enabled = 1
 set t_Co=256
-if has("gui_running")
-    let s:uname = system("uname")
-    if s:uname == "Darwin\n"
-        set guifont=Inconsolata\ for\ Powerline:h15
-    endif
-endif
 
 " Toggle nerdtree with F10
 map <F10> :NERDTreeToggle<CR>
 
 " Current file in nerdtree
 map <F9> :NERDTreeFind<CR>
+
+" highlight current line
+set cursorline
+:hi CursorLine   cterm=NONE ctermbg=234 ctermfg=NONE
 
 set smartindent
 set tabstop=4
