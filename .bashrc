@@ -116,3 +116,13 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Only set up screen preexec if terminal is screen
+if [[ $TERM == "screen" ]]; then
+    # setup preexec and precmd functions
+    . ~/.screen/preexec.bash
+
+    # load the screen preexec stuff
+    . ~/.screen/screen-preexec.sh
+    preexec_install
+fi
