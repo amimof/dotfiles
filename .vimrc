@@ -30,7 +30,7 @@ map <F9> :NERDTreeFind<CR>
 
 " highlight current line
 set cursorline
-:hi CursorLine   cterm=NONE ctermbg=234 ctermfg=NONE
+highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE
 
 set smartindent
 set tabstop=4
