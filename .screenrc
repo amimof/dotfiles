@@ -14,10 +14,10 @@ startup_message off
 #termcapinfo linux "ve=\E[?25h\E[?17;0;64c"
 
 # Show a title bar at the bottom of each screen
-caption always "%{= KG} [%S] %f %t %? ( %{rY} %u %{rW} ) %?"
+caption always "%{= kW} [%S] %f %t %? ( %{rY} %u %{rW} ) %?"
 
 # Show a list of screens on the bottom of the window
-hardstatus alwayslastline '%{= bw} %{= bc}%{-}Screens: [ %-Lw%{= KW}%{+b} %50>%n%f* %t%{-b} %{= bw}%+Lw ]%< %{= bc}%{-} %{= bw}%-=%D %d %M %Y %c:%s%{-}'
+hardstatus alwayslastline '%{= bw} %{= bc}%{-}Screens: [ %-Lw%{= kW}%{+b} %50>%n%f* %t%{-b} %{= bw}%+Lw ]%< %{= bc}%{-} %{= bw}%-=%D %d %M %Y %c:%s%{-}'
 
 # Password when locking
 password 6zB01H8tNl2Mo
