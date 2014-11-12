@@ -89,10 +89,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -lah'
-alias la='ls -A'
-alias l='ls -l'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -118,12 +114,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Set custom path for scripts
-PATH=$PATH:~/scripts
 
-# Autocomplete ssh hosts in ~/.ssh/config
-complete -W $(echo `cat ~/.ssh/config | grep "HostName" | sed -e 's/^[ \t]*//' | cut -d ' ' -f 2`) ssh
-
+# Uncomment these lines if window title should change depending on your command
 # Only set up screen preexec if terminal is screen
 #if [[ $TERM == "screen" ]]; then
     # setup preexec and precmd functions
@@ -133,3 +125,10 @@ complete -W $(echo `cat ~/.ssh/config | grep "HostName" | sed -e 's/^[ \t]*//' |
     # . ~/.screen/screen-preexec.sh
     # preexec_install
 #fi
+
+# Set custom path for scripts
+PATH=$PATH:~/scripts
+
+# Autocomplete ssh hosts in ~/.ssh/config
+complete -W "$(echo `cat ~/.ssh/config | grep "HostName" | sed -e 's/^[ \t]*//' | cut -d ' ' -f 2`;)" ssh
+
