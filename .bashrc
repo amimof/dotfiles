@@ -8,6 +8,7 @@ case $- in
       *) return;;
 esac
 
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -53,7 +54,7 @@ if [ -n "$force_color_prompt" ]; then
 	# a case would tend to support setf rather than setaf.)
 	color_prompt=yes
     else
-	color_prompt=
+	color_prompt=yes
     fi
 fi
 
@@ -117,12 +118,18 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Set custom path for scripts
+PATH=$PATH:~/scripts
+
+# Autocomplete ssh hosts in ~/.ssh/config
+complete -W $(echo `cat ~/.ssh/config | grep "HostName" | sed -e 's/^[ \t]*//' | cut -d ' ' -f 2`) ssh
+
 # Only set up screen preexec if terminal is screen
-if [[ $TERM == "screen" ]]; then
+#if [[ $TERM == "screen" ]]; then
     # setup preexec and precmd functions
-    . ~/.screen/preexec.bash
+    # . ~/.screen/preexec.bash
 
     # load the screen preexec stuff
-    . ~/.screen/screen-preexec.sh
-    preexec_install
-fi
+    # . ~/.screen/screen-preexec.sh
+    # preexec_install
+#fi
