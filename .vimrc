@@ -13,8 +13,13 @@
 " Pathogen
 execute pathogen#infect()
 
-" Airline
+" Show status line (required for airline)
 set laststatus=2
+
+" Disable default mode line
+set noshowmode
+
+" Airline
 let g:airline_powerline_fonts = 0
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
