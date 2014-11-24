@@ -127,7 +127,7 @@ fi
 #fi
 
 # Set custom path for scripts
-PATH=$PATH:~/scripts
+PATH=$PATH:~/.scripts
 
 # Autocomplete ssh hosts in ~/.ssh/config
 complete -W "$(echo `cat ~/.ssh/config | grep "HostName" | sed -e 's/^[ \t]*//' | cut -d ' ' -f 2`;)" ssh
