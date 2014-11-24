@@ -10,6 +10,5 @@ alias bundle="C:/Apps/RailsInstaller/Ruby1.9.3/bin/bundle"
 alias rake="C:/Apps/RailsInstaller/Ruby1.9.3/bin/rake"
 
 # ls aliases
+alias l='ls -lh'
 alias ll='ls -lah'
-alias la='ls -A'
-alias l='ls -l'
