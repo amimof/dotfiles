@@ -2,7 +2,7 @@
 alias s="screen -R"
 
 # Java Select menu
-alias jh="~/scripts/java_select.sh" 
+alias jh="~/.scripts/java_select.sh" 
 
 # Rails cygwin fix
 #alias rails="C:/Apps/RailsInstaller/Ruby1.9.3/bin/rails"
