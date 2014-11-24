@@ -34,8 +34,12 @@ map <F10> :NERDTreeToggle<CR>
 map <F9> :NERDTreeFind<CR>
 
 " highlight current line
-set cursorline
-highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE
+"set cursorline
+"highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE
+
+" Show linenumbers
+set number
+highlight LineNr ctermfg=grey ctermbg=black
 
 set smartindent
 set tabstop=4
