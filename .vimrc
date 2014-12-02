@@ -36,10 +36,6 @@ map <F9> :NERDTreeFind<CR>
 " Set paste map
 map <Leader>p :set paste<CR>
 
-" highlight current line
-"set cursorline
-"highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE
-
 " Show linenumbers
 set number
 highlight LineNr ctermfg=grey ctermbg=black
@@ -49,8 +45,15 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-" Command aliases
-map <C-Tab> :bnext
+" Buffers
+map <Leader>+ :bnext<CR>
+map <Leader>0 :bprev<CR>
+
+" Wipe buffer
+map <Leader>d :bd<CR>
+
+" Copy to clipboard
+map <Leader>c "+y<CR>
 
 if v:progname =~? "evim"
   finish
@@ -88,18 +91,13 @@ map Q gq
 inoremap <C-U> <C-G>u<C-U>
 
 " In many terminal emulators the mouse works just fine, thus enable it.
-"if has('mouse')
-"    set mouse=a
-"endif
+if has('mouse')
+    set mouse=a
+endif
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
     syntax on
     set hlsearch
-endif
-
-if !exists(":DiffOrig")
-    command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-                \ | wincmd p | diffthis
 endif
