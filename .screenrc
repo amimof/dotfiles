@@ -1,29 +1,32 @@
 # Use this shell
 #defshell /bin/bash
 
-# Keep scrollback n lines
+# Keep scroll back lines
 defscrollback 20000
 
 # Don't display the copyright page
 startup_message off
 
-# Screens titlebar
-#termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
-#termcapinfo rxvt 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
-#termcapinfo rxvt-cygwin-native ti@:te@
-#termcapinfo linux "ve=\E[?25h\E[?17;0;64c"
-
 # Show a title bar at the bottom of each screen
 caption always "%{= kW} [%S] %f %t %? ( %{rY} %u %{rW} ) %?"
 
 # Show a list of screens on the bottom of the window
-hardstatus alwayslastline '%{= bw} %{= bc}%{-}Screens: [ %-Lw%{= kW}%{+b} %50>%n%f* %t%{-b} %{= bw}%+Lw ]%< %{= bc}%{-} %{= bw}%-=%D %d %M %Y %c:%s%{-}'
+hardstatus alwayslastline '%{= bw} %{= bc}%{-}Screens: [ %-Lw%{= kW} %n%f %t%? %{= bw}%+Lw ]%< %{= bc}%{-} %{= bw}%-=%D %d %M %Y %c:%s%{-}'
 
 # Password when locking
 password 6zB01H8tNl2Mo
 
-# Don't clear screen after leaving for example vim
+# Don't clear screen after leaving for example Vim
 altscreen on
+
+# Defines how long messages should be displayed
+msgwait 1
+
+# Enable monitoring of screens
+defmonitor on
+
+# Display this message when activity is detected in another screen
+activity "Activity on % (%t)"
 
 # terminfo and termcap for nice 256 color terminal
 # allow bold colors - necessary for some reason

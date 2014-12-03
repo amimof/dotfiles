@@ -46,8 +46,8 @@ set shiftwidth=4
 set expandtab
 
 " Buffers
-map <Leader>+ :bnext<CR>
-map <Leader>0 :bprev<CR>
+map <Leader>+ :bnext!<CR>
+map <Leader>0 :bprev!<CR>
 
 " Wipe buffer
 map <Leader>d :bd<CR>
@@ -79,6 +79,7 @@ set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
+set nowrap      " Disable text wrapping
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
@@ -101,3 +102,12 @@ if &t_Co > 2 || has("gui_running")
     syntax on
     set hlsearch
 endif
+
+inoremap <Leader><Space> <C-X><C-O>
+
+filetype plugin on
+au FileType php setl ofu=phpcomplete#CompletePHP
+au FileType ruby,eruby setl ofu=rubycomplete#Complete
+au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
+au FileType c setl ofu=ccomplete#CompleteCpp
+au FileType css setl ofu=csscomplete#CompleteCSS
