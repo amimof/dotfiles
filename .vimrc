@@ -1,4 +1,3 @@
-
 " An example for a vimrc file.
 "
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
@@ -30,13 +29,13 @@ set t_Co=256
 " Toggle nerdtree with F10
 map <F10> :NERDTreeToggle<CR>
 
-" Current file in nerdtree
+" Current file in nerd tree 
 map <F9> :NERDTreeFind<CR>
 
 " Set paste map
 map <Leader>p :set paste<CR>
 
-" Show linenumbers
+" Show line numbers
 set number
 highlight LineNr ctermfg=grey ctermbg=black
 
@@ -54,6 +53,18 @@ map <Leader>d :bd<CR>
 
 " Copy to clipboard
 map <Leader>c "+y<CR>
+
+" Completion
+inoremap <Leader><Space> <C-X><C-O>
+
+" Spell check auto correct 
+imap <c-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+" Word completion 
+set complete+=kspell
+
+" Automatically add closing bracer
+inoremap {<CR>  {<CR>}<Esc>O
 
 if v:progname =~? "evim"
   finish
@@ -80,6 +91,11 @@ set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
 set nowrap      " Disable text wrapping
+set nostartofline " Do not start on first none blank char on the line
+set spell spelllang=en_us " Enable spell checking, English dictionary
+
+hi clear SpellBad
+hi SpellBad cterm=underline
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
@@ -87,7 +103,7 @@ set nowrap      " Disable text wrapping
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G U to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 
@@ -98,12 +114,11 @@ endif
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
+if &t_Co > 2 || has("GUI_running")
     syntax on
     set hlsearch
 endif
 
-inoremap <Leader><Space> <C-X><C-O>
 
 filetype plugin on
 au FileType php setl ofu=phpcomplete#CompletePHP
