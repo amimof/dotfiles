@@ -59,9 +59,11 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [[ "$color_prompt" = yes && "$USER" = root ]]; then
-    PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;202m\]\[\e[00;31m\]\u\[\e[00m\]@\[\e[38;5;5m\]\h\[\e[00m\]:\[\e[38;5;172m\]\w\[\e[00m\] \[\e[00m\]$ "
+    #PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;202m\]\[\e[00;31m\]\u\[\e[00m\]@\[\e[38;5;5m\]\h\[\e[00m\]:\[\e[38;5;172m\]\w\[\e[00m\]  "
+	PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[00m\]$ 	'
 elif [[ "$color_prompt" = yes ]]; then
-    PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;202m\]\[\e[38;5;245m\]\u\[\e[00m\]@\[\e[38;5;5m\]\h\[\e[00m\]:\[\e[38;5;172m\]\w\[\e[00m\] \[\e[00m\]$ "
+    #PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;202m\]\[\e[38;5;245m\]\u\[\e[00m\]@\[\e[38;5;5m\]\h\[\e[00m\]:\[\e[38;5;172m\]\w\[\e[00m\] \[\e[00m\]$ "
+	PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[00m\]$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w \$ '
 fi
