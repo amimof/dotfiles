@@ -60,10 +60,10 @@ fi
 
 if [[ "$color_prompt" = yes && "$USER" = root ]]; then
     #PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;202m\]\[\e[00;31m\]\u\[\e[00m\]@\[\e[38;5;5m\]\h\[\e[00m\]:\[\e[38;5;172m\]\w\[\e[00m\]  "
-	PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[00m\]$ 	'
+	PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[00m\]$ '
 elif [[ "$color_prompt" = yes ]]; then
     #PS1="${debian_chroot:+($debian_chroot)}\[\e[38;5;202m\]\[\e[38;5;245m\]\u\[\e[00m\]@\[\e[38;5;5m\]\h\[\e[00m\]:\[\e[38;5;172m\]\w\[\e[00m\] \[\e[00m\]$ "
-	PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[00m\]$ '
+	PS1="\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[00m\]$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w \$ '
 fi
@@ -71,13 +71,13 @@ fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*|screen*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+#case "$TERM" in
+#xterm*|rxvt*|screen*)
+#    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+#    ;;
+#*)
+#    ;;
+#esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -118,15 +118,17 @@ fi
 
 
 # Uncomment these lines if window title should change depending on your command
-# Only set up screen preexec if terminal is screen
-#if [[ $TERM == "screen" ]]; then
-    # setup preexec and precmd functions
-    # . ~/.screen/preexec.bash
-
-    # load the screen preexec stuff
-    # . ~/.screen/screen-preexec.sh
-    # preexec_install
-#fi
+if [[ "$TERM" == screen* ]]; then
+  screen_set_window_title () {
+    local HPWD="$PWD"
+    case $HPWD in
+      $HOME) HPWD="~";;
+      $HOME/*) HPWD="~${HPWD#$HOME}";;
+    esac
+    printf '\ek%s\e\\' "$HPWD"
+  }
+  PROMPT_COMMAND="screen_set_window_title; $PROMPT_COMMAND"
+fi
 
 # Set custom path for scripts
 PATH=$PATH:~/.scripts
@@ -134,4 +136,3 @@ PATH=$PATH:~/.scripts
 # Autocomplete ssh hosts in ~/.ssh/config
 #complete -W "$(echo `cat ~/.ssh/config | grep "HostName" | sed -e 's/^[ \t]*//' | cut -d ' ' -f 2`;)" ssh
 complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
-
