@@ -62,9 +62,17 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [[ "$color_prompt" = yes && "$USER" = root ]]; then
-	PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \$(__git_ps1) \[\e[00m\]$ '
+    if [[ "$TERM" == screen* ]]; then
+	    PS1='\[\e[0;31m\]\u\[\e[m\]$(__git_ps1) \[\e[00m\]$ '
+    else
+	    PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \$(__git_ps1) \[\e[00m\]$ '
+    fi
 elif [[ "$color_prompt" = yes ]]; then
-	PS1="\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\]\$(__git_ps1) \[\e[00m\]$ "
+    if [[ "$TERM" == screen* ]]; then
+	    PS1="\[\e[0;32m\]\u\[\e[m\]\[\e[m\]\$(__git_ps1) \[\e[00m\]$ "
+    else
+        PS1="\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\]\$(__git_ps1) \[\e[00m\]$ "
+    fi
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w \$ '
 fi
