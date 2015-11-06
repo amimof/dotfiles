@@ -2,9 +2,6 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-# Load in the git branch prompt script.
-source ~/.scripts/git-prompt.sh
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -62,17 +59,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [[ "$color_prompt" = yes && "$USER" = root ]]; then
-    if [[ "$TERM" == screen* ]]; then
-	    PS1='\[\e[0;31m\]\u\[\e[m\]$(__git_ps1) \[\e[00m\]$ '
-    else
-	    PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \$(__git_ps1) \[\e[00m\]$ '
-    fi
+    PS1='\[\e[0;31m\]\u\[\e[m\]$(__git_ps1) \[\e[00m\]$ '
 elif [[ "$color_prompt" = yes ]]; then
-    if [[ "$TERM" == screen* ]]; then
-	    PS1="\[\e[0;32m\]\u\[\e[m\]\[\e[m\]\$(__git_ps1) \[\e[00m\]$ "
-    else
-        PS1="\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\]\$(__git_ps1) \[\e[00m\]$ "
-    fi
+    PS1="\[\e[0;32m\]\u\[\e[m\]\[\e[m\]\$(__git_ps1) \[\e[00m\]$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w \$ '
 fi
