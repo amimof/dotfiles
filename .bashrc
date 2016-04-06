@@ -58,6 +58,9 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# Set a fancy prompt. Root should have a slight different prompt to emphasize this.
+# If we are in a screen session, don't show current command/path in command prompt,
+# this is shown in the screen status line instead.
 if [[ "$color_prompt" = yes && "$USER" = root ]]; then
 	if [[ "$TERM" == screen* ]]; then
 	    PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[00m\]$ '
@@ -123,7 +126,7 @@ if ! shopt -oq posix; then
 fi
 
 
-# Uncomment these lines if window title should change depending on your command
+# If we are in a screen session. Show current folder in title
 if [[ "$TERM" == screen* ]]; then
   screen_set_window_title () {
     local HPWD="$PWD"
@@ -141,6 +144,3 @@ PATH=$PATH:~/.scripts
 
 # Autocomplete ssh hosts in ~/.ssh/config
 complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
-
-# Set TERM to xterm for compatibility
-export TERM=xterm-256color
