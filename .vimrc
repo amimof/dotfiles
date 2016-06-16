@@ -1,9 +1,14 @@
 " An example for a vimrc file.
 
+" Enable pathogen plugin
+execute pathogen#infect()
+
 " Show line numbers
 set number
 highlight LineNr ctermfg=grey ctermbg=black
 
+" indentation
+filetype plugin indent on
 set smartindent
 set tabstop=4
 set shiftwidth=4
