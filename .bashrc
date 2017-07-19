@@ -144,3 +144,6 @@ PATH=$PATH:~/.scripts
 
 # Autocomplete ssh hosts in ~/.ssh/config
 complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
+
+# Set TERM to xterm for compatibility
+export TERM=xterm-256color
