@@ -147,3 +147,6 @@ complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\
 
 # Set TERM to xterm for compatibility
 export TERM=xterm-256color
+
+# Set screendir to ~/.screen. This works better with ws/.screen. This works better with wsl.
+export SCREENDIR=~/.screen
