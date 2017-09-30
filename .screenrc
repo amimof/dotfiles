@@ -9,7 +9,7 @@ startup_message off
 
 # Show a title bar at the bottom of each screen
 #caption always "%{= kW} [%S] %f %t %? ( %{rY} %u %{rW} ) %?"
-caption always "%{= kW} %H"
+#caption always "%{= kW} %H"
 
 # Show a list of screens on the bottom of the window
 hardstatus alwayslastline '%{= bw} %{= bc}%{-} [ %-Lw%{= kW} %n%f %t%? %{= bw}%+Lw ]%< %{= bc}%{-} %{= bw}%-= | %D %d %M %Y %c:%s%{-}'
