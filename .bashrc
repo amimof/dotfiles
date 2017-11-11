@@ -63,6 +63,18 @@ else
 fi
 unset color_prompt force_color_prompt
 
+# Display current folder in the title
+screen_set_window_title () {
+    local HPWD="$PWD"
+    case $HPWD in
+        $HOME) HPWD="~";;
+        $HOME/*) HPWD="~${HPWD#$HOME}";;
+    esac
+    printf '\ek%s\e\\' "$HPWD"
+    echo -ne "\e]0;$HPWD\a"
+}
+PROMPT_COMMAND="screen_set_window_title; $PROMPT_COMMAND"
+
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
