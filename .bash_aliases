@@ -1,12 +1,6 @@
 # Re-attach to a screen, create a screen if none exists
+# See https://github.com/amimof/scripts/tree/master/screen_sessions
 alias s='~/.scripts/screen_sessions.sh'
 
-# Java Select menu
-alias jh=". ~/.scripts/java_select.sh" 
-
-# ls aliases
-alias l='ls -lh'
-alias ll='ls -lah'
-
 # git repos home
-alias gh="cd ~/Documents/git/ && pwd"
+alias gh="~/Documents/git && pwd"

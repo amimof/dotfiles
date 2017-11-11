@@ -35,58 +35,72 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-color_prompt=yes
+#force_color_prompt=yes
 
-# Set a fancy prompt. Root should have a slight different prompt to emphasize this.
-# If we are in a screen session, don't show current command/path in command prompt,
-# this is shown in the screen status line instead.
-if [[ "$color_prompt" = yes ]]; then
-    PCOL="\[\e[1;34m\]"
-    if [[ "$USER" = root ]]; then
-        UCOL="\[\e[0;31m\]"
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
     else
-        UCOL="\[\e[0;32m\]"
+	color_prompt=
     fi
 fi
-if [[ "$TERM" == screen* ]]; then
-    PS1="$UCOL\u\[\e[m\] \[\e[00m\]$ "
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1="$UCOL\u\[\e[m\] $PCOL\w\[\e[m\] \[\e[00m\]$ "
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
+unset color_prompt force_color_prompt
 
-unset color_prompt
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
 
-# If we are in a screen session. Show current folder in title
-if [[ "$TERM" == screen* ]]; then
-  screen_set_window_title () {
-    local HPWD="$PWD"
-    case $HPWD in
-      $HOME) HPWD="~";;
-      $HOME/*) HPWD="~${HPWD#$HOME}";;
-    esac
-    printf '\ek%s\e\\' "$HPWD"
-    echo -ne "\e]0;$HPWD\a"
-  }
-  PROMPT_COMMAND="screen_set_window_title; $PROMPT_COMMAND"
-fi
-
-# enable color support of ls and also add handy aliases.
-# To define more aliases, use ~/.bash_aliases
+# enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
 
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -102,16 +116,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Autocomplete ssh hosts in ~/.ssh/config
-complete -W "$(echo $(grep ^Host ~/.ssh/config | sed -e 's/Host //' | grep -v "\*"))" ssh
-
-# Set custom path for scripts
-PATH=$PATH:~/.scripts
-
-# Set TERM to xterm for compatibility
-export TERM=xterm-256color
-
-# Set screendir to ~/.screen. This works better with ws/.screen. This works better with wsl.
+# Set screendir to ~/.screen. This works better with wsl.
 export SCREENDIR=~/.screen
-
-
