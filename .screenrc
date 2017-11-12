@@ -1,5 +1,5 @@
-# Use this shell
-#defshell /bin/bash
+#Use this shell
+defshell /bin/bash
 
 # Keep scroll back lines
 defscrollback 20000
@@ -8,11 +8,11 @@ defscrollback 20000
 startup_message off
 
 # Show a title bar at the bottom of each screen
-#caption always "%{= kW} [%S] %f %t %? ( %{rY} %u %{rW} ) %?"
-#caption always "%{= kW} %H"
+caption always "%{= kW} [%S] %f %t %? ( %{rY} %u %{rW} ) %?"
+#caption always "%{= kw} %=%H"
 
 # Show a list of screens on the bottom of the window
-hardstatus alwayslastline '%{= bw} %{= bc}%{-} [ %-Lw%{= kW} %n%f %t%? %{= bw}%+Lw ]%< %{= bc}%{-} %{= bw}%-= | %D %d %M %Y %c:%s%{-}'
+hardstatus alwayslastline '%{= bw}[ %L=%-w%45L>%{=u bW}%n%f %t%{= bw}%+w%-28= ][%D %d %M %Y %c:%s]'
 
 # Password when locking
 password 6zB01H8tNl2Mo
