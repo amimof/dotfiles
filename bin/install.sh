@@ -14,7 +14,7 @@ install() {
     done
 
     echo "Creating folders"
-    for d in ~/Documents/git/ ~/.ssh/; do
+    for d in ~/Documents/git/ ~/.ssh/ ~/.scripts/; do
       mkdir -m 755 -p $d
       echo "- '$d'"
     done
@@ -25,11 +25,16 @@ install() {
       echo "- '$f'"
     done
 
+    echo "Moving scripts into place"
+    for s in $(find "$(dirname $(dirname $0))/scripts/" -type f); do
+      cp $s ~/.scripts/$(basename $s)
+      echo "- '$s'"
+    done
+
     echo "Moving .ssh/config into place"
     if [ -s ~/.ssh/config ] && [ "$1" = false ]; then
       echo "- WARN: '~/.ssh/config' exists and/or is not empty. Override with -f."
     else
-
       cp $(dirname $(dirname $0))/.ssh/config ~/.ssh/
       chmod 600 ~/.ssh/config
       echo "- done"
