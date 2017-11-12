@@ -3,4 +3,4 @@
 alias s='~/.scripts/screen_sessions.sh'
 
 # git repos home
-alias gh="~/Documents/git && pwd"
+alias gh="cd ~/Documents/git && pwd"

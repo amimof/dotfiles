@@ -70,7 +70,10 @@ screen_set_window_title () {
         $HOME) HPWD="~";;
         $HOME/*) HPWD="~${HPWD#$HOME}";;
     esac
-    printf '\ek%s\e\\' "$HPWD"
+    # Also set title if we are in a screen
+    if [ -n "$STY" ]; then
+        printf '\ek%s\e\\' "$HPWD"
+    fi
     echo -ne "\e]0;$HPWD\a"
 }
 PROMPT_COMMAND="screen_set_window_title; $PROMPT_COMMAND"
