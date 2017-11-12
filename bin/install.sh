@@ -28,6 +28,7 @@ install() {
     echo "Moving scripts into place"
     for s in $(find "$(dirname $(dirname $0))/scripts/" -type f); do
       cp $s ~/.scripts/$(basename $s)
+      chmod +x ~/.scripts/$(basename $s)
       echo "- '$s'"
     done
 
