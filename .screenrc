@@ -8,7 +8,7 @@ defscrollback 20000
 startup_message off
 
 # Show a title bar at the bottom of each screen
-caption always "%{= kW} [%S] %f %t %? ( %{rY} %u %{rW} ) %?"
+#caption always "%{= kW} [%S] %f %t %? ( %{rY} %u %{rW} ) %?"
 #caption always "%{= kw} %=%H"
 
 # Show a list of screens on the bottom of the window
