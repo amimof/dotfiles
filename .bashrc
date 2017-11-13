@@ -57,9 +57,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h \[\e[00m\]$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h \$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -74,7 +74,8 @@ screen_set_window_title () {
     if [ -n "$STY" ]; then
         printf '\ek%s\e\\' "$HPWD"
     fi
-    echo -ne "\e]0;$HPWD\a"
+    # echo -ne "\e]0;$HPWD\a"
+	echo -ne "\033]0;$HPWD\007"
 }
 PROMPT_COMMAND="screen_set_window_title; $PROMPT_COMMAND"
 
