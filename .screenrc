@@ -15,7 +15,10 @@ startup_message off
 hardstatus alwayslastline '%{= bw}[ %L=%-w%45L>%{=b kW} %n%f %t %{= bw}%+w%-28= ][%D %d %M %Y %c:%s]'
 
 # Password when locking
-password 6zB01H8tNl2Mo
+password NS/23mrG144pQ
+
+# Lock screen after 60 minutes
+idle 3600 lockscreen
 
 # Don't clear screen after leaving for example Vim
 altscreen on
@@ -32,7 +35,9 @@ activity "Activity on % (%t)"
 # terminfo and termcap for nice 256 color terminal
 # allow bold colors - necessary for some reason
 attrcolor b ".I"
+
 # tell screen how to set colors. AB = background, AF=foreground
 termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
 # erase background with current bg color
 defbce "on"
