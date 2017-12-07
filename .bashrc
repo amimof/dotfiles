@@ -112,6 +112,12 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# Environment variables are defined in a separate dotfile.
+# Add your environment variables in ~/.bash_exports
+if [ -f ~/.bash_exports ]; then
+    . ~/.bash_exports
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
