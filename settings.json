@@ -7,5 +7,6 @@
     "workbench.activityBar.visible": false,
     "extensions.ignoreRecommendations": true,
     "editor.parameterHints": false,
-    "window.zoomLevel": 0
+    "window.zoomLevel": 0,
+	"html.autoClosingTags": false
 }
