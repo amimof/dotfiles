@@ -61,6 +61,11 @@ if [ "$color_prompt" = yes ]; then
 else
     PS1='${debian_chroot:+($debian_chroot)}\u \W \$ '
 fi
+
+# Add christmas tree to prompt if it's the first day of December each year
+if (($(date +"%m") == 12 && $(date +"%d") >= 1)); then
+   PS1="🎄 $PS1"
+fi
 unset color_prompt force_color_prompt
 
 # Display current folder in the title
@@ -132,3 +137,6 @@ fi
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
 . $(brew --prefix)/etc/bash_completion
 fi
+
+export TERM="xterm-256color"
+export EDITOR="vim"
