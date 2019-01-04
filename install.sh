@@ -48,17 +48,11 @@ install() {
 
   info "🤖 Installing scripts"
 
-  log "\tjava_select.sh"
-  download ~/.scripts/java_select.sh https://raw.githubusercontent.com/amimof/scripts/master/java_select/java_select.sh
-
-  log "\tse.sh"
-  download ~/.scripts/se.sh https://raw.githubusercontent.com/amimof/scripts/master/se/se.sh
-
   log "\tscreen_ssh.sh"
-  download ~/.scripts/screen_ssh.sh https://raw.githubusercontent.com/amimof/scripts/master/screen_ssh/screen_ssh.sh
+  download ~/.scripts/screen_ssh.sh https://raw.githubusercontent.com/amimof/dotfiles/master/.scripts/screen_ssh.sh
 
   log "\tscreen_sessions.sh"
-  download ~/.scripts/screen_sessions.sh https://raw.githubusercontent.com/amimof/scripts/master/screen_sessions/screen_sessions.sh
+  download ~/.scripts/screen_sessions.sh https://raw.githubusercontent.com/amimof/dotfiles/master/.scripts/screen_sessions.sh
 
   info "🤖 Setting permissions"
   chmod +x ~/.scripts/*.sh
@@ -69,34 +63,40 @@ install() {
   fi
   if [ ! -f ~/.ssh/config ]; then
     download ~/.ssh/config https://raw.githubusercontent.com/amimof/configs/master/.ssh/config
-    log "skip"
   else
     warn "\t~/.ssh/config already exists."
   fi
   
-  info "\n💩 Done! Restart your shell session"
+  info "\n💩 Done! Restart your shell session\n"
 
 }
 
 uninstall() {
-  echo -e "\nRemoving dotfiles"
-  echo -e " - .bashrc"
-  #rm ~/.bashrc
+  info "💀 Removing dotfiles"
   
-  echo -e " - .screenrc"
-  #rm ~/.screenrc
+  log "\t.bashrc"
+  rm -rf ~/.bashrc
   
-  echo -e " - .vimrc"
-  #rm ~/.vimrc
+  log "\t.screenrc"
+  rm -rf ~/.screenrc
   
-  echo -e " - .bash_aliases"
-  #rm ~/.bash_aliases
+  log "\t.vimrc"
+  rm -rf ~/.vimrc
+  
+  log "\t.bash_aliases"
+  rm -rf ~/.bash_aliases
 
-  echo -e "\nNot removing ~ /.scripts directory since it might contain non volatile content"
+  info "💀 Removing .scripts directory"
+  if [ -d ~/.scripts ]; then
+      rm -rf ~/.scripts/
+  else
+      warn "\t~/.scripts doesn not exist"
+  fi
 
-  echo -e "\nNot remvoing ~/.ssh/config since it might contain non volatile content"
+  warn "💀 Not removing following files/folders since they might contain non volatile content"
+  log "\t ~/.ssh/config" 
 
-  echo -e "\nDone installing. Restart your shell session"
+  echo -e "\nDone uninstalling. Restart your shell session"
 }
 
 # if [ $# -lt 1 ]; then
