@@ -1,7 +1,7 @@
 dotfiles
 ========
 
-A collection of my dotfiles, scripts and configs. Sets up my environment just the way i like it.
+A collection of my dotfiles, scripts and configs. Sets up my environment just the way I like it.
 
 # Getting started
 
@@ -11,4 +11,6 @@ curl -LSs https://raw.githubusercontent.com/amimof/dotfiles/master/install.sh | 
 ```
 
 And uninstall by running
+```
 curl -LSs https://raw.githubusercontent.com/amimof/dotfiles/master/install.sh | bash -s uninstall
+```
