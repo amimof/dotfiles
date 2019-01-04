@@ -18,7 +18,7 @@ hardstatus alwayslastline '%{= bw}[ %L=%-Lw%45L>%{= kW} %n%f %t %{= bw}%+Lw%-28=
 password NS/23mrG144pQ
 
 # Lock screen after 60 minutes
-idle 3600 lockscreen
+#idle 3600 lockscreen
 
 # Don't clear screen after leaving for example Vim
 altscreen on
