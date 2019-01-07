@@ -54,6 +54,9 @@ uninstall() {
   
   log "\t.bash_aliases"
   rm -rf ~/.bash_aliases
+
+  log "\t.bash_exports"
+  rm -rf ~/.bash_aliases
   
   log "\t.vimrc"
   rm -rf ~/.vimrc
