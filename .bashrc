@@ -68,22 +68,6 @@ if (($(date +"%m") == 12 && $(date +"%d") >= 1)); then
 fi
 unset color_prompt force_color_prompt
 
-# Display current folder in the title
-screen_set_window_title () {
-    local HPWD="$PWD"
-    case $HPWD in
-        $HOME) HPWD="~";;
-        $HOME/*) HPWD="~${HPWD#$HOME}";;
-    esac
-    # Also set title if we are in a screen
-    if [ -n "$STY" ]; then
-        printf '\ek%s\e\\' "$HPWD"
-    fi
-    # echo -ne "\e]0;$HPWD\a"
-	echo -ne "\033]0;$HPWD\007"
-}
-PROMPT_COMMAND="screen_set_window_title; $PROMPT_COMMAND"
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -138,5 +122,19 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 . $(brew --prefix)/etc/bash_completion
 fi
 
-export TERM="xterm-256color"
-export EDITOR="vim"
+# Sets the Tmux window name to the SSH remote host currently connected to 
+ssh() {
+    if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=| cut -d : -f 1)" = "tmux" ]; then
+        __tm_window=$(tmux list-windows| awk -F : '/\(active\)$/{print $1}')
+        # Use current window to change back the setting. If not it will be applied to the active window
+        trap "tmux set-window-option -t $__tm_window automatic-rename on 1>/dev/null" RETURN
+
+        # Determine if host is an IP Address or DNS name
+        local HOST="$(echo $* | rev | cut -d ' ' -f 1 | rev)"
+        if [[ ! $HOST =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+            HOST="$(echo $HOST| cut -d . -f 1)"
+        fi
+        tmux rename-window "$HOST"
+    fi
+    command ssh "$@"
+}
