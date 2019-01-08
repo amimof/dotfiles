@@ -63,7 +63,7 @@ else
 fi
 
 # Add christmas tree to prompt if it's the first day of December each year
-if (($(date +"%m") == 12 && $(date +"%d") >= 1)); then
+if (($(date +"%-m") == 12 && $(date +"%-d") >= 1)); then
    PS1="🎄 $PS1"
 fi
 unset color_prompt force_color_prompt
@@ -119,7 +119,7 @@ if ! shopt -oq posix; then
 fi
 # OSX requires "brew install bash-completion" 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
-. $(brew --prefix)/etc/bash_completion
+    . $(brew --prefix)/etc/bash_completion
 fi
 
 # Sets the Tmux window name to the SSH remote host currently connected to 
