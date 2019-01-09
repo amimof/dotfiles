@@ -118,8 +118,10 @@ if ! shopt -oq posix; then
   fi
 fi
 # OSX requires "brew install bash-completion" 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+if type -P brew &>/dev/null; then
+	if [ -f $(brew --prefix)/etc/bash_completion ]; then
+	    . $(brew --prefix)/etc/bash_completion
+	fi
 fi
 
 # Sets the Tmux window name to the SSH remote host currently connected to 
