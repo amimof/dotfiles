@@ -7,3 +7,13 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 
 # Set editor to Vim
 export EDITOR="vim"
+
+# Go Workspace
+export GOPATH="$HOME/Documents/go-workspace/"
+
+# Locales
+export LC_ALL="en_US.UTF-8"
+
+# grep colors
+export GREP_OPTIONS='--color=always'
+export GREP_COLOR='1;35;40'
