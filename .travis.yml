@@ -4,6 +4,6 @@ language: go
 go:
   - "1.11"
 before_install:
-	- go get -u github.com/client9/misspell/cmd/misspell;
+	- "go get -u github.com/client9/misspell/cmd/misspell"
 script:
-  - ${GOPATH}/bin/misspell .
+  - "${GOPATH}/bin/misspell ."
