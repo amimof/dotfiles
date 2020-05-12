@@ -110,19 +110,7 @@ fi
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-# OSX requires "brew install bash-completion" 
-if type -P brew &>/dev/null; then
-	if [ -f $(brew --prefix)/etc/bash_completion ]; then
-	    . $(brew --prefix)/etc/bash_completion
-	fi
-fi
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 # Sets the Tmux window name to the SSH remote host currently connected to 
 ssh() {
