@@ -1,12 +1,17 @@
 {
     "workbench.startupEditor": "newUntitledFile",
-    "workbench.colorTheme": "Atom One Dark",
     "editor.tabSize": 2,
     "explorer.openEditors.visible": 0,
-    "docker.showExplorer": false,
     "workbench.activityBar.visible": false,
     "extensions.ignoreRecommendations": true,
-    "editor.parameterHints": false,
     "window.zoomLevel": 0,
-	"html.autoClosingTags": false
+    "html.autoClosingTags": false,
+    "explorer.confirmDragAndDrop": false,
+    "editor.quickSuggestions": {
+        "other": false,
+        "comments": false,
+        "strings": false
+    },
+    "editor.hover.enabled": false,
+    "breadcrumbs.enabled": false
 }
