@@ -9,7 +9,7 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 export EDITOR="vim"
 
 # Go Workspace
-export GOPATH="$HOME/Documents/go-workspace/"
+export GOPATH="$HOME/go"
 
 # Locales
 export LC_ALL="en_US.UTF-8"
