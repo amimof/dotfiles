@@ -3,6 +3,7 @@
 # Sets up my linux environment the way i want it
 #
 
+BRANCH=master
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
@@ -25,22 +26,30 @@ download() {
 
 install() {
 
-  info "🤖 Installing dotfiles"
+  info "🤖 Installing oh-my-zsh"
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-  log "\t.bashrc"
-  download ~/.bashrc https://raw.githubusercontent.com/amimof/dotfiles/master/.bashrc
+  log "\t.zshrc"
+  download ~/.zshrc https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.zshrc
 
-  log "\t.bash_aliases"
-  download ~/.bash_aliases https://raw.githubusercontent.com/amimof/dotfiles/master/.bash_aliases
+  log "\taliases.zsh"
+  download ~/.oh-my-zsh/custom/aliases.zsh https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/aliases.zsh
 
-  log "\t.bash_exports"
-  download ~/.bash_exports https://raw.githubusercontent.com/amimof/dotfiles/master/.bash_exports
+  log "\texports.zsh"
+  download ~/.oh-my-zsh/custom/aliases.zsh https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/exports.zsh
+
+  log "\ttmux-ssh-title.plugin.zsh"
+  mkdir ~/.oh-my-zsh/custom/plugins/tmux-ssh-title
+  download ~/.oh-my-zsh/custom/plugins/tmux-ssh-title/tmux-ssh-title.plugin.zsh https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/plugins/tmux-ssh-title/tmux-ssh-title.plugin.zsh
+
+  log "\tholiday.zsh-theme"
+  download ~/.oh-my-zsh/custom/themes/holiday.zsh-theme https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/themes/holiday.zsh-theme
 
   log "\t.vimrc"
-  download ~/.vimrc https://raw.githubusercontent.com/amimof/dotfiles/master/.vimrc
+  download ~/.vimrc https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.vimrc
 
   log "\t.tmux.conf"
-  download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.tmux.conf
+  download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.tmux.conf
   
   info "🤖 Installing scripts"
   mkdir -p ~/.scripts
@@ -70,6 +79,7 @@ uninstall() {
   log "\t.tmux.conf"
   rm -rf ~/.tmux.conf
 
+  info "\nNot removing oh-my-zsh. You can do it yourself by running uninstall_oh_my_zsh"
   info  "\n💩 Done! Restart your shell session\n"
 }
 
