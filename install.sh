@@ -26,9 +26,10 @@ download() {
 
 install() {
 
-  info "🤖 Installing oh-my-zsh"
+  info "\n🤖 Installing oh-my-zsh"
   sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+  info "\n🤖 Downloading dotfiles"
   log "\t.zshrc"
   download ~/.zshrc https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.zshrc
 
@@ -36,10 +37,10 @@ install() {
   download ~/.oh-my-zsh/custom/aliases.zsh https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/aliases.zsh
 
   log "\texports.zsh"
-  download ~/.oh-my-zsh/custom/aliases.zsh https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/exports.zsh
+  download ~/.oh-my-zsh/custom/exports.zsh https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/exports.zsh
 
   log "\ttmux-ssh-title.plugin.zsh"
-  mkdir ~/.oh-my-zsh/custom/plugins/tmux-ssh-title
+  mkdir -p ~/.oh-my-zsh/custom/plugins/tmux-ssh-title
   download ~/.oh-my-zsh/custom/plugins/tmux-ssh-title/tmux-ssh-title.plugin.zsh https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/plugins/tmux-ssh-title/tmux-ssh-title.plugin.zsh
 
   log "\tholiday.zsh-theme"
@@ -51,7 +52,7 @@ install() {
   log "\t.tmux.conf"
   download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.tmux.conf
   
-  info "🤖 Installing scripts"
+  info "\n🤖 Installing scripts"
   mkdir -p ~/.scripts
   
   log "\tjonmosco/kube-tmux"
@@ -62,22 +63,28 @@ install() {
 }
 
 uninstall() {
-  info "💀 Removing dotfiles"
+  info "\n💀 Removing dotfiles"
   
-  log "\t.bashrc"
-  rm -rf ~/.bashrc
+  log "\t.zshrc"
+  rm -rf ~/.zshrc
   
-  log "\t.bash_aliases"
-  rm -rf ~/.bash_aliases
+  log "\taliases.zsh"
+  rm -rf ~/.oh-my-zsh/custom/aliases.zsh
 
-  log "\t.bash_exports"
-  rm -rf ~/.bash_exports
+  log "\texports.zsh"
+  rm -rf ~/.oh-my-zsh/custom/exports.zsh
   
   log "\t.vimrc"
   rm -rf ~/.vimrc
   
   log "\t.tmux.conf"
   rm -rf ~/.tmux.conf
+
+  log "\ttmux-ssh-title.plugin.zsh"
+  rm -rf ~/.oh-my-zsh/custom/plugins/tmux-ssh-title/
+
+  log "\tholiday.zsh-theme"
+  rm -rf ~/.oh-my-zsh/custom/themes/holiday.zsh-theme
 
   info "\nNot removing oh-my-zsh. You can do it yourself by running uninstall_oh_my_zsh"
   info  "\n💩 Done! Restart your shell session\n"
