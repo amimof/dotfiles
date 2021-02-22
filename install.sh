@@ -46,6 +46,10 @@ install() {
   log "\tholiday.zsh-theme"
   download ~/.oh-my-zsh/custom/themes/holiday.zsh-theme https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/themes/holiday.zsh-theme
 
+  log "\tkubectx.zsh zsh completion"
+  mkdir -p ~/.oh-my-zsh/completions
+  download ~/.oh-my-zsh/completions/_kubectx.zsh https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/kubectx.zsh
+
   log "\t.vimrc"
   download ~/.vimrc https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.vimrc
 
