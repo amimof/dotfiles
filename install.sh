@@ -6,6 +6,7 @@
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
+CMDS=("tmux" "kubectl" "kubectx" "vim" "curl")
 
 warn() {
   echo -e "${YELLOW}${1}${NC}"
@@ -22,6 +23,11 @@ log() {
 download() {
   curl -LSso "${1}" "${2}"
 }
+
+# Check if commands are installed
+for i in ${CMDS[@]}; do
+  command -v $i >/dev/null && continue || { warn "🤯 $i doesn't seem to be installed. You should probably install it."; continue; }
+done
 
 install() {
 
