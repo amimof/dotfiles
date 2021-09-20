@@ -10,3 +10,6 @@ alias oc="oc --config=/Users/amir/.kube/ocp_config"
 # Alias kubectl to k and also add bash-completion for it
 alias k="kubectl"
 complete -F __start_kubectl k
+
+# Alias kubectx to kx
+alias kx="kubectx"

@@ -128,3 +128,10 @@ ssh() {
     fi
     command ssh "$@"
 }
+
+# Rebind ctrl+w so that it deletes word sections
+stty werase undef
+bind '"\C-w":backward-kill-word'
+
+# fzf 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

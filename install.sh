@@ -3,10 +3,10 @@
 # Sets up my linux environment the way i want it
 #
 
-BRANCH=master
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
+CMDS=("tmux" "kubectl" "kubectx" "vim" "curl")
 
 warn() {
   echo -e "${YELLOW}${1}${NC}"
@@ -24,35 +24,31 @@ download() {
   curl -LSso "${1}" "${2}"
 }
 
+# Check if commands are installed
+for i in ${CMDS[@]}; do
+  command -v $i >/dev/null && continue || { warn "🤯 $i doesn't seem to be installed. You should probably install it."; continue; }
+done
+
 install() {
 
-  info "\n🤖 Installing oh-my-zsh"
-  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  info "🤖 Installing dotfiles"
 
-  info "\n🤖 Downloading dotfiles"
-  log "\t.zshrc"
-  download ~/.zshrc https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.zshrc
+  log "\t.bashrc"
+  download ~/.bashrc https://raw.githubusercontent.com/amimof/dotfiles/master/.bashrc
 
-  log "\taliases.zsh"
-  download ~/.oh-my-zsh/custom/aliases.zsh https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/aliases.zsh
+  log "\t.bash_aliases"
+  download ~/.bash_aliases https://raw.githubusercontent.com/amimof/dotfiles/master/.bash_aliases
 
-  log "\texports.zsh"
-  download ~/.oh-my-zsh/custom/exports.zsh https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/exports.zsh
-
-  log "\ttmux-ssh-title.plugin.zsh"
-  mkdir -p ~/.oh-my-zsh/custom/plugins/tmux-ssh-title
-  download ~/.oh-my-zsh/custom/plugins/tmux-ssh-title/tmux-ssh-title.plugin.zsh https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/plugins/tmux-ssh-title/tmux-ssh-title.plugin.zsh
-
-  log "\tholiday.zsh-theme"
-  download ~/.oh-my-zsh/custom/themes/holiday.zsh-theme https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.oh-my-zsh/custom/themes/holiday.zsh-theme
+  log "\t.bash_exports"
+  download ~/.bash_exports https://raw.githubusercontent.com/amimof/dotfiles/master/.bash_exports
 
   log "\t.vimrc"
-  download ~/.vimrc https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.vimrc
+  download ~/.vimrc https://raw.githubusercontent.com/amimof/dotfiles/master/.vimrc
 
   log "\t.tmux.conf"
-  download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/$BRANCH/.tmux.conf
+  download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.tmux.conf
   
-  info "\n🤖 Installing scripts"
+  info "🤖 Installing scripts"
   mkdir -p ~/.scripts
   
   log "\tjonmosco/kube-tmux"
@@ -63,16 +59,16 @@ install() {
 }
 
 uninstall() {
-  info "\n💀 Removing dotfiles"
+  info "💀 Removing dotfiles"
   
-  log "\t.zshrc"
-  rm -rf ~/.zshrc
+  log "\t.bashrc"
+  rm -rf ~/.bashrc
   
-  log "\taliases.zsh"
-  rm -rf ~/.oh-my-zsh/custom/aliases.zsh
+  log "\t.bash_aliases"
+  rm -rf ~/.bash_aliases
 
-  log "\texports.zsh"
-  rm -rf ~/.oh-my-zsh/custom/exports.zsh
+  log "\t.bash_exports"
+  rm -rf ~/.bash_exports
   
   log "\t.vimrc"
   rm -rf ~/.vimrc
@@ -80,13 +76,6 @@ uninstall() {
   log "\t.tmux.conf"
   rm -rf ~/.tmux.conf
 
-  log "\ttmux-ssh-title.plugin.zsh"
-  rm -rf ~/.oh-my-zsh/custom/plugins/tmux-ssh-title/
-
-  log "\tholiday.zsh-theme"
-  rm -rf ~/.oh-my-zsh/custom/themes/holiday.zsh-theme
-
-  info "\nNot removing oh-my-zsh. You can do it yourself by running uninstall_oh_my_zsh"
   info  "\n💩 Done! Restart your shell session\n"
 }
 
