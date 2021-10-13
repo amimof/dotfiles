@@ -23,8 +23,6 @@ zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'       # tab-completion
 HISTFILE=~/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
-#export EDITOR=/usr/bin/nano
-#export VISUAL=/usr/bin/nano
 WORDCHARS=""                                                    # Don't consider certain characters part of the word
 CLICOLOR=1                                                      # Add colors to files and directories
 LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                                 # Add colors to files and directories
@@ -82,9 +80,11 @@ setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git*+set-message:*' hooks untracked-git
-zstyle ':vcs_info:git:*' formats '%F{red}%m%u%f%F{green}%c%f %F{199}%b%f'
-zstyle ':vcs_info:git:*' actionformats '%F{cyan}%a%f%F{red}%u%f%F{green}%c%f %F{199}%b%f'
+zstyle ':vcs_info:*' unstagedstr '!'
+zstyle ':vcs_info:*' stagedstr '+'
+zstyle ':vcs_info:git*+set-message:*' hooks untracked
+zstyle ':vcs_info:git:*' formats '%F{red}%m%f%F{yellow}%u%f%F{green}%c%f %F{199}%b%f'
+zstyle ':vcs_info:git:*' actionformats '%F{cyan}%a%f %F{red}%m%f%F{yellow}%u%f%F{green}%c%f %F{199}%b%f'
 
 +vi-untracked() {
   if [[ -n "$(git ls-files --others --exclude standard)" ]]; then
@@ -103,24 +103,6 @@ export LESS_TERMCAP_so=$'\E[01;47;34m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 export LESS=-R
-
-## Plugins section: Enable fish style features
-# Use syntax highlighting
-source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# Use history substring search
-source ~/.zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-# bind UP and DOWN arrow keys to history substring search
-zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
-bindkey '^[[A' history-substring-search-up			
-bindkey '^[[B' history-substring-search-down
-
-# Offer to install missing package if command is not found
-if [[ -r /usr/share/zsh/functions/command-not-found.zsh ]]; then
-    source /usr/share/zsh/functions/command-not-found.zsh
-    export PKGFILE_PROMPT_INSTALL_MISSING=1
-fi
 
 # Set terminal window and tab/icon title
 #
@@ -177,7 +159,7 @@ function title {
   esac
 }
 
-ZSH_THEME_TERM_TAB_TITLE_IDLE="%15<..<%~%<<" #15 char left truncated PWD
+ZSH_THEME_TERM_TAB_TITLE_IDLE="%15<‥<%~%<<" #15 char left truncated PWD
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m:%~"
 
 # Runs before showing the prompt
@@ -236,8 +218,11 @@ function mzc_termsupport_preexec {
   title '$CMD' '%100>...>$LINE%<<'
 }
 
-# Add fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Plugins section
+if type "kubectl" > /dev/null; then
+ source <(kubectl completion zsh)             # kubectl auto completion
+fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh        # fzf
 
 autoload -U add-zsh-hook
 add-zsh-hook precmd mzc_termsupport_precmd
