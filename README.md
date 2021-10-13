@@ -5,9 +5,11 @@ A collection of my dotfiles, scripts and configs. Sets up my environment just th
 
 # Requirements 
 
-* bash
+* git
+* zsh
 * vim
 * tmux
+* kubectl
 
 # Getting started
 
