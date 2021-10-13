@@ -30,3 +30,6 @@ if &t_Co > 2 || has("GUI_running")
     syntax on
     set hlsearch
 endif
+
+" Yaml indentation
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
