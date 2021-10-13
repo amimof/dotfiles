@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 #  
 # Sets up my linux environment the way i want it
 #
@@ -6,10 +6,10 @@
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
-CMDS=("tmux" "kubectl" "kubectx" "vim" "curl")
+CMDS=("zsh" "tmux" "kubectl" "kubectx" "vim" "curl")
 
 warn() {
-  echo -e "${YELLOW}${1}${NC}"
+  echo -e "🤯 ${YELLOW}${1}${NC}"
 }
 
 info() {
@@ -24,30 +24,30 @@ download() {
   curl -LSso "${1}" "${2}"
 }
 
+# Check to see if we are using zsh, warn if not
+if [ "$SHELL" != $(which zsh) ]; then
+  warn "Looks like your shell is ${SHELL} and not Zsh. You might want to consider switching."
+fi
+exit
+
 # Check if commands are installed
 for i in ${CMDS[@]}; do
-  command -v $i >/dev/null && continue || { warn "🤯 $i doesn't seem to be installed. You should probably install it."; continue; }
+  command -v $i >/dev/null && continue || { warn "$i doesn't seem to be installed. You should probably install it."; continue; }
 done
 
 install() {
 
   info "🤖 Installing dotfiles"
 
-  log "\t.bashrc"
-  download ~/.bashrc https://raw.githubusercontent.com/amimof/dotfiles/master/.bashrc
-
-  log "\t.bash_aliases"
-  download ~/.bash_aliases https://raw.githubusercontent.com/amimof/dotfiles/master/.bash_aliases
-
-  log "\t.bash_exports"
-  download ~/.bash_exports https://raw.githubusercontent.com/amimof/dotfiles/master/.bash_exports
+  log "\t.zshrc"
+  download ~/.bashrc https://raw.githubusercontent.com/amimof/dotfiles/master/.zshrc
 
   log "\t.vimrc"
   download ~/.vimrc https://raw.githubusercontent.com/amimof/dotfiles/master/.vimrc
 
   log "\t.tmux.conf"
   download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.tmux.conf
-  
+
   info "🤖 Installing scripts"
   mkdir -p ~/.scripts
   
@@ -61,14 +61,8 @@ install() {
 uninstall() {
   info "💀 Removing dotfiles"
   
-  log "\t.bashrc"
-  rm -rf ~/.bashrc
-  
-  log "\t.bash_aliases"
-  rm -rf ~/.bash_aliases
-
-  log "\t.bash_exports"
-  rm -rf ~/.bash_exports
+  log "\t.zshrc"
+  rm -rf ~/.zshrc
   
   log "\t.vimrc"
   rm -rf ~/.vimrc
@@ -78,10 +72,6 @@ uninstall() {
 
   info  "\n💩 Done! Restart your shell session\n"
 }
-
-# if [ $# -lt 1 ]; then
-#   echo "Usage: $0 [install|uninstall]"
-# fi
 
 case "$1" in
   'install') 
