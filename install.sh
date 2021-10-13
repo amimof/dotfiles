@@ -39,7 +39,7 @@ install() {
   info "🤖 Installing dotfiles"
 
   log "\t.zshrc"
-  download ~/.bashrc https://raw.githubusercontent.com/amimof/dotfiles/master/.zshrc
+  download ~/.zshrc https://raw.githubusercontent.com/amimof/dotfiles/master/.zshrc
 
   log "\t.vimrc"
   download ~/.vimrc https://raw.githubusercontent.com/amimof/dotfiles/master/.vimrc
