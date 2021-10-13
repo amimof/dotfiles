@@ -28,7 +28,6 @@ download() {
 if [ "$SHELL" != $(which zsh) ]; then
   warn "Looks like your shell is ${SHELL} and not Zsh. You might want to consider switching."
 fi
-exit
 
 # Check if commands are installed
 for i in ${CMDS[@]}; do
