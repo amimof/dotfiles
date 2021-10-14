@@ -25,7 +25,7 @@
 	date = short
 
 [alias]
-  s = status
+  s = status -sb
   co = checkout
   cob = checkout -b
   com = commit
@@ -34,9 +34,5 @@
   undo = reset HEAD~1 --mixed
   res = !git reset --hard
   pu = !git push origin HEAD
-  lg = !git log --graph --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit
-  graph = log --graph --oneline --decorate=short --branches='*'
+  lg = log --graph --branches="*" --oneline --decorate=short --pretty=format:\"%C(magenta)%h%Creset -%C(auto)%d%Creset %s %C(dim white)(%cr) [%an]\"
   df = diff --color-words='[^[:space:]]'
-
-[format]
-	pretty = '%C(yellow)%h%Creset %C(magenta)%cd%Creset %d %s' 
