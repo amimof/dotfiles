@@ -1,0 +1,42 @@
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+  showbranch = auto
+	ui = true
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+
+[log]
+	date = short
+
+[alias]
+  s = status
+  co = checkout
+  cob = checkout -b
+	com = commit
+  del = branch -D 
+  br = !git --no-pager branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+  undo = reset HEAD~1 --mixed
+  res = !git reset --hard
+  pu = !git push origin HEAD
+  lg = !git log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit
+  graph = log --graph --oneline --decorate=short --branches='*'
+  df = diff --color-words='[^[:space:]]'
+
+[format]
+	pretty = '%C(yellow)%h%Creset %C(magenta)%cd%Creset %d %s' 
