@@ -2,9 +2,7 @@
     "workbench.startupEditor": "newUntitledFile",
     "editor.tabSize": 2,
     "explorer.openEditors.visible": 0,
-    "workbench.activityBar.visible": false,
     "extensions.ignoreRecommendations": true,
-    "window.zoomLevel": 0,
     "html.autoClosingTags": false,
     "explorer.confirmDragAndDrop": false,
     "editor.quickSuggestions": {
@@ -13,5 +11,12 @@
         "strings": false
     },
     "editor.hover.enabled": false,
-    "breadcrumbs.enabled": false
+    "breadcrumbs.enabled": false,
+    "editor.renderControlCharacters": false,
+    "explorer.confirmDelete": false,
+    "redhat.telemetry.enabled": false,
+    "editor.renderWhitespace": "none",
+    "git.autofetch": true,
+    "workbench.activityBar.visible": false,
+    "window.zoomLevel": 1
 }

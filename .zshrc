@@ -71,28 +71,33 @@ alias kx="kubectx"                                              # Alias kubectx 
 autoload -U compinit colors zcalc
 compinit -d
 colors
-# Stylize the prompt and right prompt with git info
 PROMPT='%B%F{blue}%1~%f%b %F{243}$%f '
-autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
-RPROMPT=\$vcs_info_msg_0_
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' unstagedstr '!'
-zstyle ':vcs_info:*' stagedstr '+'
-zstyle ':vcs_info:git*+set-message:*' hooks untracked
-zstyle ':vcs_info:git:*' formats '%F{red}%m%f%F{yellow}%u%f%F{green}%c%f %F{199}%b%f'
-zstyle ':vcs_info:git:*' actionformats '%F{cyan}%a%f %F{red}%m%f%F{yellow}%u%f%F{green}%c%f %F{199}%b%f'
+GIT_PROMPT=false
 
-+vi-untracked() {
-  if [[ -n "$(git ls-files --others --exclude standard)" ]]; then
-      hook_com[misc]='?'
-  else
-      hook_com[misc]=''
-  fi
-}
+# Stylize the prompt and right prompt with git info
+if [ "$GIT_PROMPT" = true ] ; then
+  autoload -Uz vcs_info
+  precmd_vcs_info() { vcs_info }
+  precmd_functions+=( precmd_vcs_info )
+  setopt prompt_subst
+  RPROMPT=\$vcs_info_msg_0_
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:*' unstagedstr '!'
+  zstyle ':vcs_info:*' stagedstr '+'
+  zstyle ':vcs_info:git*+set-message:*' hooks untracked
+  zstyle ':vcs_info:git:*' formats '%F{red}%m%f%F{yellow}%u%f%F{green}%c%f %F{199}%b%f'
+  zstyle ':vcs_info:git:*' actionformats '%F{cyan}%a%f %F{red}%m%f%F{yellow}%u%f%F{green}%c%f %F{199}%b%f'
+
+  # Add support for untracked status
+  +vi-untracked() {
+    if [[ -n "$(git ls-files --others --exclude standard)" ]]; then
+        hook_com[misc]='?'
+    else
+        hook_com[misc]=''
+    fi
+  }
+fi
 
 # Color man pages
 export LESS_TERMCAP_mb=$'\E[01;32m'

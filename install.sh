@@ -6,7 +6,7 @@
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
-CMDS=("zsh" "tmux" "kubectl" "kubectx" "vim" "curl")
+CMDS=("zsh" "tmux" "kubectl" "kubectx" "vim" "curl" "gitmux")
 
 warn() {
   echo -e "🤯 ${YELLOW}${1}${NC}"
@@ -46,12 +46,6 @@ install() {
 
   log "\t.tmux.conf"
   download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.tmux.conf
-
-  info "🤖 Installing scripts"
-  mkdir -p ~/.scripts
-  
-  log "\tjonmosco/kube-tmux"
-  git clone https://github.com/jonmosco/kube-tmux.git ~/.scripts/kube-tmux/
 
   info "\n💩 Done! Restart your shell session\n"
 
