@@ -47,6 +47,12 @@ install() {
   log "\t.tmux.conf"
   download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.tmux.conf
 
+  log "\t.gitconfig"
+  download ~/.gitconfig https://raw.githubusercontent.com/amimof/dotfiles/master/.gitconfig
+
+  log "\t.gitmux.conf"
+  download ~/.gitmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.gitmux.conf
+
   info "\n💩 Done! Restart your shell session\n"
 
 }
