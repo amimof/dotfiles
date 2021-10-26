@@ -8,6 +8,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tomasiser/vim-code-dark'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'wfxr/minimap.vim' " Requires code-minimap https://github.com/wfxr/code-minimap
+Plug 'itchyny/lightline.vim'
 call plug#end()
 
 " Styling
@@ -34,3 +35,4 @@ inoremap [ []<left>
 inoremap { {}<left>
 inoremap {<CR> {<CR>}<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
+nnoremap <C-t> :NERDTreeToggle<CR>

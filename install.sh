@@ -1,12 +1,11 @@
 #!/usr/bin/env zsh
 #  
-# Sets up my linux environment the way i want it
-#
+# Sets up my linux environment the way i want it #
 
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
-CMDS=("zsh" "tmux" "kubectl" "kubectx" "vim" "curl" "gitmux")
+CMDS=("zsh" "tmux" "kubectl" "kubectx" "vim" "curl" "gitmux" "code-minimap")
 
 warn() {
   echo -e "🤯 ${YELLOW}${1}${NC}"
@@ -54,6 +53,8 @@ install() {
   download ~/.gitmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.gitmux.conf
 
   info "\n💩 Done! Restart your shell session\n"
+
+  info "\n☝️ Remember to install nerd-fonts (https://github.com/ryanoasis/nerd-fonts)\n"
 
 }
 
