@@ -11,9 +11,13 @@ Plug 'wfxr/minimap.vim' " Requires code-minimap https://github.com/wfxr/code-min
 call plug#end()
 
 " Styling
-set number " Enable line numbers
+let g:NERDTreeGitStatusConcealBrackets = 1 " Remove brackets
 colorscheme codedark
-let g:NERDTreeGitStatusConcealBrackets = 1 " default: 0
+syntax on
+set hlsearch " Highlight text while searching
+set number " Enable line numbers
+set cursorline " Display cursor position by highlighting current line
+set paste " Enable paste mode by default
 
 " Indentation
 set smartindent
