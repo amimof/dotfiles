@@ -5,7 +5,7 @@
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
-CMDS=("zsh" "tmux" "kubectl" "kubectx" "vim" "curl" "gitmux" "code-minimap")
+CMDS=("zsh" "tmux" "kubectl" "kubectx" "vim" "curl" "gitmux" "fzf") 
 
 warn() {
   echo -e "🤯 ${YELLOW}${1}${NC}"
