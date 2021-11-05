@@ -53,9 +53,6 @@ install() {
   download ~/.gitmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.gitmux.conf
 
   info "\n💩 Done! Restart your shell session\n"
-
-  info "\n☝️ Remember to install nerd-fonts (https://github.com/ryanoasis/nerd-fonts)\n"
-
 }
 
 uninstall() {
@@ -70,6 +67,11 @@ uninstall() {
   log "\t.tmux.conf"
   rm -rf ~/.tmux.conf
 
+  log "\t.gitconfig"
+  rm -rf ~/.gitconfig
+
+  log "\t.gitmux.conf"
+  rm -rf ~/.gitmux.conf
   info  "\n💩 Done! Restart your shell session\n"
 }
 
