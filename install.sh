@@ -1,12 +1,11 @@
 #!/usr/bin/env zsh
 #  
-# Sets up my linux environment the way i want it
-#
+# Sets up my linux environment the way i want it #
 
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
-CMDS=("zsh" "tmux" "kubectl" "kubectx" "vim" "curl" "gitmux")
+CMDS=("zsh" "tmux" "kubectl" "kubectx" "vim" "curl" "gitmux" "fzf") 
 
 warn() {
   echo -e "🤯 ${YELLOW}${1}${NC}"
@@ -47,8 +46,13 @@ install() {
   log "\t.tmux.conf"
   download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.tmux.conf
 
-  info "\n💩 Done! Restart your shell session\n"
+  log "\t.gitconfig"
+  download ~/.gitconfig https://raw.githubusercontent.com/amimof/dotfiles/master/.gitconfig
 
+  log "\t.gitmux.conf"
+  download ~/.gitmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.gitmux.conf
+
+  info "\n💩 Done! Restart your shell session\n"
 }
 
 uninstall() {
@@ -63,6 +67,11 @@ uninstall() {
   log "\t.tmux.conf"
   rm -rf ~/.tmux.conf
 
+  log "\t.gitconfig"
+  rm -rf ~/.gitconfig
+
+  log "\t.gitmux.conf"
+  rm -rf ~/.gitmux.conf
   info  "\n💩 Done! Restart your shell session\n"
 }
 

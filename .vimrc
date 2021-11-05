@@ -1,35 +1,24 @@
-" An example for a vimrc file.
+set encoding=UTF-8
 
-" Show line numbers
-set number
-highlight LineNr ctermfg=grey ctermbg=black
-
+" Settings
+set hlsearch                                                " Highlight text while searching
+set number                                                  " Enable line numbers
+set cursorline                                              " Display cursor position by highlighting current line
+set laststatus=2                                            " Show status line 
+set showtabline=2                                           " Show tabline at the top
+set scrolloff=5                                             " Leave 5 lines of buffer when scrolling
+set sidescrolloff=10                                        " Leave 10 characters of horizontal buffer when scrolling
 set smartindent
 set tabstop=4
-set shiftwidth=4
 set expandtab
+set shiftwidth=4
+set backspace=indent,eol,start                              " Make backspace work like in most other programs (http://vi.stackexchange.com/a/2163)
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab    " Use 2-space tabs for yaml
 
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
+" Keybindings
+nnoremap <C-k> :bprevious<CR>
+nnoremap <C-j> :bnext<CR>
+nnoremap <C-d> :bdelete<CR>
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
-set nowrap      " Disable text wrapping
-set nostartofline " Do not start on first none blank char on the line
-set paste
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("GUI_running")
-    syntax on
-    set hlsearch
-endif
-
-" Yaml indentation
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+" Styling
+syntax on                                                   " Enable syntax highlighting 
