@@ -1,3 +1,6 @@
+[core]
+  sshCommand = "ssh -i ~/.ssh/keys/amimof@users.noreply.github.com -o IdentitiesOnly=yes"
+
 [color]
 	branch = auto
 	diff = auto
@@ -38,3 +41,19 @@
   df = diff --color-words='[^[:space:]]'
   contrib = !git --no-pager log --pretty=short | git shortlog -e --numbered --summary
   alias = config --get-regexp ^alias.
+
+[user]
+	email = amimof@users.noreply.github.com
+	name = Amir Mofasser
+	signingkey = DC25DD12BDACC23E
+
+[commit]
+	gpgsign = true
+
+#
+# Add repo specific configuration here, including them if needed.
+# For example, create the file ~/.gitconfig-orgname and uncomment:
+# 
+# [includeIf "gitdir:~/git/github.com/orgname/"]
+#   path = ~/.gitconfig-orgname
+# 
