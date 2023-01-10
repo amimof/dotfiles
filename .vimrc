@@ -21,9 +21,11 @@ nnoremap <C-k> :bprevious<CR>
 nnoremap <C-j> :bnext<CR>
 nnoremap <C-d> :bdelete<CR>
 
-highlight StatusLine ctermbg=darkred
+" Styling
+colorscheme codedark
 
 " Setup the status line
+highlight StatusLine ctermbg=darkred
 set statusline=
 set statusline+=%#NormalColor#%{(mode()=='n')?'\ \ NORMAL\ ':''}
 set statusline+=%#InsertColor#%{(mode()=='i')?'\ \ INSERT\ ':''}
@@ -48,27 +50,7 @@ hi User2 ctermbg=red   ctermfg=blue  guibg=red   guifg=blue
 hi User3 ctermbg=blue  ctermfg=green guibg=blue  guifg=green
 
 " Add colors to statusline
-hi NormalColor guifg=Black guibg=Green ctermbg=46 ctermfg=0
+hi NormalColor guifg=Black guibg=Grey ctermbg=7 ctermfg=0
 hi InsertColor guifg=Black guibg=Cyan ctermbg=51 ctermfg=0
 hi ReplaceColor guifg=Black guibg=maroon1 ctermbg=165 ctermfg=0
 hi VisualColor guifg=Black guibg=Orange ctermbg=202 ctermfg=0
-
-
-" Colorize line numbers and cursorline
-"  term = normal terminals, e.g.: vt100, xterm
-"  cterm = color terminals, e.g.: MS-DOS console, color-xterm
-"  gui = GUIs
-highlight CursorLine
-    \ term=NONE
-    \ cterm=NONE  ctermbg=NONE  ctermfg=NONE
-    \ gui=NONE    guibg=#073642  guifg=NONE
-
-highlight CursorLineNr
-    \ term=NONE
-    \ cterm=NONE  ctermbg=NONE   ctermfg=237
-    \ gui=NONE    guibg=#073642  guifg=Orange
-
-highlight LineNr
-    \ term=NONE
-    \ cterm=NONE  ctermfg=241    ctermbg=233
-    \ gui=NONE    guifg=#839497  guibg=#073642
