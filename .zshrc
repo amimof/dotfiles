@@ -66,6 +66,7 @@ alias s='tmux attach || tmux new'                               # Re-attach to t
 alias gh="cd ~/git && pwd"                                      # git repos home
 alias k="kubectl"                                               # Alias kubectl to k and also add bash-completion for it
 alias kx="kubectx"                                              # Alias kubectx to kx
+alias kn="kubens"                                               # Alias kubens to kn
 alias diff="diff --color"                                       # Add colors to diff command
 
 # Theming section  
