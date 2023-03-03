@@ -68,12 +68,20 @@ alias k="kubectl"                                               # Alias kubectl 
 alias kx="kubectx"                                              # Alias kubectx to kx
 alias kn="kubens"                                               # Alias kubens to kn
 alias diff="diff --color"                                       # Add colors to diff command
+alias ls="ls --color=tty"                                       # Enable ls colors
+alias ll="ls -latrh"
+
+## Exports
+export PATH=$PATH:/usr/local/go/bin                             # Puts go into PATH
+export MOZ_GTK_TITLEBAR_DECORATION=client                       # Configure GTK to use client titlebar
+export GTK_THEME=Adwaita:dark                                   # Make GTK windows dark
+export EDITOR=vim                                               # Vim is our editor
 
 # Theming section  
 autoload -U compinit colors zcalc
 compinit -d
 colors
-PROMPT='%B%F{blue}%1~%f%b %F{243}$%f '
+PROMPT='%B%F{blue}%1~%f%b %F{243}%f '
 GIT_PROMPT=false
 
 # Stylize the prompt and right prompt with git info
@@ -229,8 +237,13 @@ function mzc_termsupport_preexec {
 if type "kubectl" > /dev/null; then
  source <(kubectl completion zsh)             # kubectl auto completion
 fi
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh        # fzf
-
+[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh        # fzf keybindings
+[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh        # fzf completion
+[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # syntax highlighting
 autoload -U add-zsh-hook
 add-zsh-hook precmd mzc_termsupport_precmd
 add-zsh-hook preexec mzc_termsupport_preexec
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

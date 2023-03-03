@@ -52,6 +52,9 @@ install() {
   log "\t.gitmux.conf"
   download ~/.gitmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.gitmux.conf
 
+  log "\tvim-code-dark (vim colorscheme)"
+  git clone https://github.com/tomasiser/vim-code-dark ~/.vim/pack/themes/start/vim-code-dark
+
   info "\n💩 Done! Restart your shell session\n"
 }
 
