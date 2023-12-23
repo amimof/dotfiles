@@ -63,6 +63,7 @@ alias df='df -h'                                                # Human-readable
 alias free='free -m'                                            # Show sizes in MB
 alias gitu='git add . && git commit && git push'
 alias s='tmux attach || tmux new'                               # Re-attach to tmux session. Create a new session if none exists
+alias g="git"                                                   # Git becomes g
 alias gh="cd ~/git && pwd"                                      # git repos home
 alias k="kubectl"                                               # Alias kubectl to k and also add bash-completion for it
 alias kx="kubectx"                                              # Alias kubectx to kx
@@ -76,6 +77,9 @@ export PATH=$PATH:/usr/local/go/bin                             # Puts go into P
 export MOZ_GTK_TITLEBAR_DECORATION=client                       # Configure GTK to use client titlebar
 export GTK_THEME=Adwaita:dark                                   # Make GTK windows dark
 export EDITOR=vim                                               # Vim is our editor
+export CLICOLOR=1                                               # Add colors to files and directories
+export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                          # Add colors to files and directories
+export GPG_TTY=$(tty)                                           # Tell gpg agent which TTY we are in
 
 # Theming section  
 autoload -U compinit colors zcalc
