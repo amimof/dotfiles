@@ -3,20 +3,31 @@
     "editor.tabSize": 2,
     "explorer.openEditors.visible": 0,
     "extensions.ignoreRecommendations": true,
-    "html.autoClosingTags": false,
     "explorer.confirmDragAndDrop": false,
     "editor.quickSuggestions": {
-        "other": false,
-        "comments": false,
-        "strings": false
+        "comments": "off",
+        "strings": "off",
+        "other": "off"
     },
-    "editor.hover.enabled": false,
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.wordBasedSuggestions": "off",
+    "editor.quickSuggestionsDelay": 1000000,
+    "editor.parameterHints.enabled": false,
+    "editor.hover.enabled": true,
     "breadcrumbs.enabled": false,
-    "editor.renderControlCharacters": false,
     "explorer.confirmDelete": false,
     "redhat.telemetry.enabled": false,
     "editor.renderWhitespace": "none",
     "git.autofetch": true,
-    "workbench.activityBar.visible": false,
-    "window.zoomLevel": 1
+    "editor.multiCursorModifier": "ctrlCmd",
+    "html.autoClosingTags": false,
+    "html.autoCreateQuotes": false,
+    "go.toolsManagement.autoUpdate": true,
+    "gopls": {
+        "ui.semanticTokens": true
+    },
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "workbench.editor.empty.hint": "hidden",
+    "window.zoomLevel": 1,
+    "workbench.activityBar.location": "hidden"
 }

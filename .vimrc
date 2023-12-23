@@ -4,6 +4,7 @@ set nocompatible
 " Semtingm
 syntax on                                                   " Enable syntax highlighting 
 set hlsearch                                                " Highlight text while searching
+set paste
 set number                                                  " Enable line numbers
 set cursorline                                              " Display cursor position by highlighting current line
 set laststatus=2                                            " Show status line 
