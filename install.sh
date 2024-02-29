@@ -35,31 +35,31 @@ done
 
 install() {
 
-  # info "🔌 Installing plugins"
+  info "🔌 Installing plugins"
   
-  # log "\tvim-plug"
-  # download ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  log "\tvim-plug"
+  download ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-  # log "\Tmux Plugin Manager (TPM)"
-  # git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm --quiet
-  # exit
+  log "\Tmux Plugin Manager (TPM)"
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm --quiet
+  exit
 
-  # info "🤖 Installing dotfiles"
+  info "🤖 Installing dotfiles"
 
-  # log "\t.zshrc"
-  # download ~/.zshrc https://raw.githubusercontent.com/amimof/dotfiles/master/.zshrc
+  log "\t.zshrc"
+  download ~/.zshrc https://raw.githubusercontent.com/amimof/dotfiles/master/.zshrc
 
-  # log "\t.vimrc"
-  # download ~/.vimrc https://raw.githubusercontent.com/amimof/dotfiles/master/.vimrc
+  log "\t.vimrc"
+  download ~/.vimrc https://raw.githubusercontent.com/amimof/dotfiles/master/.vimrc
 
-  # log "\t.tmux.conf"
-  # download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.tmux.conf
+  log "\t.tmux.conf"
+  download ~/.tmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.tmux.conf
 
-  # log "\t.gitconfig"
-  # download ~/.gitconfig https://raw.githubusercontent.com/amimof/dotfiles/master/.gitconfig
+  log "\t.gitconfig"
+  download ~/.gitconfig https://raw.githubusercontent.com/amimof/dotfiles/master/.gitconfig
 
-  # log "\t.gitmux.conf"
-  # download ~/.gitmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.gitmux.conf
+  log "\t.gitmux.conf"
+  download ~/.gitmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.gitmux.conf
 
   info "\n💩 Done! Time to restart your shell\n"
 
