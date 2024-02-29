@@ -16,7 +16,6 @@
     "editor.hover.enabled": true,
     "breadcrumbs.enabled": false,
     "explorer.confirmDelete": false,
-    "redhat.telemetry.enabled": false,
     "editor.renderWhitespace": "none",
     "git.autofetch": true,
     "editor.multiCursorModifier": "ctrlCmd",
@@ -29,5 +28,7 @@
     "editor.unicodeHighlight.invisibleCharacters": false,
     "workbench.editor.empty.hint": "hidden",
     "window.zoomLevel": 1,
-    "workbench.activityBar.location": "hidden"
+    "workbench.activityBar.location": "hidden",
+    "telemetry.telemetryLevel": "off"
 }
+
