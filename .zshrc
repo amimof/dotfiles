@@ -47,6 +47,8 @@ bindkey '^[[D'  backward-char                                   # Left key
 bindkey '^[[5~' history-beginning-search-backward               # Page up key
 bindkey '^[[6~' history-beginning-search-forward                # Page down key
 bindkey '^w' backward-kill-word                                 # Ctrl+w to delete words
+bindkey '^[[1;9C' forward-word
+bindkey '^[[1;9D' backward-word
 
 # Navigate words with ctrl+arrow keys
 bindkey '^[Oc' forward-word                                     #
@@ -68,6 +70,7 @@ alias gh="cd ~/git && pwd"                                      # git repos home
 alias k="kubectl"                                               # Alias kubectl to k and also add bash-completion for it
 alias kx="kubectx"                                              # Alias kubectx to kx
 alias kn="kubens"                                               # Alias kubens to kn
+alias kc="kubecfg"                                              # Alias kubecfg to kc
 alias diff="diff --color"                                       # Add colors to diff command
 alias ls="ls --color=tty"                                       # Enable ls colors
 alias ll="ls -latrh"
@@ -80,12 +83,13 @@ export EDITOR=vim                                               # Vim is our edi
 export CLICOLOR=1                                               # Add colors to files and directories
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                          # Add colors to files and directories
 export GPG_TTY=$(tty)                                           # Tell gpg agent which TTY we are in
+export COMPLETION_WAITING_DOTS="true"
 
 # Theming section  
 autoload -U compinit colors zcalc
 compinit -d
 colors
-PROMPT='%B%F{blue}%1~%f%b %F{243}%f '
+PROMPT='%F{blue}%1~%f%b %F{green}%f '
 GIT_PROMPT=false
 
 # Stylize the prompt and right prompt with git info
@@ -241,9 +245,12 @@ function mzc_termsupport_preexec {
 if type "kubectl" > /dev/null; then
  source <(kubectl completion zsh)             # kubectl auto completion
 fi
-[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh        # fzf keybindings
-[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh        # fzf completion
-[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # syntax highlighting
+if type "podman" > /dev/null; then
+ source <(podman completion zsh)             # kubectl auto completion
+fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh # fzf key bindings and auto completion
+[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # syntax highlighting
+[ -f ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh # syntax highlighting
 autoload -U add-zsh-hook
 add-zsh-hook precmd mzc_termsupport_precmd
 add-zsh-hook preexec mzc_termsupport_preexec

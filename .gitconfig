@@ -45,10 +45,13 @@
 [user]
 	email = amimof@users.noreply.github.com
 	name = Amir Mofasser
-	signingkey = DC25DD12BDACC23E
+	signingkey = ~/.ssh/keys/amimof@users.noreply.github.com-signing.pub
 
 [commit]
 	gpgsign = true
+
+[gpg]
+    format = ssh
 
 #
 # Add repo specific configuration here, including them if needed.
