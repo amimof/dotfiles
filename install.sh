@@ -40,9 +40,10 @@ install() {
   log "\tvim-plug"
   download ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-  log "\Tmux Plugin Manager (TPM)"
+  log "\ttmux Plugin Manager (TPM)"
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm --quiet
-  exit
+
+  # TODO: Install NeoVim configuration to ~/.config/nvim
 
   info "🤖 Installing dotfiles"
 

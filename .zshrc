@@ -30,16 +30,8 @@ GPG_TTY=$(tty)
 
 ## Keybindings section
 bindkey -e
-bindkey '^[[7~' beginning-of-line                               # Home key
-bindkey '^[[H' beginning-of-line                                # Home key
-if [[ "${terminfo[khome]}" != "" ]]; then
-  bindkey "${terminfo[khome]}" beginning-of-line                # [Home] - Go to beginning of line
-fi
-bindkey '^[[8~' end-of-line                                     # End key
-bindkey '^[[F' end-of-line                                      # End key
-if [[ "${terminfo[kend]}" != "" ]]; then
-  bindkey "${terminfo[kend]}" end-of-line                       # [End] - Go to end of line
-fi
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[4~" end-of-line
 bindkey '^[[2~' overwrite-mode                                  # Insert key
 bindkey '^[[3~' delete-char                                     # Delete key
 bindkey '^[[C'  forward-char                                    # Right key
@@ -74,12 +66,15 @@ alias kc="kubecfg"                                              # Alias kubecfg 
 alias diff="diff --color"                                       # Add colors to diff command
 alias ls="ls --color=tty"                                       # Enable ls colors
 alias ll="ls -latrh"
+alias vim="nvim"                                                # Use NeoVim over Vim
+alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'" # Use bat in preview window
 
 ## Exports
+export TERM=tmux-256color
 export PATH=$PATH:/usr/local/go/bin                             # Puts go into PATH
 export MOZ_GTK_TITLEBAR_DECORATION=client                       # Configure GTK to use client titlebar
 export GTK_THEME=Adwaita:dark                                   # Make GTK windows dark
-export EDITOR=vim                                               # Vim is our editor
+export EDITOR=nvim                                               # NeoVim is our editor
 export CLICOLOR=1                                               # Add colors to files and directories
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                          # Add colors to files and directories
 export GPG_TTY=$(tty)                                           # Tell gpg agent which TTY we are in
@@ -251,6 +246,7 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh # fzf key bindings and auto completion
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # syntax highlighting
 [ -f ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh # syntax highlighting
+[ -f ~/.zsh/swe-holiday-prompt.zsh ] && source ~/.zsh/swe-holiday-prompt.zsh
 autoload -U add-zsh-hook
 add-zsh-hook precmd mzc_termsupport_precmd
 add-zsh-hook preexec mzc_termsupport_preexec
