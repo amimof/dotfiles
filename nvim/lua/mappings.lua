@@ -1,7 +1,7 @@
 -- require "nvchad.mappings"
 local map = vim.keymap.set
-local nomap = vim.keymap.del
-local builtin = require "telescope.builtin"
+-- local nomap = vim.keymap.del
+local builtin = require("telescope.builtin")
 
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -45,7 +45,7 @@ map("n", "<leader>gD", builtin.lsp_type_definitions, { desc = "[G]oto Type [D]ef
 
 -- LSP rename, uses NvChad renamer: NvRenamer
 map("n", "<leader>ra", function()
-  require "nvchad.lsp.renamer"()
+	require("nvchad.lsp.renamer")()
 end, { desc = "LSP NvRenamer" })
 
 -- LSP hover information
@@ -71,27 +71,27 @@ map("v", "<leader>r", '"hy:%s/<C-r>h//g<left><left>', { noremap = true, silent =
 
 -- Buffer manipulation
 map("n", "<leader>x", function()
-  require("nvchad.tabufline").close_buffer()
+	require("nvchad.tabufline").close_buffer()
 end, { desc = "[B]uffer [D]elete" })
 map("n", "<tab>", function()
-  require("nvchad.tabufline").next()
+	require("nvchad.tabufline").next()
 end, { desc = "[B]uffer [N]ext" })
 map("n", "<S-tab>", function()
-  require("nvchad.tabufline").prev()
+	require("nvchad.tabufline").prev()
 end, { desc = "[B]uffer [P]revious" })
 
 -- Fuzzy search current opened buffer, without preview pane
 map("n", "<leader>/", function()
-  builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
+	builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+		winblend = 10,
+		previewer = false,
+	}))
 end, { desc = "[/] Fuzzily search in current buffer" })
 
 -- Fuzzy search all open files (requires ripgrep)
 map("n", "<leader>s/", function()
-  builtin.live_grep {
-    grep_open_files = true,
-    prompt_title = "Live Grep in Open Files",
-  }
+	builtin.live_grep({
+		grep_open_files = true,
+		prompt_title = "Live Grep in Open Files",
+	})
 end, { desc = "[S]earch [/] in Open Files" })
