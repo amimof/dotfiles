@@ -1,5 +1,6 @@
 -- require "nvchad.mappings"
 local map = vim.keymap.set
+local nomap = vim.keymap.del
 local builtin = require "telescope.builtin"
 
 -- better up/down
@@ -40,7 +41,15 @@ map("n", "<leader>gI", builtin.lsp_implementations, { desc = "[G]oto [I]mplement
 -- Jump to the type of the word under your cursor.
 --  Useful when you're not sure what type a variable is and you want to see
 --  the definition of its *type*, not where it was *defined*.
-map("n", "<leader>gD", builtin.lsp_type_definitions, { desc = "Type [D]efinition" })
+map("n", "<leader>gD", builtin.lsp_type_definitions, { desc = "[G]oto Type [D]efinition" })
+
+-- LSP rename, uses NvChad renamer: NvRenamer
+map("n", "<leader>ra", function()
+  require "nvchad.lsp.renamer"()
+end, { desc = "LSP NvRenamer" })
+
+-- LSP hover information
+map("n", "K", vim.lsp.buf.hover, { desc = "LSP hover information" })
 
 -- Search through keymappings with telescope
 map("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
@@ -54,6 +63,8 @@ map("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 map("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 map("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 map("n", "<leader>sl", builtin.lsp_document_symbols, { desc = "[L]SP Document Symbols" })
+
+map("n", "<leader>sH", vim.lsp.buf.signature_help, { desc = "Show signature help" })
 
 -- Replace selection in visual mode
 map("v", "<leader>r", '"hy:%s/<C-r>h//g<left><left>', { noremap = true, silent = false, desc = "[R]eplace" })

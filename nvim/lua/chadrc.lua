@@ -9,16 +9,16 @@ M.ui = {
   telescope = {
     style = "bordered",
   },
-  hl_override = {
-    LspReferenceText = {
-      bg = "black",
-    },
-    LspReferenceRead = {
-      bg = "black",
-    },
-    LspReferenceWrite = {
-      bg = "black",
-    },
-  },
+  -- hl_override = {
+  --   LspReferenceText = {
+  --     bg = "black",
+  --   },
+  --   LspReferenceRead = {
+  --     bg = "black",
+  --   },
+  --   LspReferenceWrite = {
+  --     bg = "black",
+  --   },
+  -- },
 }
 return M

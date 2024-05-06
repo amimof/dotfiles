@@ -134,24 +134,6 @@ return {
       }
     end,
   },
-  -- -- init.lua:
-  -- {
-  --   "nvim-telescope/telescope.nvim",
-  --   dependencies = { "nvim-lua/plenary.nvim" },
-  --   config = function()
-  --     require("telescope").setup {
-  --       defaults = {
-  --         mappings = {
-  --           i = {
-  --             -- unmap default mapping
-  --             ["<leader>sh"] = false,
-  --           },
-  --         },
-  --       },
-  --     }
-  --   end,
-  -- },
-
   -- Markdown preview in the browser
   {
     "iamcco/markdown-preview.nvim",
