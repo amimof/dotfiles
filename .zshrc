@@ -71,7 +71,7 @@ alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {
 
 ## Exports
 export TERM=tmux-256color
-export PATH=$PATH:/usr/local/go/bin                             # Puts go into PATH
+export PATH=$PATH:/usr/local/go/bin:~/go/bin                             # Puts go into PATH
 export MOZ_GTK_TITLEBAR_DECORATION=client                       # Configure GTK to use client titlebar
 export GTK_THEME=Adwaita:dark                                   # Make GTK windows dark
 export EDITOR=nvim                                               # NeoVim is our editor
@@ -247,6 +247,7 @@ fi
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # syntax highlighting
 [ -f ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh # syntax highlighting
 [ -f ~/.zsh/swe-holiday-prompt.zsh ] && source ~/.zsh/swe-holiday-prompt.zsh
+[ -f ~/.zsh/vpn.zsh ] && source ~/.zsh/vpn.zsh
 autoload -U add-zsh-hook
 add-zsh-hook precmd mzc_termsupport_precmd
 add-zsh-hook preexec mzc_termsupport_preexec

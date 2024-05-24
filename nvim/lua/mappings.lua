@@ -95,3 +95,21 @@ map("n", "<leader>s/", function()
 		prompt_title = "Live Grep in Open Files",
 	})
 end, { desc = "[S]earch [/] in Open Files" })
+
+-- Debugging
+map("n", "<leader>dc", "<cmd> DapContinue <CR>", { desc = "[D]ebug [C]ontinue" })
+map("n", "<leader>dt", "<cmd> DapTerminate <CR>", { desc = "[D]ebug [T]erminate" })
+map("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>", { desc = "[D]ebug [B]reakpoint Toggle" })
+map("n", "<leader>di", "<cmd> DapStepInto <CR>", { desc = "[D]ebug Step [I]n" })
+map("n", "<leader>do", "<cmd> DapStepOut <CR>", { desc = "[D]ebug Step [O]ut" })
+map("n", "<leader>dO", "<cmd> DapStepOver <CR>", { desc = "[D]ebug Step [O]ver" })
+
+-- Open debug sidebar
+map("n", "<leader>dus", function()
+	local widgets = require("dap.ui.widgets")
+	local sidebar = widgets.sidebar(widgets.scopes)
+	sidebar.toggle()
+end, { desc = "Open Debug Sidebar" })
+
+map("n", "<leader>dt", require("dap-go").debug_test, { desc = "Debug [T]est" })
+map("n", "<leader>dl", require("dap-go").debug_last_test, { desc = "Debug [L]ast [T]est" })
