@@ -4,7 +4,7 @@ local capabilities = require("nvchad.configs.lspconfig").capabilities
 
 local lspconfig = require("lspconfig")
 local util = require("lspconfig/util")
-local servers = { "html", "gopls" }
+local servers = { "html", "gopls", "yamlls", "lua_ls", "marksman", "tsserver" }
 
 local on_attach = function(client, bufnr)
 	require("nvchad.lsp.signature").setup(client, bufnr)
@@ -18,6 +18,46 @@ for _, lsp in ipairs(servers) do
 		capabilities = capabilities,
 	})
 end
+
+lspconfig.yamlls.setup({
+	on_attach = function(client)
+		if vim.fn.has("nvim-0.10") == 0 then
+			if client.name == "yamlls" then
+				client.server_capabilities.documentFormattingProvider = true
+			end
+		end
+	end,
+	capabilities = {
+		textDocument = {
+			foldingRange = {
+				dynamicRegistration = false,
+				lineFoldingOnly = true,
+			},
+		},
+	},
+	-- lazy-load schemastore when needed
+	on_new_config = function(new_config)
+		new_config.settings.yaml.schemas =
+			vim.tbl_deep_extend("force", new_config.settings.yaml.schemas or {}, require("schemastore").yaml.schemas())
+	end,
+	settings = {
+		redhat = { telemetry = { enabled = false } },
+		yaml = {
+			keyOrdering = false,
+			format = {
+				enable = true,
+			},
+			validate = true,
+			schemaStore = {
+				-- Must disable built-in schemaStore support to use
+				-- schemas from SchemaStore.nvim plugin
+				enable = false,
+				-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+				url = "",
+			},
+		},
+	},
+})
 
 lspconfig.gopls.setup({
 	on_attach = on_attach,
@@ -36,3 +76,45 @@ lspconfig.gopls.setup({
 		},
 	},
 })
+
+lspconfig.lua_ls.setup({
+	settings = {
+		Lua = {
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = {
+					"vim",
+					"require",
+				},
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+})
+
+lspconfig.marksman.setup({})
+local mason_registry = require("mason-registry")
+local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+	.. "/node_modules/@vue/language-server"
+lspconfig.tsserver.setup({
+	init_options = {
+		plugins = {
+			{
+				name = "@vue/typescript-plugin",
+				location = vue_language_server_path,
+				languages = { "vue" },
+			},
+		},
+	},
+	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+})
+lspconfig.volar.setup({})
+-- lspconfig.vuels.setup({
+-- 	filetypes = { "vue" },
+-- })
