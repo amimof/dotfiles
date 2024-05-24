@@ -51,6 +51,12 @@ end, { desc = "LSP NvRenamer" })
 -- LSP hover information
 map("n", "K", vim.lsp.buf.hover, { desc = "LSP hover information" })
 
+-- LSP Code Action
+map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[A]ctions" })
+
+-- LSP Code Lens
+map("n", "<leader>cc", vim.lsp.codelens.run, { desc = "Lens" })
+
 -- Search through keymappings with telescope
 map("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 map("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
@@ -66,8 +72,14 @@ map("n", "<leader>sl", builtin.lsp_document_symbols, { desc = "[L]SP Document Sy
 
 map("n", "<leader>sH", vim.lsp.buf.signature_help, { desc = "Show signature help" })
 
--- Replace selection in visual mode
-map("v", "<leader>r", '"hy:%s/<C-r>h//g<left><left>', { noremap = true, silent = false, desc = "[R]eplace" })
+-- Replace all occurenses of word under cursor
+-- map("v", "<leader>cr", '"hy:%s/<C-r>h//g<left><left>', { noremap = true, silent = false, desc = "[R]eplace Selection" })
+map(
+	"n",
+	"<leader>cr",
+	'"hy:%s/<C-r><C-w>/<C-r><C-w>/g<left><left>',
+	{ noremap = true, silent = false, desc = "[R]eplace Word" }
+)
 
 -- Buffer manipulation
 map("n", "<leader>x", function()

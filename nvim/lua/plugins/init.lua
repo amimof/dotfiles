@@ -36,6 +36,12 @@ return {
 				"lua-language-server",
 				"stylua",
 				"gopls",
+				"yaml-language-server",
+				"markdownlint",
+				"marksman",
+				"typescript-language-server",
+				"prettier",
+				"vue-language-server",
 			},
 		},
 	},
@@ -51,10 +57,20 @@ return {
 				"html",
 				"css",
 				"go",
+				"yaml",
+				"markdown",
+				"markdown_inline",
+				"vue",
+				"javascript",
+				"typescript",
 			},
 		},
 	},
-
+	{
+		"b0o/SchemaStore.nvim",
+		lazy = true,
+		version = false, -- last release is way too old
+	},
 	-- File explorer
 	{
 		"nvim-tree/nvim-tree.lua",
@@ -131,6 +147,7 @@ return {
 				["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
 				["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
 				["<leader>b"] = { name = "[B]uffer", _ = "which_key_ignore" },
+				["<leader>g"] = { name = "[G]oto", _ = "which_key_ignore" },
 			})
 		end,
 	},
@@ -143,6 +160,8 @@ return {
 			vim.fn["mkdp#util#install"]()
 		end,
 	},
+
+	-- Go debugging
 	{
 		"mfussenegger/nvim-dap",
 	},
@@ -161,6 +180,27 @@ return {
 					},
 				},
 			})
+		end,
+	},
+
+	-- Greeter
+	{
+		"goolord/alpha-nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("alpha").setup(require("alpha.themes.startify").config)
+		end,
+	},
+
+	-- Multi-cursor
+	{
+		"mg979/vim-visual-multi",
+		branch = "master",
+		lazy = false,
+		init = function()
+			vim.g.VM_maps = {
+				["Find Under"] = "<C-l>",
+			}
 		end,
 	},
 }
