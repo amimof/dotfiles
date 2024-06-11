@@ -80,12 +80,16 @@ export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                          # Add colors to 
 export GPG_TTY=$(tty)                                           # Tell gpg agent which TTY we are in
 export COMPLETION_WAITING_DOTS="true"
 
+# Experimental, uses fzf to list history
+ export FZF_TMUX_OPTS="-p 80%,50%"
+ export FZF_CTRL_R_OPTS="--reverse --preview 'echo {}' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'"
+
 # Theming section  
 autoload -U compinit colors zcalc
 compinit -d
 colors
 PROMPT='%F{blue}%1~%f%b %F{green}%f '
-GIT_PROMPT=false
+GIT_PROMPT=true
 
 # Stylize the prompt and right prompt with git info
 if [ "$GIT_PROMPT" = true ] ; then
@@ -248,6 +252,7 @@ fi
 [ -f ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh # syntax highlighting
 [ -f ~/.zsh/swe-holiday-prompt.zsh ] && source ~/.zsh/swe-holiday-prompt.zsh
 [ -f ~/.zsh/vpn.zsh ] && source ~/.zsh/vpn.zsh
+
 autoload -U add-zsh-hook
 add-zsh-hook precmd mzc_termsupport_precmd
 add-zsh-hook preexec mzc_termsupport_preexec
