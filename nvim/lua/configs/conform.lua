@@ -1,11 +1,13 @@
 local options = {
 	formatters_by_ft = {
-		lua = { "stylua" },
-		go = { "goimports", "gofmt" },
+		-- lua = { "stylua" },
+		go = { "goimports", "gofumpt" },
 		css = { "prettier" },
 		html = { "prettier" },
 		javascript = { "prettier" },
 		typescript = { "prettier" },
+		["markdown"] = { { "prettierd", "prettier" }, "markdownlint", "markdown-toc" },
+		["markdown.mdx"] = { { "prettierd", "prettier" }, "markdownlint", "markdown-toc" },
 	},
 
 	format_on_save = {

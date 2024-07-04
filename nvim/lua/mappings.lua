@@ -43,6 +43,13 @@ map("n", "<leader>gI", builtin.lsp_implementations, { desc = "[G]oto [I]mplement
 --  the definition of its *type*, not where it was *defined*.
 map("n", "<leader>gD", builtin.lsp_type_definitions, { desc = "[G]oto Type [D]efinition" })
 
+-- Show LSP line diagnostics float
+map("n", "<leader>gl", vim.diagnostic.open_float, { desc = "[G]oto [L]ine Diagnostics" })
+
+-- Displays a popup showing the current function and it's signature
+map("n", "<leader>gk", vim.lsp.buf.signature_help, { desc = "[G]oto Signature Help" })
+map("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "[G]oto Signature Help" })
+
 -- LSP rename, uses NvChad renamer: NvRenamer
 map("n", "<leader>ra", function()
 	require("nvchad.lsp.renamer")()
@@ -52,10 +59,11 @@ end, { desc = "LSP NvRenamer" })
 map("n", "K", vim.lsp.buf.hover, { desc = "LSP hover information" })
 
 -- LSP Code Action
-map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[A]ctions" })
+map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ctions" })
 
 -- LSP Code Lens
-map("n", "<leader>cc", vim.lsp.codelens.run, { desc = "Lens" })
+map("n", "<leader>cc", vim.lsp.codelens.run, { desc = "Run Codelens" })
+map("n", "<leader>cC", vim.lsp.codelens.refresh, { desc = "Refresh & Display Codelens" })
 
 -- Search through keymappings with telescope
 map("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
@@ -69,8 +77,7 @@ map("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 map("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 map("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 map("n", "<leader>sl", builtin.lsp_document_symbols, { desc = "[L]SP Document Symbols" })
-
-map("n", "<leader>sH", vim.lsp.buf.signature_help, { desc = "Show signature help" })
+map("n", "<leader>sc", builtin.git_commits, { desc = "[S]earch Git [C]ommits" })
 
 -- Replace all occurenses of word under cursor
 -- map("v", "<leader>cr", '"hy:%s/<C-r>h//g<left><left>', { noremap = true, silent = false, desc = "[R]eplace Selection" })
@@ -125,3 +132,12 @@ end, { desc = "Open Debug Sidebar" })
 
 map("n", "<leader>dt", require("dap-go").debug_test, { desc = "Debug [T]est" })
 map("n", "<leader>dl", require("dap-go").debug_last_test, { desc = "Debug [L]ast [T]est" })
+
+-- URL handling
+if vim.fn.has("mac") == 1 then
+	map("", "gx", '<Cmd>call jobstart(["open", expand("<cfile>")], {"detach": v:true})<CR>', { desc = "Open" })
+elseif vim.fn.has("unix") == 1 then
+	map("", "gx", '<Cmd>call jobstart(["xdg-open", expand("<cfile>")], {"detach": v:true})<CR>', { desc = "Open" })
+else
+	map("", "gx", '<Cmd>lua print("Error: gx is not supported on this OS!")<CR>', { desc = "Open" })
+end
