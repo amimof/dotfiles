@@ -8,6 +8,9 @@ local M = {
     telescope = {
       style = "bordered",
     },
+    -- nvdash = {
+    --   load_on_startup = true
+    -- }
     -- hl_override = {
     -- 	["@scope"] = {
     -- 		fg = "red",
