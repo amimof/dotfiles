@@ -29,6 +29,7 @@ LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                                 # Add colors to 
 GPG_TTY=$(tty)
 
 ## Keybindings section
+bindkey -v                                                      # Enable vi mode
 bindkey -e
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
@@ -79,19 +80,33 @@ export CLICOLOR=1                                               # Add colors to 
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                          # Add colors to files and directories
 export GPG_TTY=$(tty)                                           # Tell gpg agent which TTY we are in
 export COMPLETION_WAITING_DOTS="true"
-
+export FZF_DEFAULT_OPTS='
+  --height 40%
+  --ansi
+  --reverse
+  --color hl:#50FA7B
+  --color hl+:#FFB86C
+  --color info:#BD93F9
+  --color prompt:#50FA7B
+  --color pointer:#FF79C6
+  --color marker:#FF5555
+  --color spinner:#8BE9FD
+  --color header:#8BE9FD
+'
 # Experimental, uses fzf to list history
- export FZF_TMUX_OPTS="-p 80%,50%"
- export FZF_CTRL_R_OPTS="--reverse --preview 'echo {}' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'"
+export FZF_TMUX_OPTS="-p 80%,50%"
+export FZF_CTRL_R_OPTS="--preview 'echo {} | bat --color=always --style=numbers' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'"
 
 # Theming section  
 autoload -U compinit colors zcalc
 compinit -d
 colors
-PROMPT='%F{blue}%1~%f%b %F{green}%f '
+PROMPT=' %F{blue}%1~ %B%f%F{green}%f%b '
 GIT_PROMPT=true
+precmd() { print "" }  # Print empty line before prompt is rendered
 
 # Stylize the prompt and right prompt with git info
+# https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#Configuration-3
 if [ "$GIT_PROMPT" = true ] ; then
   autoload -Uz vcs_info
   precmd_vcs_info() { vcs_info }
@@ -100,11 +115,11 @@ if [ "$GIT_PROMPT" = true ] ; then
   RPROMPT=\$vcs_info_msg_0_
   zstyle ':vcs_info:*' enable git
   zstyle ':vcs_info:*' check-for-changes true
-  zstyle ':vcs_info:*' unstagedstr '!'
-  zstyle ':vcs_info:*' stagedstr '+'
+  zstyle ':vcs_info:*' unstagedstr '%{%F{yellow}!%}'
+  zstyle ':vcs_info:*' stagedstr ''
   zstyle ':vcs_info:git*+set-message:*' hooks untracked
-  zstyle ':vcs_info:git:*' formats '%F{red}%m%f%F{yellow}%u%f%F{green}%c%f %F{199}%b%f'
-  zstyle ':vcs_info:git:*' actionformats '%F{cyan}%a%f %F{red}%m%f%F{yellow}%u%f%F{green}%c%f %F{199}%b%f'
+  zstyle ':vcs_info:git:*' formats ' %F{white}%b%f %F{red}%m%f%F{red}%u%f%F{green}%c%f'
+  zstyle ':vcs_info:git:*' actionformats ' %F{white}%b%f %F{cyan}%a%f %F{yellow}%m%f%F{red}%u%f%F{green}%c%f'
 
   # Add support for untracked status
   +vi-untracked() {
@@ -252,6 +267,7 @@ fi
 [ -f ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh # syntax highlighting
 [ -f ~/.zsh/swe-holiday-prompt.zsh ] && source ~/.zsh/swe-holiday-prompt.zsh
 [ -f ~/.zsh/vpn.zsh ] && source ~/.zsh/vpn.zsh
+[ -f ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh ] && source ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh
 
 autoload -U add-zsh-hook
 add-zsh-hook precmd mzc_termsupport_precmd
