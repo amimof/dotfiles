@@ -199,20 +199,6 @@ return {
     "nvimdev/dashboard-nvim",
     lazy = false, -- As https://github.com/nvimdev/dashboard-nvim/pull/450, dashboard-nvim shouldn't be lazy-loaded to properly handle stdin.
     opts = function()
-      local logo = [[
-               ▄ ▄
-           ▄   ▄▄▄     ▄ ▄▄▄ ▄ ▄
-           █ ▄ █▄█ ▄▄▄ █ █▄█ █ █
-        ▄▄ █▄█▄▄▄█ █▄█▄█▄▄█▄▄█ █
-      ▄ █▄▄█ ▄ ▄▄ ▄█ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-      █▄▄▄▄ ▄▄▄ █ ▄ ▄▄▄ ▄ ▄▄▄ ▄ ▄ █ ▄
-    ▄ █ █▄█ █▄█ █ █ █▄█ █ █▄█ ▄▄▄ █ █
-    █▄█ ▄ █▄▄█▄▄█ █ ▄▄█ █ ▄ █ █▄█▄█ █
-        █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ █▄█▄▄▄█
-    ]]
-
-      logo = string.rep("\n", 8) .. logo .. "\n\n"
-
       local builtin = require("telescope.builtin")
 
       local opts = {
@@ -228,7 +214,7 @@ return {
             enable = false
           },
           -- header = vim.split(logo, "\n"),
-          project = { enable = true, limit = 8, icon = '󰘬', label = '', action = 'Telescope find_files cwd=/Users/amir/git/' },
+          -- project = { enable = true, limit = 6, icon = '󰘬', label = '', action = 'Telescope find_files cwd=/Users/amir/git' },
           -- stylua: ignore
           shortcut = {
             { action = builtin.find_files, desc = " Find File", icon = " ", key = "f", icon_hl = "@variable" },
@@ -324,12 +310,12 @@ return {
     cmd = "Trouble",
     keys = {
       {
-        "<leader>xx",
+        "<leader>cx",
         "<cmd>Trouble diagnostics toggle<cr>",
         desc = "Diagnostics (Trouble)",
       },
       {
-        "<leader>xX",
+        "<leader>cX",
         "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
         desc = "Buffer Diagnostics (Trouble)",
       },
@@ -344,12 +330,12 @@ return {
         desc = "LSP Definitions / references / ... (Trouble)",
       },
       {
-        "<leader>xL",
+        "<leader>cL",
         "<cmd>Trouble loclist toggle<cr>",
         desc = "Location List (Trouble)",
       },
       {
-        "<leader>xQ",
+        "<leader>cQ",
         "<cmd>Trouble qflist toggle<cr>",
         desc = "Quickfix List (Trouble)",
       },

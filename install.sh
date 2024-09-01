@@ -5,7 +5,7 @@
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
-CMDS=("git" "zsh" "tmux" "kubectl" "kubectx" "kubens" "vim" "curl" "gitmux" "fzf") 
+CMDS=("git" "zsh" "tmux" "kubectl" "kubectx" "kubens" "vim" "curl" "gitmux" "fzf" "eza") 
 
 warn() {
   echo -e "🤯 ${YELLOW}${1}${NC}"
@@ -61,6 +61,14 @@ install() {
 
   log "\t.gitmux.conf"
   download ~/.gitmux.conf https://raw.githubusercontent.com/amimof/dotfiles/master/.gitmux.conf
+
+  info "\t 🌈 Installing Zsh plugins"
+
+  log "\t fzf-tab"
+  git clone https://github.com/Aloxaf/fzf-tab ~/.zsh/fzf-tab
+
+  log "\t catppuccin-zsh-syntax-highlighting"
+  git clone https://github.com/catppuccin/zsh-syntax-highlighting.git ~/.zsh/catppuccin-zsh-syntax-highlighting.zsh
 
   info "\n💩 Done! Time to restart your shell\n"
 

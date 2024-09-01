@@ -27,7 +27,8 @@ map("n", "<C-b>", "<Cmd>NvimTreeToggle<CR>")
 map("n", "<leader>gd", builtin.lsp_definitions, { desc = "[G]oto [D]efinition" })
 map("n", "<leader>gr", builtin.lsp_references, { desc = "[G]oto [R]eferences" })
 map("n", "<leader>gI", builtin.lsp_implementations, { desc = "[G]oto [I]mplementation" })
-map("n", "<leader>gD", builtin.lsp_type_definitions, { desc = "[G]oto Type [D]efinition" })
+map("n", "<leader>gy", builtin.lsp_type_definitions, { desc = "[G]oto T[y]pe Definition" })
+map("n", "<leader>gD", vim.lsp.buf.declaration, { desc = "[G]oto [D]eclaration" })
 
 -- LSP rename, uses NvChad renamer: NvRenamer
 map("n", "<leader>ra", function()
@@ -38,7 +39,7 @@ end, { desc = "LSP NvRenamer" })
 map("n", "K", vim.lsp.buf.hover, { desc = "LSP hover information" })
 
 -- LSP Function Signature Help
-map({ "n", "i" }, "<C-V>", vim.lsp.buf.signature_help, { desc = "[G]oto Signature Help" })
+map({ "n", "i" }, "<C-V>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
 
 -- LSP Code Action
 map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ctions" })
@@ -54,7 +55,8 @@ map("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
 map("n", "<leader>st", builtin.builtin, { desc = "[S]earch [T]elescope" })
 map("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
 map("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
-map("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
+map("n", "<leader>sd", function() builtin.diagnostics { wrap_results = true, line_width = "full" } end,
+  { desc = "[S]earch [D]iagnostics" })
 map("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 map("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 map("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
