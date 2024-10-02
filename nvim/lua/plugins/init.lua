@@ -32,19 +32,19 @@ return {
   {
     "williamboman/mason.nvim",
     opts = {
-      ensure_installed = {
-        "gopls",
-        "gofumpt",
-        "goimports",
-        "lua-language-server",
-        "stylua",
-        "yaml-language-server",
-        "markdownlint",
-        "marksman",
-        "typescript-language-server",
-        "prettier",
-        "vue-language-server",
-      },
+      -- ensure_installed = {
+      --   "gopls",
+      --   "gofumpt",
+      --   "goimports",
+      --   "lua-language-server",
+      --   "stylua",
+      --   "yaml-language-server",
+      --   "markdownlint",
+      --   "marksman",
+      --   "typescript-language-server",
+      --   "prettier",
+      --   "vue-language-server",
+      -- },
     },
   },
 
@@ -88,7 +88,7 @@ return {
       require("nvim-tree").setup({
         update_focused_file = {
           enable = true,
-          update_root = true,
+          update_root = false,
           ignore_list = {},
         },
         filters = {
@@ -172,26 +172,65 @@ return {
     end,
   },
 
-  -- Go debugging
-  -- {
-  --   "mfussenegger/nvim-dap",
-  -- },
+  -- Debugging
   {
-    "leoluz/nvim-dap-go",
-    ft = "go",
-    dependencies = "mfussenegger/nvim-dap",
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "leoluz/nvim-dap-go",
+      "rcarriga/nvim-dap-ui",
+      "leoluz/nvim-dap-go",
+      "theHamsta/nvim-dap-virtual-text",
+      "nvim-neotest/nvim-nio",
+    },
     config = function()
-      require("dap-go").setup({
+      local dap = require "dap"
+      local ui = require "dapui"
+      require('dap-go').setup({
         dap_configurations = {
           {
             type = "go",
-            name = "Attach remote",
-            mode = "remote",
-            request = "attach",
+            name = "Hello Attach remote",
+            request = "launch",
+            program = "${file}"
           },
         },
+
       })
-    end,
+      require("dapui").setup()
+
+
+      vim.keymap.set("n", "<space>db", dap.toggle_breakpoint, { desc = "[D]ebug Toggle [B]reakpoint" })
+
+      -- Eval var under cursor
+      vim.keymap.set("n", "<space>?", function()
+        require("dapui").eval(nil, { enter = true })
+      end)
+
+
+      vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
+      vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', numhl = '' })
+
+      vim.keymap.set("n", "<F1>", dap.continue, { desc = "DAP Continue" })
+      vim.keymap.set("n", "<F2>", dap.step_into, { desc = "DAP Step Into" })
+      vim.keymap.set("n", "<F3>", dap.step_over, { desc = "DAP Step Over" })
+      vim.keymap.set("n", "<F4>", dap.step_out, { desc = "DAP Step Out" })
+      vim.keymap.set("n", "<F5>", dap.step_back, { desc = "DAP Step Back" })
+      vim.keymap.set("n", "<F6>", dap.restart, { desc = "DAP Restart" })
+      vim.keymap.set("n", "<F7>", dap.terminate, { desc = "DAP Termiante" })
+
+      dap.listeners.before.attach.dapui_config = function()
+        ui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        ui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        ui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        ui.close()
+      end
+    end
   },
 
   -- Greeter
@@ -210,6 +249,28 @@ return {
           statusline = false,
         },
         config = {
+          header = {
+            "",
+            "⢰⣶⣶⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣶⣶⣶⣶⣶⣶",
+            "⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿",
+            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
+            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
+            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
+            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⢰⣶⣶⣶⠀⠀⠀⢰⣶⣶⣶⡆⠀⣿⣿⣿",
+            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⢸⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⡇⠀⣿⣿⣿",
+            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
+            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
+            "⢸⣿⣿⣿⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣶⣶⣶⣿⣿⣿",
+            "⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿",
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⠀⠀⠀",
+            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⡀⠀⠀",
+            "⠀⠀⠀⣸⣿⣿⣿⠇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠘⣿⣿⣿⣇⠀⠀",
+            "⢠⣤⣶⣿⣿⣿⡟⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠹⣿⣿⣿⣶⣤",
+            "⢸⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠀⠙⠿⣿⣿⣿",
+            "",
+            "",
+          },
           week_header = {
             enable = false
           },
@@ -234,6 +295,44 @@ return {
           end,
         },
       }
+
+      -- General
+      -- DashboardHeader DashboardFooter
+      -- -- Hyper theme
+      -- DashboardProjectTitle DashboardProjectTitleIcon DashboardProjectIcon
+      -- DashboardMruTitle DashboardMruIcon DashboardFiles DashboardShortCutIcon
+      -- -- Doome theme
+      -- DashboardDesc DashboardKey DashboardIcon DashboardShortCut
+
+
+      -- Setup highlights
+      vim.cmd([[
+        :hi DashboardProjectTitle guifg=#a6e3a1
+        :hi DashboardMruTitle guifg=#a6e3a1
+        ]])
+
+      vim.defer_fn(
+        function()
+          vim.api.nvim_create_autocmd(
+            'BufDelete',
+            {
+              group    = vim.api.nvim_create_augroup('open-dashboard-after-last-buffer-close', { clear = true }),
+              callback = function(event)
+                for buf = 1, vim.fn.bufnr('$') do
+                  if buf ~= event.buf and vim.fn.buflisted(buf) == 1 then
+                    if vim.api.nvim_buf_get_name(buf) ~= '' and vim.bo[buf].filetype ~= 'dashboard' then
+                      return
+                    end
+                  end
+                end
+
+                vim.cmd('Dashboard')
+              end,
+            }
+          )
+        end,
+        0
+      )
 
       return opts
     end,
@@ -303,42 +402,30 @@ return {
     },
   },
 
-  -- Pretty code diagnostics plugin
+  -- Highlight TODOs in code
   {
-    "folke/trouble.nvim",
-    opts = {}, -- for default options, refer to the configuration section for custom setup.
-    cmd = "Trouble",
-    keys = {
-      {
-        "<leader>cx",
-        "<cmd>Trouble diagnostics toggle<cr>",
-        desc = "Diagnostics (Trouble)",
-      },
-      {
-        "<leader>cX",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Buffer Diagnostics (Trouble)",
-      },
-      {
-        "<leader>cs",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
-        desc = "Symbols (Trouble)",
-      },
-      {
-        "<leader>cl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
-      },
-      {
-        "<leader>cL",
-        "<cmd>Trouble loclist toggle<cr>",
-        desc = "Location List (Trouble)",
-      },
-      {
-        "<leader>cQ",
-        "<cmd>Trouble qflist toggle<cr>",
-        desc = "Quickfix List (Trouble)",
-      },
-    },
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = "BufEnter",
+    opts = {},
+  },
+
+  -- Multicursor
+  {
+    "jake-stewart/multicursor.nvim",
+    branch = "1.0",
+    config = function()
+      local mc = require("multicursor-nvim")
+      mc.setup() -- Add a cursor and jump to the next word under cursor.
+      vim.keymap.set({ "n", "v" }, "<c-n>", function() mc.addCursor("*") end)
+
+      vim.keymap.set({ "n" }, "<m-j>", function() mc.addCursor("j") end, { desc = "Add cursor downwards" })
+      vim.keymap.set({ "n" }, "<m-k>", function() mc.addCursor("k") end, { desc = "Add cursor upwards" })
+      vim.api.nvim_set_hl(0, "MultiCursorCursor", { link = "Cursor" })
+      vim.api.nvim_set_hl(0, "MultiCursorVisual", { link = "Visual" })
+      vim.api.nvim_set_hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
+      vim.api.nvim_set_hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
+    end
   }
+
 }

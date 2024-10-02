@@ -20,6 +20,9 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle ':completion:*' menu select                              # Menu select on double-tab
 zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'       # tab-completion case sensitive
+zstyle ':completion:*:git-checkout:*' sort false                # disable sort when completing `git checkout`
+zstyle ':completion:*:descriptions' format '[%d]'
+
 HISTFILE=~/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
@@ -68,7 +71,13 @@ alias diff="diff --color"                                       # Add colors to 
 alias ls="ls --color=tty"                                       # Enable ls colors
 alias ll="ls -latrh"
 alias vim="nvim"                                                # Use NeoVim over Vim
-alias fzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'" # Use bat in preview window
+alias ls="eza --git --icons=always --hyperlink"
+alias cat="bat"
+
+# Completion
+autoload -U compinit colors zcalc
+compinit -d
+colors
 
 ## Exports
 export TERM=tmux-256color
@@ -80,28 +89,20 @@ export CLICOLOR=1                                               # Add colors to 
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                          # Add colors to files and directories
 export GPG_TTY=$(tty)                                           # Tell gpg agent which TTY we are in
 export COMPLETION_WAITING_DOTS="true"
-export FZF_DEFAULT_OPTS='
-  --height 40%
-  --ansi
-  --reverse
-  --color hl:#50FA7B
-  --color hl+:#FFB86C
-  --color info:#BD93F9
-  --color prompt:#50FA7B
-  --color pointer:#FF79C6
-  --color marker:#FF5555
-  --color spinner:#8BE9FD
-  --color header:#8BE9FD
-'
-# Experimental, uses fzf to list history
-export FZF_TMUX_OPTS="-p 80%,50%"
-export FZF_CTRL_R_OPTS="--preview 'echo {} | bat --color=always --style=numbers' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'"
 
-# Theming section  
-autoload -U compinit colors zcalc
-compinit -d
-colors
-PROMPT=' %F{blue}%1~ %B%f%F{green}%f%b '
+# FZF config
+export FZF_TMUX=0
+export FZF_DEFAULT_COMMAND='fd . --hidden --color always'
+export FZF_DEFAULT_OPTS='
+  --reverse
+  --border rounded
+  --color dark
+'
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'"
+export FZF_CTRL_T_OPTS="--preview '([[ -d {} ]] && eza -l --color=always {} || bat --style=numbers --color=always --line-range=:500 {}) 2> /dev/null | head -200'"
+
+# Prompt
+PROMPT='%F{blue}%1~ %B%f%F{green}%f%b '
 GIT_PROMPT=true
 precmd() { print "" }  # Print empty line before prompt is rendered
 
@@ -263,16 +264,13 @@ if type "podman" > /dev/null; then
  source <(podman completion zsh)             # kubectl auto completion
 fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh # fzf key bindings and auto completion
+# [ -f ~/.zsh/fzf-tab/fzf-tab.plugin.zsh ] && source ~/.zsh/fzf-tab/fzf-tab.plugin.zsh
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # syntax highlighting
-[ -f ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh # syntax highlighting
+[ -f ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh # syntax highlighting
+[ -f ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh ] && source ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh
 [ -f ~/.zsh/swe-holiday-prompt.zsh ] && source ~/.zsh/swe-holiday-prompt.zsh
 [ -f ~/.zsh/vpn.zsh ] && source ~/.zsh/vpn.zsh
-[ -f ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh ] && source ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh
 
 autoload -U add-zsh-hook
 add-zsh-hook precmd mzc_termsupport_precmd
 add-zsh-hook preexec mzc_termsupport_preexec
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
