@@ -34,6 +34,7 @@ GPG_TTY=$(tty)
 ## Keybindings section
 bindkey -v                                                      # Enable vi mode
 bindkey -e
+bindkey "^[" vi-cmd-mode                                        # Bind Esc to vi cmd mode
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
 bindkey '^[[2~' overwrite-mode                                  # Insert key
@@ -72,7 +73,7 @@ alias ls="ls --color=tty"                                       # Enable ls colo
 alias ll="ls -latrh"
 alias vim="nvim"                                                # Use NeoVim over Vim
 alias ls="eza --git --icons=always --hyperlink"
-alias cat="bat"
+alias cat="bat --theme=base16"
 
 # Completion
 autoload -U compinit colors zcalc
@@ -80,6 +81,7 @@ compinit -d
 colors
 
 ## Exports
+export KEYTIMEOUT=1                                             # Reduce the delay to enter vi-mode
 export TERM=tmux-256color
 export PATH=$PATH:/usr/local/go/bin:~/go/bin                             # Puts go into PATH
 export MOZ_GTK_TITLEBAR_DECORATION=client                       # Configure GTK to use client titlebar
@@ -89,6 +91,7 @@ export CLICOLOR=1                                               # Add colors to 
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                          # Add colors to files and directories
 export GPG_TTY=$(tty)                                           # Tell gpg agent which TTY we are in
 export COMPLETION_WAITING_DOTS="true"
+# export PURE_PROMPT_SYMBOL="➜"
 
 # FZF config
 export FZF_TMUX=0
@@ -102,9 +105,9 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap:hidden:
 export FZF_CTRL_T_OPTS="--preview '([[ -d {} ]] && eza -l --color=always {} || bat --style=numbers --color=always --line-range=:500 {}) 2> /dev/null | head -200'"
 
 # Prompt
-PROMPT='%F{blue}%1~ %B%f%F{green}%f%b '
-GIT_PROMPT=true
-precmd() { print "" }  # Print empty line before prompt is rendered
+# PROMPT='%F{blue}%1~ %B%f%F{green}%f%b '
+GIT_PROMPT=false
+#precmd() { print "" }  # Print empty line before prompt is rendered
 
 # Stylize the prompt and right prompt with git info
 # https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#Configuration-3
@@ -268,9 +271,33 @@ fi
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # syntax highlighting
 [ -f ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh # syntax highlighting
 [ -f ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh ] && source ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh
-[ -f ~/.zsh/swe-holiday-prompt.zsh ] && source ~/.zsh/swe-holiday-prompt.zsh
+# [ -f ~/.zsh/swe-holiday-prompt.zsh ] && source ~/.zsh/swe-holiday-prompt.zsh
 [ -f ~/.zsh/vpn.zsh ] && source ~/.zsh/vpn.zsh
 
 autoload -U add-zsh-hook
 add-zsh-hook precmd mzc_termsupport_precmd
 add-zsh-hook preexec mzc_termsupport_preexec
+
+eval "$(starship init zsh)"
+
+# Function to add clipboard entries to history and fuzzy-find them
+tmux_fuzzy_clipboard() {
+  # Define a file to store clipboard history
+  local clipboard_history_file="$HOME/.tmux_clipboard_history"
+
+  # Append the current clipboard content to the history file (if not empty)
+  local current_clipboard=$(pbpaste)
+  if [[ -n "$current_clipboard" ]]; then
+    echo "$current_clipboard" >> "$clipboard_history_file"
+  fi
+
+  # Use `fzf` to fuzzy-find through the clipboard history
+  local selected=$(tac "$clipboard_history_file" | fzf --height 40% --reverse --preview "echo {}")
+
+  # If a selection is made, copy it to the clipboard and paste into Tmux
+  if [[ -n "$selected" ]]; then
+    echo "$selected" | pbcopy
+    tmux set-buffer "$selected"  # Set it in Tmux buffer
+    tmux paste-buffer             # Paste it in the current Tmux pane
+  fi
+}

@@ -3,11 +3,97 @@ return {
   -- Auto-completion
   {
     "hrsh7th/nvim-cmp",
-    opts = {
-      completion = {
-        autocomplete = false,
-      },
+    dependencies = {
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-nvim-lsp",
+      "rafamadriz/friendly-snippets",
     },
+    opts = function(_, opts)
+      local luasnip = require('luasnip')
+
+      opts.preselect = "none"
+
+      opts.completion = {
+        autocomplete = false,
+        completeopt = "menu,menuone,preview"
+      }
+
+      opts.snippet = {
+        expand = function(args)
+          luasnip.lsp_expand(args.body)
+        end
+      }
+
+      opts.sources = {
+        { name = 'nvim_lsp' },
+        { name = 'path' },
+        { name = 'luasnip' },
+      }
+
+      --
+      -- -- comparators
+      -- local lspkind_comparator = function(conf)
+      --   local lsp_types = require("cmp.types").lsp
+      --   return function(entry1, entry2)
+      --     if entry1.source.name ~= "nvim_lsp" then
+      --       if entry2.source.name == "nvim_lsp" then
+      --         return false
+      --       else
+      --         return nil
+      --       end
+      --     end
+      --     local kind1 = lsp_types.CompletionItemKind[entry1:get_kind()]
+      --     local kind2 = lsp_types.CompletionItemKind[entry2:get_kind()]
+      --
+      --     local priority1 = conf.kind_priority[kind1] or 0
+      --     local priority2 = conf.kind_priority[kind2] or 0
+      --     if priority1 == priority2 then
+      --       return nil
+      --     end
+      --     return priority2 < priority1
+      --   end
+      -- end
+      -- --
+      -- local label_comparator = function(entry1, entry2)
+      --   return entry1.completion_item.label < entry2.completion_item.label
+      -- end
+      -- opts.sorting = {
+      --   priority_weight = 1,
+      --   comparators = {
+      --     lspkind_comparator({
+      --       kind_priority = {
+      --         Field = 11,
+      --         Property = 11,
+      --         Constant = 10,
+      --         Enum = 10,
+      --         EnumMember = 10,
+      --         Event = 10,
+      --         Function = 10,
+      --         Method = 10,
+      --         Operator = 10,
+      --         Reference = 10,
+      --         Struct = 10,
+      --         Variable = 9,
+      --         File = 8,
+      --         Folder = 8,
+      --
+      --         Class = 5,
+      --         Color = 5,
+      --         Module = 5,
+      --         Keyword = 2,
+      --         Constructor = 1,
+      --         Interface = 1,
+      --         Snippet = 0,
+      --         Text = 1,
+      --         TypeParameter = 1,
+      --         Unit = 1,
+      --         Value = 1,
+      --       },
+      --     }),
+      --     label_comparator,
+      --   },
+      -- }
+    end,
   },
 
   -- Formatting
@@ -31,31 +117,18 @@ return {
   -- Package manager for LSP servers
   {
     "williamboman/mason.nvim",
-    opts = {
-      -- ensure_installed = {
-      --   "gopls",
-      --   "gofumpt",
-      --   "goimports",
-      --   "lua-language-server",
-      --   "stylua",
-      --   "yaml-language-server",
-      --   "markdownlint",
-      --   "marksman",
-      --   "typescript-language-server",
-      --   "prettier",
-      --   "vue-language-server",
-      -- },
-    },
   },
 
   -- Syntax highlighting
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
+      auto_install = true,
       ensure_installed = {
         "vim",
-        "lua",
         "vimdoc",
+        "lua",
+        "luadoc",
         "html",
         "css",
         "go",
@@ -68,6 +141,8 @@ return {
         "vue",
         "javascript",
         "typescript",
+        "proto",
+        "bash",
       },
     },
   },
@@ -104,13 +179,13 @@ return {
             git_placement = "signcolumn",
             glyphs = {
               git = {
-                untracked = "┃",
                 unstaged = "┃",
                 staged = "┃",
                 unmerged = "┃",
                 renamed = "┃",
+                untracked = "┃",
                 deleted = "┃",
-                ignored = "",
+                ignored = " ",
               },
             },
           },
@@ -234,109 +309,109 @@ return {
   },
 
   -- Greeter
-  {
-    "nvimdev/dashboard-nvim",
-    lazy = false, -- As https://github.com/nvimdev/dashboard-nvim/pull/450, dashboard-nvim shouldn't be lazy-loaded to properly handle stdin.
-    opts = function()
-      local builtin = require("telescope.builtin")
-
-      local opts = {
-        theme = "hyper",
-        change_to_vcs_root = true,
-        hide = {
-          -- this is taken care of by lualine
-          -- enabling this messes up the actual laststatus setting after loading a file
-          statusline = false,
-        },
-        config = {
-          header = {
-            "",
-            "⢰⣶⣶⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣶⣶⣶⣶⣶⣶",
-            "⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿",
-            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
-            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
-            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
-            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⢰⣶⣶⣶⠀⠀⠀⢰⣶⣶⣶⡆⠀⣿⣿⣿",
-            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⢸⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⡇⠀⣿⣿⣿",
-            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
-            "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
-            "⢸⣿⣿⣿⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣶⣶⣶⣿⣿⣿",
-            "⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿",
-            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⠀⠀⠀",
-            "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⡀⠀⠀",
-            "⠀⠀⠀⣸⣿⣿⣿⠇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠘⣿⣿⣿⣇⠀⠀",
-            "⢠⣤⣶⣿⣿⣿⡟⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠹⣿⣿⣿⣶⣤",
-            "⢸⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠀⠙⠿⣿⣿⣿",
-            "",
-            "",
-          },
-          week_header = {
-            enable = false
-          },
-          -- header = vim.split(logo, "\n"),
-          -- project = { enable = true, limit = 6, icon = '󰘬', label = '', action = 'Telescope find_files cwd=/Users/amir/git' },
-          -- stylua: ignore
-          shortcut = {
-            { action = builtin.find_files, desc = " Find File", icon = " ", key = "f", icon_hl = "@variable" },
-            { action = "ene | startinsert", desc = " New File", icon = " ", key = "n" },
-            { action = builtin.oldfiles, desc = " Recent Files", icon = " ", key = "r" },
-            { action = builtin.live_grep, desc = " Find Text", icon = " ", key = "g" },
-            { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
-            { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
-            { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit", icon = " ", key = "q" },
-          },
-          footer = function()
-            local stats = require("lazy").stats()
-            local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-            return {
-              "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms",
-            }
-          end,
-        },
-      }
-
-      -- General
-      -- DashboardHeader DashboardFooter
-      -- -- Hyper theme
-      -- DashboardProjectTitle DashboardProjectTitleIcon DashboardProjectIcon
-      -- DashboardMruTitle DashboardMruIcon DashboardFiles DashboardShortCutIcon
-      -- -- Doome theme
-      -- DashboardDesc DashboardKey DashboardIcon DashboardShortCut
-
-
-      -- Setup highlights
-      vim.cmd([[
-        :hi DashboardProjectTitle guifg=#a6e3a1
-        :hi DashboardMruTitle guifg=#a6e3a1
-        ]])
-
-      vim.defer_fn(
-        function()
-          vim.api.nvim_create_autocmd(
-            'BufDelete',
-            {
-              group    = vim.api.nvim_create_augroup('open-dashboard-after-last-buffer-close', { clear = true }),
-              callback = function(event)
-                for buf = 1, vim.fn.bufnr('$') do
-                  if buf ~= event.buf and vim.fn.buflisted(buf) == 1 then
-                    if vim.api.nvim_buf_get_name(buf) ~= '' and vim.bo[buf].filetype ~= 'dashboard' then
-                      return
-                    end
-                  end
-                end
-
-                vim.cmd('Dashboard')
-              end,
-            }
-          )
-        end,
-        0
-      )
-
-      return opts
-    end,
-  },
+  -- {
+  --   "nvimdev/dashboard-nvim",
+  --   lazy = false, -- As https://github.com/nvimdev/dashboard-nvim/pull/450, dashboard-nvim shouldn't be lazy-loaded to properly handle stdin.
+  --   opts = function()
+  --     local builtin = require("telescope.builtin")
+  --
+  --     local opts = {
+  --       theme = "hyper",
+  --       change_to_vcs_root = true,
+  --       hide = {
+  --         -- this is taken care of by lualine
+  --         -- enabling this messes up the actual laststatus setting after loading a file
+  --         statusline = false,
+  --       },
+  --       config = {
+  --         header = {
+  --           "",
+  --           "⢰⣶⣶⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣶⣶⣶⣶⣶⣶",
+  --           "⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿",
+  --           "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
+  --           "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
+  --           "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
+  --           "⢸⣿⣿⣿⠀⠀⠀⠀⠀⢰⣶⣶⣶⠀⠀⠀⢰⣶⣶⣶⡆⠀⣿⣿⣿",
+  --           "⢸⣿⣿⣿⠀⠀⠀⠀⠀⢸⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⡇⠀⣿⣿⣿",
+  --           "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
+  --           "⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿",
+  --           "⢸⣿⣿⣿⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣶⣶⣶⣿⣿⣿",
+  --           "⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿",
+  --           "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+  --           "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⠀⠀⠀",
+  --           "⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⡀⠀⠀",
+  --           "⠀⠀⠀⣸⣿⣿⣿⠇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠘⣿⣿⣿⣇⠀⠀",
+  --           "⢠⣤⣶⣿⣿⣿⡟⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠹⣿⣿⣿⣶⣤",
+  --           "⢸⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠀⠙⠿⣿⣿⣿",
+  --           "",
+  --           "",
+  --         },
+  --         week_header = {
+  --           enable = false
+  --         },
+  --         -- header = vim.split(logo, "\n"),
+  --         -- project = { enable = true, limit = 6, icon = '󰘬', label = '', action = 'Telescope find_files cwd=/Users/amir/git' },
+  --         -- stylua: ignore
+  --         shortcut = {
+  --           { action = builtin.find_files, desc = " Find File", icon = " ", key = "f", icon_hl = "@variable" },
+  --           { action = "ene | startinsert", desc = " New File", icon = " ", key = "n" },
+  --           { action = builtin.oldfiles, desc = " Recent Files", icon = " ", key = "r" },
+  --           { action = builtin.live_grep, desc = " Find Text", icon = " ", key = "g" },
+  --           { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
+  --           { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
+  --           { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit", icon = " ", key = "q" },
+  --         },
+  --         footer = function()
+  --           local stats = require("lazy").stats()
+  --           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+  --           return {
+  --             "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms",
+  --           }
+  --         end,
+  --       },
+  --     }
+  --
+  --     -- General
+  --     -- DashboardHeader DashboardFooter
+  --     -- -- Hyper theme
+  --     -- DashboardProjectTitle DashboardProjectTitleIcon DashboardProjectIcon
+  --     -- DashboardMruTitle DashboardMruIcon DashboardFiles DashboardShortCutIcon
+  --     -- -- Doome theme
+  --     -- DashboardDesc DashboardKey DashboardIcon DashboardShortCut
+  --
+  --
+  --     -- Setup highlights
+  --     vim.cmd([[
+  --       :hi DashboardProjectTitle guifg=#a6e3a1
+  --       :hi DashboardMruTitle guifg=#a6e3a1
+  --       ]])
+  --
+  --     vim.defer_fn(
+  --       function()
+  --         vim.api.nvim_create_autocmd(
+  --           'BufDelete',
+  --           {
+  --             group    = vim.api.nvim_create_augroup('open-dashboard-after-last-buffer-close', { clear = true }),
+  --             callback = function(event)
+  --               for buf = 1, vim.fn.bufnr('$') do
+  --                 if buf ~= event.buf and vim.fn.buflisted(buf) == 1 then
+  --                   if vim.api.nvim_buf_get_name(buf) ~= '' and vim.bo[buf].filetype ~= 'dashboard' then
+  --                     return
+  --                   end
+  --                 end
+  --               end
+  --
+  --               vim.cmd('Dashboard')
+  --             end,
+  --           }
+  --         )
+  --       end,
+  --       0
+  --     )
+  --
+  --     return opts
+  --   end,
+  -- },
 
   -- Replacement for vm.ui.select
   {
@@ -348,16 +423,19 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     module = "telescope",
-    override_options = function()
-      return {
-        extentions = {
-          ["ui-select"] = {
-            require("telescope.themes").get_dropdown({}),
+    opts = function()
+      local opts = require('nvchad.configs.telescope')
+      opts.extensions = {
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown {
+            style = "minimal",
+            width = 0.5,
           },
         },
-        extensions_list = { "themes", "terms", "ui-select" },
       }
-    end,
+      opts.extensions_list = { "themes", "terms", "ui-select" }
+      require('telescope').setup(opts)
+    end
   },
 
   -- Line and blockwise commenting
@@ -398,7 +476,6 @@ return {
       { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
       { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
       { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-      -- { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
 
@@ -416,16 +493,52 @@ return {
     branch = "1.0",
     config = function()
       local mc = require("multicursor-nvim")
-      mc.setup() -- Add a cursor and jump to the next word under cursor.
-      vim.keymap.set({ "n", "v" }, "<c-n>", function() mc.addCursor("*") end)
-
-      vim.keymap.set({ "n" }, "<m-j>", function() mc.addCursor("j") end, { desc = "Add cursor downwards" })
-      vim.keymap.set({ "n" }, "<m-k>", function() mc.addCursor("k") end, { desc = "Add cursor upwards" })
-      vim.api.nvim_set_hl(0, "MultiCursorCursor", { link = "Cursor" })
-      vim.api.nvim_set_hl(0, "MultiCursorVisual", { link = "Visual" })
-      vim.api.nvim_set_hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
-      vim.api.nvim_set_hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
+      mc.setup()
     end
-  }
+  },
 
+  -- Surround
+  {
+    "kylechui/nvim-surround",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({
+      })
+    end
+  },
+
+  -- LSP Diagnostics
+  {
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>td",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "[T]rouble [D]iagnostics",
+      },
+      {
+        "<leader>ts",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "[T]rouble [S]ymbols",
+      },
+      {
+        "<leader>cl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "[T]rouble [L]SP Definitions / references etc",
+      },
+      {
+        "<leader>tl",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "[T]rouble [L]ocation List",
+      },
+      {
+        "<leader>tq",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "[T]rouble [Q]uickfix List",
+      },
+    },
+  },
 }

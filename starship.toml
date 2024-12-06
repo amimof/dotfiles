@@ -1,0 +1,42 @@
+format = """
+$username\
+$hostname\
+$directory\
+$character"""
+
+right_format = """
+$cmd_duration\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status"""
+
+[git_branch]
+symbol = " "
+style = "purple"
+
+[git_commit]
+tag_symbol = '  '
+
+[git_status]
+style = "bold #555555"
+up_to_date = '[✓](green)'
+modified = '[!](yellow)'
+stashed = '[⚑](cyan)'
+staged = '[+](green)'
+untracked = '[?](red)'
+ahead = '[⇡](green)'
+behind = '[⇣](red)'
+diverged = '[⇕](orange)'
+
+[directory]
+style = "blue"
+
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
+
+[cmd_duration]
+format = "[$duration]($style) "
+style = "yellow"
