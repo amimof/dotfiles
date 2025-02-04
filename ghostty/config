@@ -1,20 +1,20 @@
+# General
 background = 11121D
 font-family = "FiraMono Nerd Font"
 font-size = 14
-theme = tokyonight
+theme = "tokyonight_night"
 window-height = 58
 window-width = 140
 window-step-resize = true
 window-title-font-family = "FiraMono Nerd Font"
+window-vsync = true
+quick-terminal-screen = main
+copy-on-select = true
+
+# MacOS settings
 macos-titlebar-style = "tabs"
 macos-titlebar-proxy-icon = hidden
 macos-option-as-alt = left
-
-quick-terminal-screen = main
-#background-blur-radius = 20
-#background-opacity = 0.95
-window-vsync = true
-shell-integration = zsh
 
 # Keybinds
 keybind = alt+j=unbind
