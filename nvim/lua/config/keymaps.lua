@@ -35,3 +35,7 @@ map(
   '"hy:%s/\\C<C-r>h/<C-r>h/g<left><left>',
   { noremap = true, silent = false, desc = "[R]replace [W]ord" }
 )
+
+-- Adds new-lines and stays in Normal mode
+map("n", "<leader>o", "o<Esc>", { desc = "New line below (stay in normal mode)" })
+map("n", "<leader>O", "O<Esc>", { desc = "New below below (stay in normal mode)" })

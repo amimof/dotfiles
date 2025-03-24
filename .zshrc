@@ -34,6 +34,7 @@ GPG_TTY=$(tty)
 # Keybindings section
 bindkey -v                                                      # Enable vi mode
 bindkey -e
+
 bindkey "^[" vi-cmd-mode                                        # Bind Esc to vi cmd mode
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
@@ -73,7 +74,11 @@ alias ls="ls --color=tty"                                       # Enable ls colo
 alias ll="ls -latrh"
 alias vim="nvim"                                                # Use NeoVim over Vim
 alias ls="eza --git --icons=always --hyperlink"
-alias cat="bat --theme=base16"
+alias cat="bat --theme=Eldritch"
+alias capply="cat <<EOF | kubectl apply -f -"
+alias b64="base64"
+alias b64d="base64 -d"
+alias sslview="openssl x509 -text -noout"
 
 # Completion
 autoload -U compinit colors zcalc
@@ -104,15 +109,12 @@ export LESS_TERMCAP_us=$'\E[01;36m'
 export LESS=-R
 
 # FZF config
+export FZF_STYLE="full"
 export FZF_TMUX=0
-export FZF_DEFAULT_COMMAND='fd . --hidden --color always'
-export FZF_DEFAULT_OPTS='
-  --reverse
-  --border rounded
-  --color dark
-'
+# export FZF_DEFAULT_COMMAND='fd . --hidden --color always'
+export FZF_DEFAULT_OPTS='--layout reverse --border rounded --color=fg:#ebfafa,hl:#37f499 --color=fg+:#ebfafa,bg+:#212337,hl+:#37f499 --color=info:#f7c67f,prompt:#04d1f9,pointer:#7081d0 --color=marker:#7081d0,spinner:#f7c67f,header:#323449'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'"
-export FZF_CTRL_T_OPTS="--preview '([[ -d {} ]] && eza -l --color=always {} || bat --style=numbers --color=always --line-range=:500 {}) 2> /dev/null | head -200'"
+export FZF_CTRL_T_OPTS="--preview '([[ -d {} ]] && eza -l --color=always {} || bat --theme=Eldritch --style=numbers --color=always --line-range=:500 {}) 2> /dev/null | head -200'"
 
 # Prompt
 #PROMPT='%F{blue}%1~ %B%f%F{green}%f%b '
@@ -271,13 +273,24 @@ if type "podman" > /dev/null; then
  source <(podman completion zsh)             # kubectl auto completion
 fi
 
-# Load plugins
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh # fzf key bindings and auto completion
-[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # syntax highlighting
-[ -f ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh # syntax highlighting
+# Load fzf 
+source <(fzf --zsh)
+
+# Load other plugins
+[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
+
+# Load syntax highlighting plugin
+[ -f ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
+
+# Load fzf tab completion plugin
 [ -f ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh ] && source ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh
+
+# Load own plugins
 [ -f ~/.zsh/vpn.zsh ] && source ~/.zsh/vpn.zsh
 
 # Starship prompt
 eval "$(starship init zsh)"
 
+
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"

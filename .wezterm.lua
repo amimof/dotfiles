@@ -5,7 +5,7 @@ local config = wezterm.config_builder()
 -- Colors & Font
 -- config.color_scheme = "Tokyo Night"
 config.color_scheme = "Eldritch"
-config.font_size = 13
+config.font_size = 13.3
 config.font = wezterm.font("FiraMono Nerd Font")
 config.colors = {
 	background = "#11121D",
@@ -33,6 +33,8 @@ config.window_padding = {
 }
 config.window_frame = {
 	active_titlebar_bg = "#191919",
+	-- border_left_width = "0.2cell",
+	-- border_left_color = "cyan",
 }
 config.initial_cols = 140
 config.initial_rows = 75
@@ -87,11 +89,59 @@ local function split_nav(resize_or_move, mods, key, dir)
 	}
 end
 
+-- -- New tabs should always open in HOME directory
+-- wezterm.on("spawn-new-tab", function(window, pane)
+-- 	-- Override new tab to always start in home directory
+-- 	window:perform_action(
+-- 		wezterm.action.SpawnCommandInNewTab({
+-- 			cwd = os.getenv("HOME"),
+-- 		}),
+-- 		pane
+-- 	)
+-- end)
+
+local io = require("io")
+local os = require("os")
+
+wezterm.on("trigger-vim-with-scrollback", function(window, pane)
+	-- Retrieve the text from the pane
+	local text = pane:get_lines_as_text(pane:get_dimensions().scrollback_rows)
+
+	-- Create a temporary file to pass to vim
+	local name = os.tmpname()
+	local f = io.open(name, "w+")
+	f:write(text)
+	f:flush()
+	f:close()
+
+	-- Open a new window running vim and tell it to open the file
+	window:perform_action(
+		act.SpawnCommandInNewTab({
+			args = { "/opt/homebrew/bin/nvim", name },
+		}),
+		pane
+	)
+
+	-- Wait "enough" time for vim to read the file before we remove it.
+	-- The window creation and process spawn are asynchronous wrt. running
+	-- this script and are not awaitable, so we just pick a number.
+	--
+	-- Note: We don't strictly need to remove this file, but it is nice
+	-- to avoid cluttering up the temporary directory.
+	wezterm.sleep_ms(1000)
+	os.remove(name)
+end)
+
 -- Global modifier key
 local mod = "SHIFT|SUPER"
 
 -- Key mappings
 config.keys = {
+	{
+		key = "E",
+		mods = mod,
+		action = act.EmitEvent("trigger-vim-with-scrollback"),
+	},
 	-- Make Option-Left equivalent to Alt-b which many line editors interpret as backward-word
 	{ key = "LeftArrow", mods = "OPT", action = act.SendString("\x1bb") },
 
@@ -101,6 +151,10 @@ config.keys = {
 	-- CMD+Left/right goes to end/beginning of line
 	{ key = "LeftArrow", mods = "SUPER", action = act.SendString("\001") },
 	{ key = "RightArrow", mods = "SUPER", action = act.SendString("\005") },
+
+	-- Override new-tab to always start in HOME
+	-- { key = "t", mods = "SUPER", action = act.EmitEvent("spawn-new-tab") },
+	{ key = "t", mods = "SUPER", action = act.SpawnTab("CurrentPaneDomain") },
 
 	-- Switch to the default workspace
 	{
@@ -112,11 +166,11 @@ config.keys = {
 	},
 
 	-- Scrollback
-	{ mods = mod, key = "u", action = act.ScrollByPage(-0.5) },
-	{ mods = mod, key = "d", action = act.ScrollByPage(0.5) },
+	{ mods = "SUPER", key = "u", action = act.ScrollByPage(-0.5) },
+	{ mods = "SUPER", key = "d", action = act.ScrollByPage(0.5) },
 
 	-- Quick select
-	{ mods = mod, key = "S", action = act.QuickSelect },
+	{ mods = "SUPER", key = "s", action = act.QuickSelect },
 
 	-- Cycle workspaces
 	{ mods = mod, key = "RightBracket", action = act.SwitchWorkspaceRelative(1) },
@@ -130,7 +184,7 @@ config.keys = {
 	{ mods = "SUPER", key = "å", action = act.ActivateTabRelative(-1) },
 
 	-- Go to previously active pane
-	{ mods = mod, key = "a", action = act.ActivateLastTab },
+	{ mods = "SUPER", key = "a", action = act.ActivateLastTab },
 
 	-- Split panes
 	{ mods = mod, key = "h", action = act.SplitHorizontal },
@@ -146,11 +200,64 @@ config.keys = {
 	{ mods = mod, key = "RightArrow", action = act.AdjustPaneSize({ "Right", 4 }) },
 
 	-- Copy mode
-	{ mods = mod, key = "X", action = wezterm.action.ActivateCopyMode },
+	{ mods = "SUPER", key = "x", action = wezterm.action.ActivateCopyMode },
 
 	-- Show the launcher in fuzzy selection mode and have it list all workspaces and allow activating one.
 	{ key = "l", mods = mod, action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
 
+	{
+		key = "w",
+		mods = mod,
+		action = wezterm.action_callback(function(window, pane)
+			local function workspaceName(str)
+				for _, v in ipairs(wezterm.mux.get_workspace_names()) do
+					if v == str then
+						return str .. " *"
+					end
+				end
+				return str
+			end
+			local home = wezterm.home_dir
+			local workspaces = {
+				{ id = home .. "/git/github.com/amimof", label = workspaceName("Home") },
+				{ id = home .. "/git/github.com/devtrafik", label = workspaceName("Västtrafik") },
+				{ id = home .. "/git/git.vgregion.se", label = workspaceName("VGR") },
+			}
+
+			window:perform_action(
+				act.InputSelector({
+					action = wezterm.action_callback(function(inner_window, inner_pane, id, label)
+						wezterm.log_info("Workspace", workspaces)
+						if not id and not label then
+							wezterm.log_info("cancelled")
+						else
+							wezterm.log_info("id = " .. id)
+							wezterm.log_info("label = " .. label)
+							inner_window:perform_action(
+								act.SwitchToWorkspace({
+									name = string.gsub(label, " %*", ""),
+									spawn = {
+										label = label,
+										cwd = id,
+									},
+								}),
+								inner_pane
+							)
+						end
+					end),
+					title = "Choose Workspace",
+					choices = workspaces,
+					fuzzy = true,
+					fuzzy_description = wezterm.format({
+						{ Attribute = { Intensity = "Bold" } },
+						{ Foreground = { AnsiColor = "Fuchsia" } },
+						{ Text = "Fuzzy find and/or make a workspace: " },
+					}),
+				}),
+				pane
+			)
+		end),
+	},
 	-- Prompt for a name to use for a new workspace and switch to it.
 	{
 		key = "n",
@@ -186,7 +293,38 @@ config.keys = {
 	split_nav("move", "CTRL", "l", "Right"),
 }
 
--- Plugins
+-- Copy mode key mappings
+local keys = {
+	-- Clear the selection mode, but remain in copy mode
+	{
+		key = "y",
+		mods = "NONE",
+		action = act.Multiple({
+			act.CopyTo("PrimarySelection"),
+			act.ClearSelection,
+
+			act.CopyMode("ClearSelectionMode"),
+		}),
+	},
+}
+
+local copy_mode = nil
+if wezterm.gui then
+	copy_mode = wezterm.gui.default_key_tables().copy_mode
+	for k, v in pairs(keys) do
+		table.insert(copy_mode, v)
+	end
+end
+config.key_tables = {
+	copy_mode = copy_mode,
+}
+
+-- Additional patterns for quick selection
+config.quick_select_patterns = {
+	"^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+}
+
+-- Plugin: Tabline
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 tabline.setup({
 	options = {
@@ -229,5 +367,9 @@ tabline.setup({
 		tabline_z = { "workspace" },
 	},
 })
+
+-- Plugin: Modal
+-- local modal = wezterm.plugin.require("https://github.com/MLFlexer/modal.wezterm")
+-- modal.apply_to_config(config)
 
 return config

@@ -128,6 +128,7 @@ return {
       opts.default_component_configs.modified = {
         symbol = "",
       }
+      opts.window.width = 30
       require("neo-tree").setup(opts)
       vim.cmd([[
         :hi NeoTreeNormal guibg=#0c0d18
@@ -366,6 +367,9 @@ return {
   {
     "saghen/blink.cmp",
     opts = {
+      -- fuzzy = {
+      --   implementation = "prefer_rust_with_warning"
+      -- },
       completion = {
         ghost_text = { enabled = false },
         menu = {
@@ -414,13 +418,14 @@ return {
     opts = {},
     config = function(opts)
       local p = require("tokyodark.palette")
+      local darker_black = "#0c0d18"
       opts.on_colors = function(colors)
-        -- colors.bg = p.base00
-        -- colors.bg_statusline = "#ff0000"
-        -- colors.bg_float = p.base00
         colors.bg_highlight = p.bg2
-        -- colors.bg_dark = "#0c0d18"
-        -- colors.bg_dark = p.base00
+      end
+
+      opts.on_highlights = function(h, c)
+        h.SnacksIndent = { fg = p.bg2 }
+        h.SnacksIndentScope = { fg = p.bg4 }
       end
 
       opts.transparent = true

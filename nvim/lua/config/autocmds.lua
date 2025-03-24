@@ -17,3 +17,14 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
   desc = "Disable New Line Comment",
 })
+
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   callback = function()
+--     vim.bo.expandtab = true
+--     vim.bo.shiftwidth = 4
+--     vim.bo.tabstop = 4
+--     vim.bo.softtabstop = 4
+--     vim.bo.commentstring = "#%s"
+--   end,
+--   desc = "Fix tabstop",
+-- })
