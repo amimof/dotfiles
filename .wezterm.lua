@@ -135,8 +135,53 @@ end)
 -- Global modifier key
 local mod = "SHIFT|SUPER"
 
+config.launch_menu = {
+	{
+		label = "Project A Workspace",
+		-- Launch a shell (bash in this example) and keep it interactive.
+		args = { "zsh", "-l" },
+		-- Set the working directory for Project A
+		cwd = "/home/yourusername/projects/projectA",
+		-- Set environment variables for Project A
+		set_environment_variables = {
+			PROJECT_NAME = "ProjectA",
+			API_KEY = "abc123",
+		},
+	},
+	{
+		label = "Project B Workspace",
+		args = { "zsh", "-l" },
+		cwd = "/home/yourusername/projects/projectB",
+		set_environment_variables = {
+			PROJECT_NAME = "ProjectB",
+			API_KEY = "def456",
+		},
+	},
+}
+
+local home = wezterm.home_dir
+local workspaces = {
+	{
+		label = "Home",
+		cwd = home .. "/git/github.com/amimof",
+	},
+	{
+		label = "Västtrafik",
+		cwd = home .. "/git/github.com/devtrafik",
+	},
+	{
+		label = "VGR",
+		cwd = home .. "/git/git.vgregion.se",
+	},
+	{
+		label = "Education",
+		cwd = home .. "/git/github.com/middlewaregruppen/education",
+	},
+}
+
 -- Key mappings
 config.keys = {
+	-- Open buffer in NeoVim
 	{
 		key = "E",
 		mods = mod,
@@ -217,12 +262,13 @@ config.keys = {
 				end
 				return str
 			end
-			local home = wezterm.home_dir
-			local workspaces = {
-				{ id = home .. "/git/github.com/amimof", label = workspaceName("Home") },
-				{ id = home .. "/git/github.com/devtrafik", label = workspaceName("Västtrafik") },
-				{ id = home .. "/git/git.vgregion.se", label = workspaceName("VGR") },
-			}
+			local choices = function()
+				local ret = {}
+				for i, v in ipairs(workspaces) do
+					ret[i] = { id = v.cwd, label = workspaceName(v.label) }
+				end
+				return ret
+			end
 
 			window:perform_action(
 				act.InputSelector({
@@ -237,7 +283,7 @@ config.keys = {
 								act.SwitchToWorkspace({
 									name = string.gsub(label, " %*", ""),
 									spawn = {
-										label = label,
+										label = workspaceName(label),
 										cwd = id,
 									},
 								}),
@@ -246,7 +292,7 @@ config.keys = {
 						end
 					end),
 					title = "Choose Workspace",
-					choices = workspaces,
+					choices = choices(),
 					fuzzy = true,
 					fuzzy_description = wezterm.format({
 						{ Attribute = { Intensity = "Bold" } },
