@@ -4,7 +4,8 @@ return {
   { "ggandor/leap.nvim", enabled = false },
   { "folke/noice.nvim", enabled = false },
   { "folke/flash.nvim", enabled = false },
-  { "echasnovski/mini.icons", enabled = false },
+  { "nvim-mini/mini.icons", enabled = false },
+  { "MagicDuck/grug-far.nvim", enabled = false },
   -- { "MeanderingProgrammer/render-markdown.nvim", enabled = false },
   -- { "williamboman/mason-lspconfig.nvim", config = function(_, opts) end, enabled = true },
 
@@ -17,7 +18,13 @@ return {
         enabled = true,
         sections = {
           { section = "header" },
-          { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
+          {
+            icon = " ",
+            title = "Keymaps",
+            section = "keys",
+            indent = 2,
+            padding = 1,
+          },
           { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
           { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
           { section = "startup" },
@@ -49,14 +56,15 @@ return {
   },
 
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = function(_, opts)
       opts.ui = {
         border = "rounded",
       }
-      -- vim.list_extend(opts.ensure_installed, {
-      --   "kcl",
-      -- })
+      opts.registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+      }
     end,
   },
 
@@ -74,9 +82,19 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        kcl = {
-          cmd = { "/usr/local/bin/kcl-language-server" },
-          mason = false,
+        buf_ls = {
+          cmd = { "buf", "beta", "lsp", "--timeout", "0", "--log-format=text" },
+          -- root_dir = require("lspconfig.util").root_pattern("buf.yaml", "buf.work.yaml", ".git"),
+          -- root_dir = function(fname)
+          --   local util = require("lspconfig.util")
+          --   return util.root_pattern("buf.work.yaml", ".git")(fname)
+          -- end,
+          filetypes = { "proto" },
+          settings = {
+            buf = {
+              semanticTokens = true,
+            },
+          },
         },
       },
       diagnostics = {
@@ -88,9 +106,6 @@ return {
         enabled = false,
       },
       setup = {
-        -- kcl = function(_, opts)
-        --   opts.capabilities = vim.lsp.protocol.make_client_capabilities()
-        -- end,
         gopls = function(_, opts)
           opts.settings.gopls = {
             gofumpt = true,
@@ -120,6 +135,17 @@ return {
       },
     },
   },
+
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        html = { "htmlbeautifier", "gofumpt" },
+      },
+    },
+  },
+  -- /Users/amir/.local/share/nvim/mason/bin/htmlbeautifier
 
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -193,6 +219,7 @@ return {
             text_align = "left",
           },
         },
+        sort_by = "insert_at_end",
       },
     },
   },
@@ -371,22 +398,26 @@ return {
       --   implementation = "prefer_rust_with_warning"
       -- },
       completion = {
+        trigger = {
+          show_on_trigger_character = true,
+          show_on_keyword = false,
+        },
         ghost_text = { enabled = false },
         menu = {
-          auto_show = false,
-          border = "rounded",
-          winhighlight = "Normal:BlinkCmpMenu,FloatBorder:Purple,CursorLine:BlinkCmpMenuSelection,Search:None",
+          --auto_show = false,
+          winhighlight = "Base:BlinkCmpMenu,RoundBorder:BrightGreen,CursorLine:BlinkCmpMenuSelection,Search:Normal",
           draw = {
             columns = {
-              { "label", "label_description", gap = 1 },
+              { "label", "label_description", gap = 2 },
               { "kind_icon", "kind" },
             },
           },
         },
         documentation = {
+          auto_show_delay_ms = 500,
+          auto_show = false,
           window = {
             border = "rounded",
-            winhighlight = "Normal:BlinkCmpDoc,FloatBorder:Purple,CursorLine:BlinkCmpDocCursorLine,Search:None",
           },
         },
       },
@@ -399,12 +430,18 @@ return {
       opts.fzf_opts = {
         ["--header"] = false,
       }
-      require("fzf-lua").setup(opts)
     end,
   },
 
   {
-    "kcl-lang/kcl.nvim",
+    "seblyng/roslyn.nvim",
+    ft = "cs",
+    ---@module 'roslyn.config'
+    ---@type RoslynNvimConfig
+    opts = {
+      -- your configuration comes here; leave empty for default settings
+      -- NOTE: You must configure `cmd` in `config.cmd` unless you have installed via mason
+    },
   },
 
   {
@@ -426,6 +463,44 @@ return {
       opts.on_highlights = function(h, c)
         h.SnacksIndent = { fg = p.bg2 }
         h.SnacksIndentScope = { fg = p.bg4 }
+
+        h.BlinkCmpMenu = { bg = p.base }
+        h.BlinkCmpMenuBorder = { bg = p.base, fg = c.bright_green }
+        h.BlinkCmpDoc = { bg = p.base }
+        h.BlinkCmpDocBorder = { bg = p.base, fg = c.bright_green }
+        h.BlinkCmpKindConstant = { fg = c.yellow }
+        h.BlinkCmpKindFunction = { fg = c.yellow }
+        -- h.BlinkCmpKindIdentifier = { fg = p.base08 }
+        h.BlinkCmpKindField = { fg = c.orange }
+        h.BlinkCmpKindVariable = { fg = c.red }
+        h.BlinkCmpKindSnippet = { fg = c.red }
+        h.BlinkCmpKindText = { fg = c.fg }
+        h.BlinkCmpKindStructure = { fg = c.yellow }
+        -- h.BlinkCmpKindType = { fg = c.bright_green }
+        h.BlinkCmpKindKeyword = { fg = c.cyan }
+        h.BlinkCmpKindMethod = { fg = c.purple }
+        h.BlinkCmpKindConstructor = { fg = c.cyan }
+        h.BlinkCmpKindFolder = { fg = c.cyan }
+        h.BlinkCmpKindModule = { fg = c.orange }
+        h.BlinkCmpKindProperty = { fg = c.bright_green }
+        h.BlinkCmpKindEnum = { fg = c.cyan }
+        -- h.BlinkCmpKindUnit = { fg = p.base0E }
+        h.BlinkCmpKindClass = { fg = c.cyan }
+        -- h.BlinkCmpKindFile = { fg = p.base07 }
+        h.BlinkCmpKindInterface = { fg = c.cyan }
+        -- h.BlinkCmpKindColor = { fg = p.white }
+        h.BlinkCmpKindReference = { fg = c.orange }
+        h.BlinkCmpKindEnumMember = { fg = c.green }
+        h.BlinkCmpKindStruct = { fg = c.cyan }
+        h.BlinkCmpKindValue = { fg = c.orange }
+        h.BlinkCmpKindEvent = { fg = c.cyan }
+        h.BlinkCmpKindOperator = { fg = c.green }
+        h.BlinkCmpKindTypeParameter = { fg = c.cyan }
+        -- h.BlinkCmpKindCopilot = { fg = p.green }
+        -- h.BlinkCmpKindCodeium = { fg = p.vibrant_green }
+        -- h.BlinkCmpKindTabNine = { fg = p.baby_pink }
+        -- h.BlinkCmpKindSuperMaven = { fg = p.yellow }
+        h.DiffText = { bg = "#244246" }
       end
 
       opts.transparent = true
@@ -447,5 +522,41 @@ return {
       vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
       vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
     end,
+  },
+
+  {
+    "tpope/vim-fugitive",
+    config = function(opts)
+      vim.keymap.set("n", "<leader>gs", ":vertical Git<CR>", { desc = "Git Status (Fugitive)" })
+    end,
+  },
+
+  {
+    "dmtrKovalenko/fff.nvim",
+    build = function()
+      -- this will download prebuild binary or try to use existing rustup toolchain to build from source
+      -- (if you are using lazy you can use gb for rebuilding a plugin if needed)
+      require("fff.download").download_or_build_binary()
+    end,
+    -- if you are using nixos
+    -- build = "nix run .#release",
+    opts = { -- (optional)
+      debug = {
+        enabled = true, -- we expect your collaboration at least during the beta
+        show_scores = true, -- to help us optimize the scoring system, feel free to share your scores!
+      },
+    },
+    -- No need to lazy-load with lazy.nvim.
+    -- This plugin initializes itself lazily.
+    lazy = false,
+    keys = {
+      {
+        "ff", -- try it if you didn't it is a banger keybinding for a picker
+        function()
+          require("fff").find_files()
+        end,
+        desc = "FFFind files",
+      },
+    },
   },
 }

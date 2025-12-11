@@ -20,7 +20,14 @@ map({ "n" }, "<esc>", function()
 end, { desc = "Escape and Clear hlsearch" })
 
 -- Signature help using ctrl-v in insert and normal
-map({ "n", "i" }, "<C-V>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+map({ "n", "i" }, "<C-V>", function()
+  vim.lsp.buf.signature_help({ border = "rounded" })
+end, { desc = "Signature Help" })
+
+-- Hover with rounded borders
+map({ "n" }, "K", function()
+  vim.lsp.buf.hover({ border = "rounded" })
+end, { desc = "Hover" })
 
 -- Replace all occurenses of word under cursor in normal and selection in visual. Case (sensitive)
 map(
@@ -39,3 +46,16 @@ map(
 -- Adds new-lines and stays in Normal mode
 map("n", "<leader>o", "o<Esc>", { desc = "New line below (stay in normal mode)" })
 map("n", "<leader>O", "O<Esc>", { desc = "New below below (stay in normal mode)" })
+
+-- Prompts the user for a directory and fuzzy searches for files in there
+local function search_files_in_directory()
+  local fzf = require("fzf-lua")
+  vim.ui.input({ prompt = "Search files in directory: ", completion = "dir" }, function(dir)
+    if dir and dir ~= "" then
+      fzf.files({ cwd = dir })
+    else
+      print("No directory specified")
+    end
+  end)
+end
+map("n", "<leader>fa", search_files_in_directory, { desc = "Search files in any directory" })

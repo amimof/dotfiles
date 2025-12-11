@@ -1,0 +1,49 @@
+cmd + alt - t : open -a /Applications/WezTerm.app
+cmd + alt - b : open -a "/Applications/Zen Browser.app"
+cmd + alt - f : open -a /System/Library/CoreServices/Finder.app
+# cmd + alt - 1 : yabai -m space --focus 1
+# cmd + alt - 2 : yabai -m space --focus 2
+
+
+cmd + alt - return : yabai -m window --toggle zoom-parent
+cmd + alt - s : yabai -m window --toggle split
+cmd + alt - y : yabai -m window --toggle float; \
+                yabai -m window --grid 8:8:1:1:6:6
+
+cmd + alt - u : yabai -m window --swap prev
+cmd + alt - i : yabai -m window --swap next
+cmd + alt - f : yabai -m space --layout float
+cmd + alt - n : yabai -m space --layout bsp
+
+# Move focus 
+cmd + alt - h : yabai -m window --focus west
+cmd + alt - j : yabai -m window --focus south
+cmd + alt - k : yabai -m window --focus north
+cmd + alt - l : yabai -m window --focus east
+
+
+# Move window 
+cmd + alt - p : yabai -m window --space next --focus
+
+# Define modes
+:: default : sketchybar --trigger skhd_mode_change INFO="NORMAL"
+:: resize @ : sketchybar --trigger skhd_mode_change INFO="RESIZE"
+
+# Default -> Resize
+cmd - x ; resize
+
+# Resize -> Default 
+resize < cmd - x ; default
+resize < escape ; default
+resize < ctrl - c ; default
+
+
+resize < b : yabai -m space --balance
+
+resize < alt - h : yabai -m window --swap west
+resize < alt - j : yabai -m window --swap south
+resize < alt - k : yabai -m window --swap north
+resize < alt - l : yabai -m window --swap east
+
+resize < ctrl - n : yabai -m window --focus next
+resize < ctrl - p : yabai -m window --focus prev
