@@ -1,4 +1,5 @@
 format = """
+$python\
 $username\
 $hostname\
 $directory\
@@ -6,6 +7,7 @@ $character"""
 
 right_format = """
 $cmd_duration\
+$kubernetes\
 $git_branch\
 $git_commit\
 $git_state\
@@ -31,6 +33,8 @@ diverged = '[⇕](orange)'
 
 [directory]
 style = "blue"
+truncate_to_repo = true
+truncation_length = 2
 
 [character]
 success_symbol = "[❯](purple)"
@@ -40,3 +44,9 @@ vimcmd_symbol = "[❮](green)"
 [cmd_duration]
 format = "[$duration]($style) "
 style = "yellow"
+
+[python]
+format = '(\($virtualenv\)) '
+
+[kubernetes]
+disabled = true

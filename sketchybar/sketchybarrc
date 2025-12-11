@@ -1,0 +1,131 @@
+# This is a demo config to showcase some of the most important commands.
+# It is meant to be changed and configured, as it is intentionally kept sparse.
+# For a (much) more advanced configuration example see my dotfiles:
+# https://github.com/FelixKratz/dotfiles
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+export COLOR_BACKGROUND=0xe01d2021
+export COLOR_FOREGROUND=0xe0fbf1c7
+
+export COLOR_ACCENT=0xe0d65d0e
+export COLOR_ACCENT_BRIGHT=0xe0fe8019
+
+export COLOR_BLACK=0xe0282828
+export COLOR_RED=0xe0cc241d
+export COLOR_GREEN=0xe098971a
+export COLOR_YELLOW=0xe0d79921
+export COLOR_BLUE=0xe0458588
+export COLOR_MAGENTA=0xe0b16286
+export COLOR_CYAN=0xe0689d6a
+export COLOR_WHITE=0xe0a89984
+
+export COLOR_BLACK_BRIGHT=0xe0928374
+export COLOR_RED_BRIGHT=0xe0fb4934
+export COLOR_GREEN_BRIGHT=0xe0b8bb26
+export COLOR_YELLOW_BRIGHT=0xe0fabd2f
+export COLOR_BLUE_BRIGHT=0xe083a598
+export COLOR_MAGENTA_BRIGHT=0xe0d3869b
+export COLOR_CYAN_BRIGHT=0xe08ec07c
+export COLOR_WHITE_BRIGHT=0xe0ebdbb2
+##### Bar Appearance #####
+# Configuring the general appearance of the bar.
+# These are only some of the options available. For all options see:
+# https://felixkratz.github.io/SketchyBar/config/bar
+# If you are looking for other colors, see the color picker:
+# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
+
+# sketchybar --bar position=top height=40 blur_radius=30 color=0x40000000
+sketchybar --bar position=top height=36 blur_radius=30 color=0x00000000
+
+##### Changing Defaults #####
+# We now change some default values, which are applied to all further items.
+# For a full list of all available item properties see:
+# https://felixkratz.github.io/SketchyBar/config/items
+
+default=(
+  padding_left=2
+  padding_right=2
+  icon.font="Hack Nerd Font:Bold:14.0"
+  label.font="Hack Nerd Font:Semi:12.0"
+  icon.color=0xffffffff
+  label.color=0xffffffff
+  icon.padding_left=4
+  icon.padding_right=4
+  label.padding_left=4
+  label.padding_right=4
+)
+sketchybar --default "${default[@]}"
+
+sketchybar --add event skhd_mode_change
+
+##### Adding Mission Control Space Indicators #####
+# Let's add some mission control spaces:
+# https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
+# to indicate active and available mission control spaces.
+
+SPACE_ICONS=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
+for i in "${!SPACE_ICONS[@]}"
+do
+  sid="$(($i+1))"
+  space=(
+    space="$sid"
+    icon="${SPACE_ICONS[i]}"
+    icon.padding_left=7
+    icon.padding_right=7
+    background.color=0x40ffffff
+    background.corner_radius=5
+    background.height=25
+    label.drawing=off
+    script="$PLUGIN_DIR/space.sh"
+    click_script="yabai -m space --focus $sid"
+  )
+  sketchybar --add space space."$sid" left --set space."$sid" "${space[@]}"
+done
+
+# Show which skhdrc mode we're in
+sketchybar --add item chevron1 left \
+           --set chevron1 icon= label.drawing=off  \
+					 --add item skhd_mode left \
+					 --set skhd_mode icon.drawing=off script="$PLUGIN_DIR/update_mode.sh" \
+					 --subscribe skhd_mode skhd_mode_change
+sketchybar --trigger skhd_mode_change INFO="NORMAL"
+
+##### Adding Left Items #####
+# We add some regular items to the left side of the bar, where
+# only the properties deviating from the current defaults need to be set
+
+sketchybar --add item chevron left \
+           --set chevron icon= label.drawing=off \
+           --add item front_app left \
+           --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
+           --subscribe front_app front_app_switched
+
+
+
+##### Adding Right Items #####
+# In the same way as the left items we can add items to the right side.
+# Additional position (e.g. center) are available, see:
+# https://felixkratz.github.io/SketchyBar/config/items#adding-items-to-sketchybar
+
+# Some items refresh on a fixed cycle, e.g. the clock runs its script once
+# every 10s. Other items respond to events they subscribe to, e.g. the
+# volume.sh script is only executed once an actual change in system audio
+# volume is registered. More info about the event system can be found here:
+# https://felixkratz.github.io/SketchyBar/config/events
+sketchybar --add item wifi right \
+   --set wifi \
+   script="$PLUGIN_DIR/wifi.sh" \
+   --subscribe wifi wifi_change \
+   --subscribe wifi mouse.clicked
+
+sketchybar --add item clock right \
+           --set clock update_freq=10 icon=  script="$PLUGIN_DIR/clock.sh" \
+           --add item volume right \
+           --set volume script="$PLUGIN_DIR/volume.sh" \
+           --subscribe volume volume_change \
+           --add item battery right \
+           --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
+           --subscribe battery system_woke power_source_change
+
+##### Force all scripts to run the first time (never do this in a script) #####
+sketchybar --update

@@ -4,8 +4,9 @@ local config = wezterm.config_builder()
 
 -- Colors & Font
 -- config.color_scheme = "Tokyo Night"
+config.leader = { key = "z", mods = "CTRL" }
 config.color_scheme = "Eldritch"
-config.font_size = 13.3
+config.font_size = 14.2
 config.font = wezterm.font("FiraMono Nerd Font")
 config.colors = {
 	background = "#11121D",
@@ -33,8 +34,6 @@ config.window_padding = {
 }
 config.window_frame = {
 	active_titlebar_bg = "#191919",
-	-- border_left_width = "0.2cell",
-	-- border_left_color = "cyan",
 }
 config.initial_cols = 140
 config.initial_rows = 75
@@ -51,8 +50,7 @@ config.adjust_window_size_when_changing_font_size = false
 local act = wezterm.action
 
 local function is_nvim(pane)
-	local process_name = string.gsub(pane:get_foreground_process_name(), "(.*[/\\])(.*)", "%2")
-	return process_name == "nvim" or process_name == "vim"
+	return pane:get_user_vars().IS_NVIM == "true" or pane:get_foreground_process_name():find("n?vim")
 end
 
 local function is_zoomed(pane)
@@ -89,17 +87,6 @@ local function split_nav(resize_or_move, mods, key, dir)
 	}
 end
 
--- -- New tabs should always open in HOME directory
--- wezterm.on("spawn-new-tab", function(window, pane)
--- 	-- Override new tab to always start in home directory
--- 	window:perform_action(
--- 		wezterm.action.SpawnCommandInNewTab({
--- 			cwd = os.getenv("HOME"),
--- 		}),
--- 		pane
--- 	)
--- end)
-
 local io = require("io")
 local os = require("os")
 
@@ -133,32 +120,9 @@ wezterm.on("trigger-vim-with-scrollback", function(window, pane)
 end)
 
 -- Global modifier key
-local mod = "SHIFT|SUPER"
+local mod = "LEADER"
 
-config.launch_menu = {
-	{
-		label = "Project A Workspace",
-		-- Launch a shell (bash in this example) and keep it interactive.
-		args = { "zsh", "-l" },
-		-- Set the working directory for Project A
-		cwd = "/home/yourusername/projects/projectA",
-		-- Set environment variables for Project A
-		set_environment_variables = {
-			PROJECT_NAME = "ProjectA",
-			API_KEY = "abc123",
-		},
-	},
-	{
-		label = "Project B Workspace",
-		args = { "zsh", "-l" },
-		cwd = "/home/yourusername/projects/projectB",
-		set_environment_variables = {
-			PROJECT_NAME = "ProjectB",
-			API_KEY = "def456",
-		},
-	},
-}
-
+-- Workspace management
 local home = wezterm.home_dir
 local workspaces = {
 	{
@@ -184,7 +148,7 @@ config.keys = {
 	-- Open buffer in NeoVim
 	{
 		key = "E",
-		mods = mod,
+		mods = "LEADER",
 		action = act.EmitEvent("trigger-vim-with-scrollback"),
 	},
 	-- Make Option-Left equivalent to Alt-b which many line editors interpret as backward-word
@@ -200,59 +164,81 @@ config.keys = {
 	-- Override new-tab to always start in HOME
 	-- { key = "t", mods = "SUPER", action = act.EmitEvent("spawn-new-tab") },
 	{ key = "t", mods = "SUPER", action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
 
 	-- Switch to the default workspace
 	{
 		key = "y",
-		mods = mod,
+		mods = "LEADER",
 		action = act.SwitchToWorkspace({
 			name = "default",
 		}),
 	},
 
-	-- Scrollback
-	{ mods = "SUPER", key = "u", action = act.ScrollByPage(-0.5) },
-	{ mods = "SUPER", key = "d", action = act.ScrollByPage(0.5) },
+	-- Puts you in copy mode
+	{
+		mods = "CTRL",
+		key = "u",
+		action = wezterm.action_callback(function(window, pane)
+			if is_nvim(pane) then
+				window:perform_action(act.SendKey({ key = "u", mods = "CTRL" }), pane)
+			else
+				-- window:perform_action(act.ActivateKeyTable({ name = "copy_mode", one_shot = false }), pane)
+				-- window:perform_action(act.ScrollByPage(-0.5), pane)
+				-- window:perform_action(act.CopyMode("ClearSelectionMode"), pane)
+				window:perform_action(act.ActivateCopyMode, pane)
+			end
+		end),
+	},
 
 	-- Quick select
-	{ mods = "SUPER", key = "s", action = act.QuickSelect },
+	{ mods = mod, key = "s", action = act.QuickSelect },
+
+	-- Enter search mode
+	-- search for the string "hash" matching regardless of case
+	{
+		mods = mod,
+		key = "/",
+		action = act.Search({ CaseInSensitiveString = "" }),
+	},
 
 	-- Cycle workspaces
-	{ mods = mod, key = "RightBracket", action = act.SwitchWorkspaceRelative(1) },
-	{ mods = mod, key = "å", action = act.SwitchWorkspaceRelative(-1) },
+	-- { mods = mod, key = "RightBracket", action = act.SwitchWorkspaceRelative(1) },
+	-- { mods = mod, key = "å", action = act.SwitchWorkspaceRelative(-1) },
 
 	-- Rotate tabs
 	{ mods = mod, key = "R", action = act.RotatePanes("Clockwise") },
 
-	-- Cycle tabs
-	{ mods = "SUPER", key = "RightBracket", action = act.ActivateTabRelative(1) },
-	{ mods = "SUPER", key = "å", action = act.ActivateTabRelative(-1) },
+	-- Cycle tabs forwards
+	{ mods = mod, key = "l", action = act.ActivateTabRelative(1) },
+	{ mods = mod, key = "n", action = act.ActivateTabRelative(1) },
+
+	-- Cycle tabs backwards
+	{ mods = mod, key = "h", action = act.ActivateTabRelative(-1) },
+	{ mods = mod, key = "p", action = act.ActivateTabRelative(-1) },
 
 	-- Go to previously active pane
-	{ mods = "SUPER", key = "a", action = act.ActivateLastTab },
+	{ mods = "LEADER|CTRL", key = "z", action = act.ActivateLastTab },
 
 	-- Split panes
-	{ mods = mod, key = "h", action = act.SplitHorizontal },
-	{ mods = mod, key = "v", action = act.SplitVertical },
+	{ mods = mod, key = "H", action = act.SplitHorizontal },
+	{ mods = mod, key = "V", action = act.SplitVertical },
 
 	-- Zoom in on pane
 	{ mods = mod, key = "Enter", action = act.TogglePaneZoomState },
 
-	-- Resize panes
-	{ mods = mod, key = "UpArrow", action = act.AdjustPaneSize({ "Up", 4 }) },
-	{ mods = mod, key = "DownArrow", action = act.AdjustPaneSize({ "Down", 4 }) },
-	{ mods = mod, key = "LeftArrow", action = act.AdjustPaneSize({ "Left", 4 }) },
-	{ mods = mod, key = "RightArrow", action = act.AdjustPaneSize({ "Right", 4 }) },
+	-- Puts you in resize mode
+	{ mods = mod, key = "r", action = act.ActivateKeyTable({ name = "resize_mode", one_shot = false }) },
 
 	-- Copy mode
-	{ mods = "SUPER", key = "x", action = wezterm.action.ActivateCopyMode },
+	{ mods = mod, key = "x", action = wezterm.action.ActivateCopyMode },
 
 	-- Show the launcher in fuzzy selection mode and have it list all workspaces and allow activating one.
-	{ key = "l", mods = mod, action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+	{ mods = mod, key = "f", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
 
 	{
-		key = "w",
 		mods = mod,
+		key = "w",
 		action = wezterm.action_callback(function(window, pane)
 			local function workspaceName(str)
 				for _, v in ipairs(wezterm.mux.get_workspace_names()) do
@@ -306,8 +292,8 @@ config.keys = {
 	},
 	-- Prompt for a name to use for a new workspace and switch to it.
 	{
+		mods = mod .. "|SHIFT",
 		key = "n",
-		mods = mod,
 		action = act.PromptInputLine({
 			description = wezterm.format({
 				{ Attribute = { Intensity = "Bold" } },
@@ -329,8 +315,8 @@ config.keys = {
 			end),
 		}),
 	},
-	{ mods = mod, key = "P", action = wezterm.action.ActivateCommandPalette },
-	{ mods = mod, key = "T", action = wezterm.action.ShowTabNavigator },
+	{ mods = mod, key = "o", action = wezterm.action.ActivateCommandPalette },
+	{ mods = mod, key = "m", action = wezterm.action.ShowTabNavigator },
 
 	-- move between split panes
 	split_nav("move", "CTRL", "h", "Left"),
@@ -339,8 +325,17 @@ config.keys = {
 	split_nav("move", "CTRL", "l", "Right"),
 }
 
+-- This loop would add keybindings which will allow us to activate a specific tab by its number from 1 to 9.
+for i = 1, 9 do
+	table.insert(config.keys, {
+		key = tostring(i),
+		mods = "LEADER",
+		action = act.ActivateTab(i - 1),
+	})
+end
+
 -- Copy mode key mappings
-local keys = {
+local copy_keys = {
 	-- Clear the selection mode, but remain in copy mode
 	{
 		key = "y",
@@ -352,17 +347,54 @@ local keys = {
 			act.CopyMode("ClearSelectionMode"),
 		}),
 	},
+	{
+		key = "/",
+		mods = "NONE",
+		action = act.Multiple({
+			act.Search({ CaseInSensitiveString = "" }),
+		}),
+	},
 }
 
+-- Pressing Enter in search mode will put you in copy mode so that you can easily yank the text
+local search_keys = {
+	{
+		key = "Enter",
+		mods = "NONE",
+		action = act.Multiple({
+			act.ActivateCopyMode,
+		}),
+	},
+}
+
+-- Resize panes in a dedicated custom mode which we for now will call resize mode
+local resize_mode = {
+	{ key = "h", action = act.AdjustPaneSize({ "Left", 4 }) },
+	{ key = "j", action = act.AdjustPaneSize({ "Down", 4 }) },
+	{ key = "k", action = act.AdjustPaneSize({ "Up", 4 }) },
+	{ key = "l", action = act.AdjustPaneSize({ "Right", 4 }) },
+	{ key = "Escape", action = "PopKeyTable" },
+	{ key = "c", mods = "CTRL", action = "PopKeyTable" },
+}
+
+-- Instead of overwriting existing key bindings in copy and search mode, we add our own key mappinga to the existing tables
 local copy_mode = nil
+local search_mode = nil
 if wezterm.gui then
 	copy_mode = wezterm.gui.default_key_tables().copy_mode
-	for k, v in pairs(keys) do
+	for _, v in pairs(copy_keys) do
 		table.insert(copy_mode, v)
 	end
+	search_mode = wezterm.gui.default_key_tables().search_mode
+	for _, v in pairs(search_keys) do
+		table.insert(search_mode, v)
+	end
 end
+
 config.key_tables = {
 	copy_mode = copy_mode,
+	search_mode = search_mode,
+	resize_mode = resize_mode,
 }
 
 -- Additional patterns for quick selection
@@ -413,9 +445,5 @@ tabline.setup({
 		tabline_z = { "workspace" },
 	},
 })
-
--- Plugin: Modal
--- local modal = wezterm.plugin.require("https://github.com/MLFlexer/modal.wezterm")
--- modal.apply_to_config(config)
 
 return config
