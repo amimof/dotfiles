@@ -79,11 +79,19 @@ alias capply="cat <<EOF | kubectl apply -f -"
 alias b64="base64"
 alias b64d="base64 -d"
 alias sslview="openssl x509 -text -noout"
+alias gn='cd "/Users/amir/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian Vault"; nvim' # Change directory to Obsidian Vault and open NeoVim
+alias get_idf='. $HOME/git/github.com/espressif/esp-idf/export.sh'
+alias b=bbctl
 
 # Completion
 autoload -U compinit colors zcalc
 compinit -d
 colors
+
+# Enable edit command widget
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^Xe' edit-command-line
 
 # Exports
 export KEYTIMEOUT=1                                             # Reduce the delay to enter vi-mode
@@ -285,8 +293,14 @@ source <(fzf --zsh)
 # Load fzf tab completion plugin
 [ -f ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh ] && source ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh
 
+# Load zsh auto pairs plugin
+source $(brew --prefix)/share/zsh-autopair/autopair.zsh
+
 # Load own plugins
 [ -f ~/.zsh/vpn.zsh ] && source ~/.zsh/vpn.zsh
+
+# Load own plugins
+[ -f ~/.zsh/workspaces.zsh ] && source ~/.zsh/workspaces.zsh
 
 # Starship prompt
 eval "$(starship init zsh)"
@@ -294,3 +308,5 @@ eval "$(starship init zsh)"
 
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+export PATH="$PATH:/Users/amir/.dotnet/tools"
+export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"

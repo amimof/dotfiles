@@ -221,8 +221,8 @@ config.keys = {
 	{ mods = "LEADER|CTRL", key = "z", action = act.ActivateLastTab },
 
 	-- Split panes
-	{ mods = mod, key = "H", action = act.SplitHorizontal },
-	{ mods = mod, key = "V", action = act.SplitVertical },
+	{ mods = mod, key = "-", action = act.SplitHorizontal },
+	{ mods = mod, key = "v", action = act.SplitVertical },
 
 	-- Zoom in on pane
 	{ mods = mod, key = "Enter", action = act.TogglePaneZoomState },

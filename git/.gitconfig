@@ -64,6 +64,9 @@
   tool = nvimdiff
   conflictstyle = diff3
 
+[push]
+  autoSetupRemote = true
+
 [user]
 	email = amimof@users.noreply.github.com
 	name = Amir Mofasser
@@ -76,7 +79,7 @@
   format = ssh
 
 [gpg "ssh"]
-  program = "/Applications/5Password.app/Contents/MacOS/op-ssh-sign"
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 
 [filter "lfs"]
   required = true

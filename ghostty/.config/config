@@ -10,6 +10,11 @@ window-title-font-family = "FiraMono Nerd Font"
 window-vsync = true
 quick-terminal-screen = main
 copy-on-select = true
+unfocused-split-fill = 000000
+unfocused-split-opacity = 0.75
+
+auto-update = check
+auto-update-channel = tip
 
 # MacOS settings
 macos-titlebar-style = "tabs"

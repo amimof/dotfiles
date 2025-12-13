@@ -13,7 +13,3 @@ vim.o.winborder = "rounded"
 
 -- Remove whitespaces
 vim.cmd([[set nolist]])
-
-if vim.opt.diff:get() then
-  vim.o.diffopt = "internal,filter,closeoff"
-end
