@@ -16,6 +16,13 @@ $(BIN)/%: | $(BIN) ; $(info $(M) building $(PACKAGE))
 MISSPELL = $(BIN)/misspell
 $(BIN)/misspell: PACKAGE=github.com/client9/misspell/cmd/misspell
 
+# Build
+all: 
+	stow -v --dotfiles -R -t $$HOME */
+
+delete: 
+	stow -v --dotfiles -D -t $$HOME */
+
 # Tests
 
 .PHONY: misspell

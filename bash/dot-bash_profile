@@ -1,4 +1,6 @@
+# vim: filetype=bash
 # Source .bashrc
 if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
+  . ~/.bashrc
 fi
+

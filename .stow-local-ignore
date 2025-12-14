@@ -1,0 +1,7 @@
+\.github
+\.minttyrc
+Makefile
+init.lua
+install.sh
+lazy-lock.json
+settings.json
