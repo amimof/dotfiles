@@ -82,6 +82,7 @@ alias sslview="openssl x509 -text -noout"
 alias gn='cd "/Users/amir/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian Vault"; nvim' # Change directory to Obsidian Vault and open NeoVim
 alias get_idf='. $HOME/git/github.com/espressif/esp-idf/export.sh'
 alias b=bbctl
+alias gp=gitproj
 
 # Completion
 autoload -U compinit colors zcalc
@@ -120,7 +121,7 @@ export LESS=-R
 export FZF_STYLE="full"
 export FZF_TMUX=0
 # export FZF_DEFAULT_COMMAND='fd . --hidden --color always'
-export FZF_DEFAULT_OPTS='--layout reverse --border rounded --color=fg:#ebfafa,hl:#37f499 --color=fg+:#ebfafa,bg+:#212337,hl+:#37f499 --color=info:#f7c67f,prompt:#04d1f9,pointer:#7081d0 --color=marker:#7081d0,spinner:#f7c67f,header:#323449'
+export FZF_DEFAULT_OPTS='--height=~30% --layout reverse --border rounded --color=fg:#ebfafa,hl:#37f499 --color=fg+:#ebfafa,bg+:#212337,hl+:#37f499 --color=info:#f7c67f,prompt:#04d1f9,pointer:#7081d0 --color=marker:#7081d0,spinner:#f7c67f,header:#323449'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'"
 export FZF_CTRL_T_OPTS="--preview '([[ -d {} ]] && eza -l --color=always {} || bat --theme=Eldritch --style=numbers --color=always --line-range=:500 {}) 2> /dev/null | head -200'"
 
@@ -298,9 +299,8 @@ source $(brew --prefix)/share/zsh-autopair/autopair.zsh
 
 # Load own plugins
 [ -f ~/.zsh/vpn.zsh ] && source ~/.zsh/vpn.zsh
-
-# Load own plugins
 [ -f ~/.zsh/workspaces.zsh ] && source ~/.zsh/workspaces.zsh
+[ -f ~/.zsh/gitproj.zsh ] && source ~/.zsh/gitproj.zsh
 
 # Starship prompt
 eval "$(starship init zsh)"
