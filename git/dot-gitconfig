@@ -2,7 +2,7 @@
 
 [core]
   #hooksPath = "~/.config/git_hooks"
-  sshCommand = "ssh -i ~/.ssh/keys/amimof@users.noreply.github.com -o IdentitiesOnly=yes"
+  ; sshCommand = "ssh -i ~/.ssh/keys/amimof@users.noreply.github.com -o IdentitiesOnly=yes"
 
 [color]
 	branch = auto

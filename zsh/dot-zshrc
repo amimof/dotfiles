@@ -97,10 +97,11 @@ bindkey '^Xe' edit-command-line
 # Exports
 export KEYTIMEOUT=1                                             # Reduce the delay to enter vi-mode
 export TERM=tmux-256color
-export PATH=$PATH:/usr/local/go/bin:~/go/bin                             # Puts go into PATH
+export PATH=$PATH:/usr/local/go/bin:~/go/bin                    # Puts go into PATH
+export PATH=$PATH:~/.local/bin
 export MOZ_GTK_TITLEBAR_DECORATION=client                       # Configure GTK to use client titlebar
 export GTK_THEME=Adwaita:dark                                   # Make GTK windows dark
-export EDITOR=nvim                                               # NeoVim is our editor
+export EDITOR=nvim                                              # NeoVim is our editor
 export CLICOLOR=1                                               # Add colors to files and directories
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                          # Add colors to files and directories
 export GPG_TTY=$(tty)                                           # Tell gpg agent which TTY we are in

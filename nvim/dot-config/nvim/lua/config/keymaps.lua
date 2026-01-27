@@ -59,3 +59,13 @@ local function search_files_in_directory()
   end)
 end
 map("n", "<leader>fa", search_files_in_directory, { desc = "Search files in any directory" })
+
+map("n", "<leader>gt", function()
+  require("fzf-lua").git_branches()
+end, { desc = "Create new branch" })
+
+map("n", "<leader>gP", function()
+  vim.cmd([[
+    :Git pu
+  ]])
+end, { desc = "Git push" })
