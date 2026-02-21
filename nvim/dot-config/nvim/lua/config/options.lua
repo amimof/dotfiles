@@ -11,5 +11,11 @@ vim.opt_local.spell = false
 
 vim.o.winborder = "rounded"
 
+-- vim.g.moonflyTransparent = true
+vim.g.moonflyWinSeparator = 2
+vim.g.moonflyVirtualTextColor = true
+vim.g.moonflyNormalPmenu = true
+vim.g.moonflyNormalFloat = true
+
 -- Remove whitespaces
 vim.cmd([[set nolist]])

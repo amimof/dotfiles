@@ -5,7 +5,7 @@ local config = wezterm.config_builder()
 -- Colors & Font
 -- config.color_scheme = "Tokyo Night"
 config.leader = { key = "z", mods = "CTRL" }
-config.color_scheme = "Eldritch"
+config.color_scheme = "moonfly"
 config.font_size = 14.2
 config.font = wezterm.font("FiraMono Nerd Font")
 config.colors = {
@@ -406,7 +406,7 @@ config.quick_select_patterns = {
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 tabline.setup({
 	options = {
-		theme = "Eldritch",
+		-- theme = "Moonfly",
 		tab_separators = {
 			left = "",
 			right = "",

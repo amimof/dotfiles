@@ -145,7 +145,6 @@ return {
       },
     },
   },
-  -- /Users/amir/.local/share/nvim/mason/bin/htmlbeautifier
 
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -156,11 +155,6 @@ return {
       }
       opts.window.width = 30
       require("neo-tree").setup(opts)
-      vim.cmd([[
-        :hi NeoTreeNormal guibg=#0c0d18
-        :hi NeoTreeNormalNC guibg=#0c0d18
-        :hi NeoTreeEndOfBuffer guibg=#0c0d18
-      ]])
       vim.cmd([[
         " :hi NvimTreeGitFileNewHL guifg=#a6e3a1
         " :hi NvimTreeGitNewIcon guifg=#a6e3a1
@@ -178,14 +172,14 @@ return {
         " :hi NvimTreeGitFileStagedHL guifg=#a6e3a1 gui=bold
         " :hi NvimTreeGitFolderStagedHL guifg=#a6e3a1 gui=bold
         "
-        :hi NeoTreeGitModified guifg=#f9e2af
-        :hi NeoTreeGitDeleted guifg=#ee6d85
+        " :hi NeoTreeGitModified guifg=#f9e2af
+        " :hi NeoTreeGitDeleted guifg=#ee6d85
 
-        :hi NeoTreeGitAdded guifg=#a6e3a1
+        " :hi NeoTreeGitAdded guifg=#a6e3a1
         " :hi NeoTreeDirectoryName guifg=cleared
         " :hi NeoTreeGitConflict guifg=#a6e3a1
         " :hi NeoTreeGitIgnored guifg=#a6e3a1
-        :hi NeoTreeGitUnstaged guifg=#a6e3a1
+        " :hi NeoTreeGitUnstaged guifg=#a6e3a1
         " :hi NeoTreeGitUntracked guifg=#a6e3a1
         " :hi NeoTreeGitStaged guifg=#a6e3a1
         " :hi NeoTreeHiddenByName guifg=#a6e3a1
@@ -394,9 +388,9 @@ return {
   {
     "saghen/blink.cmp",
     opts = {
-      -- fuzzy = {
-      --   implementation = "prefer_rust_with_warning"
-      -- },
+      fuzzy = {
+        implementation = "prefer_rust_with_warning",
+      },
       completion = {
         trigger = {
           show_on_trigger_character = true,
@@ -405,7 +399,7 @@ return {
         ghost_text = { enabled = false },
         menu = {
           --auto_show = false,
-          winhighlight = "Base:BlinkCmpMenu,RoundBorder:BrightGreen,CursorLine:BlinkCmpMenuSelection,Search:Normal",
+          -- winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
           draw = {
             columns = {
               { "label", "label_description", gap = 2 },
@@ -427,6 +421,7 @@ return {
   {
     "ibhagwan/fzf-lua",
     config = function(opts)
+      opts = { "skim" }
       opts.fzf_opts = {
         ["--header"] = false,
       }
@@ -459,11 +454,15 @@ return {
     config = function(opts)
       local p = require("tokyodark.palette")
       local darker_black = "#0c0d18"
+
       opts.on_colors = function(colors)
         colors.bg_highlight = p.bg2
       end
-
       opts.on_highlights = function(h, c)
+        h.NeoTreeNormal = { bg = "#0c0d18" }
+        h.NeoTreeNormalNC = { bg = "#0c0d18" }
+        h.NeoTreeEndOfBuffer = { bg = "#0c0d18" }
+
         h.SnacksIndent = { fg = p.bg2 }
         h.SnacksIndentScope = { fg = p.bg4 }
 
@@ -531,6 +530,18 @@ return {
     "tpope/vim-fugitive",
     config = function(opts)
       vim.keymap.set("n", "<leader>gs", ":vertical Git<CR>", { desc = "Git Status (Fugitive)" })
+    end,
+  },
+
+  {
+    "bluz71/vim-moonfly-colors",
+    name = "moonfly",
+    lazy = false,
+    priority = 1000,
+    config = function(opts)
+      vim.cmd([[
+        :hi NormalFloat guibg=#a6e3a1
+      ]])
     end,
   },
 }

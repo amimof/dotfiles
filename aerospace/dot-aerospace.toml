@@ -1,0 +1,152 @@
+# Reference: https://github.com/i3/i3/blob/next/etc/config
+
+config-version = 2
+
+# In i3, all workspaces are phantom
+persistent-workspaces = ["1", "2", "3", "4"]
+
+# i3 doesn't have "normalizations" feature that why we disable them here.
+# But the feature is very helpful.
+# Normalizations eliminate all sorts of weird tree configurations that don't make sense.
+# Give normalizations a chance and enable them back.
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Mouse follows focus when focused monitor changes
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# See: https://nikitabobko.github.io/AeroSpace/guide#layouts
+# The 'accordion-padding' specifies the size of accordion padding
+# You can set 0 to disable the padding feature
+accordion-padding = 30
+
+# Possible values: tiles|accordion
+default-root-container-layout = 'tiles'
+
+# Possible values: horizontal|vertical|auto
+# 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
+#               tall monitor (anything higher than wide) gets vertical orientation
+default-root-container-orientation = 'auto'
+
+# Run Sketchybar together with AeroSpace
+# sketchybar has a built-in detection of already running process,
+# so it won't be run twice on AeroSpace restart
+after-startup-command = ['exec-and-forget sketchybar']
+
+
+
+
+# Notify Sketchybar about workspace change
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
+[gaps]
+    inner.horizontal = 10
+    inner.vertical =   10
+    outer.left =       10
+    outer.bottom =     10
+    outer.top =        40
+    outer.right =      10
+
+[mode.main.binding]
+    # See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
+    cmd-alt-t = '''exec-and-forget osascript -e '
+    tell application "WezTerm"
+      do script
+      activate
+    end tell'
+    '''
+
+    # cmd-h = [] # Disable "hide application"
+    cmd-alt-h = [] # Disable "hide others"
+
+    # i3 wraps focus by default
+    cmd-h = 'focus left'
+    cmd-j = 'focus down'
+    cmd-k = 'focus up'
+    cmd-l = 'focus right'
+
+    cmd-alt-u = 'move left'
+    cmd-alt-i = 'move right'
+    # alt-shift-k = 'move up'
+    # alt-shift-l = 'move right'
+
+    # Consider using 'join-with'a command as a 'split' replacement if you want to enable
+    # normalizations
+    # alt-h = 'split horizontal'
+    # alt-v = 'split vertical'
+
+    cmd-alt-f = 'fullscreen'
+
+    # alt-s = 'layout v_accordion' # 'layout stacking' in i3
+    # alt-w = 'layout h_accordion' # 'layout tabbed' in i3
+    cmd-alt-n = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
+
+    cmd-alt-y = 'layout floating tiling' # 'floating toggle' in i3
+
+    # Not supported, because this command is redundant in AeroSpace mental model.
+    # See: https://nikitabobko.github.io/AeroSpace/guide#floating-windows
+    #alt-space = 'focus toggle_tiling_floating'
+
+    # `focus parent`/`focus child` are not yet supported, and it's not clear whether they
+    # should be supported at all https://github.com/nikitabobko/AeroSpace/issues/5
+    # alt-a = 'focus parent'
+
+    # alt-minus = 'resize smart -50'
+    # alt-equal = 'resize smart +50'
+
+    cmd-alt-1 = 'workspace 1'
+    cmd-alt-2 = 'workspace 2'
+    cmd-alt-3 = 'workspace 3'
+    cmd-alt-4 = 'workspace 4'
+    cmd-alt-5 = 'workspace 5'
+
+    cmd-alt-shift-1 = 'move-node-to-workspace 1'
+    cmd-alt-shift-2 = 'move-node-to-workspace 2'
+    cmd-alt-shift-3 = 'move-node-to-workspace 3'
+    cmd-alt-shift-4 = 'move-node-to-workspace 4'
+    cmd-alt-shift-5 = 'move-node-to-workspace 5'
+
+    alt-shift-c = 'reload-config'
+
+    cmd-alt-r = 'mode resize'
+
+[mode.resize.binding]
+    cmd-h = 'resize width -50'
+    cmd-j = 'resize height +50'
+    cmd-k = 'resize height -50'
+    cmd-l = 'resize width +50'
+    enter = 'mode main'
+    esc = 'mode main'
+    ctrl-c = 'mode main'
+
+# Assign apps to specific workspace.
+# Use this command to get bundle id of running apps:
+#   mdls -name kMDItemCFBundleIdentifier -r /Applications/App.app
+# Use this for any app:
+#   codesign -dr - /Applications/<APP_NAME>.app
+
+[[on-window-detected]]
+    if.app-id = 'app.zen-browser.zen'
+    run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+    if.app-id = 'com.github.wez.wezterm'
+    run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+    if.app-id = 'com.tinyspeck.slackmacgap'
+    run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+    if.app-id = 'com.microsoft.teams2'
+    run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+    if.app-id = 'ch.protonmail.desktop'
+    run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+    if.app-id = 'com.microsoft.Outlook'
+    run = 'move-node-to-workspace 3'
