@@ -399,7 +399,7 @@ return {
         ghost_text = { enabled = false },
         menu = {
           --auto_show = false,
-          -- winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
+          winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
           draw = {
             columns = {
               { "label", "label_description", gap = 2 },
@@ -508,7 +508,7 @@ return {
       opts.transparent = true
 
       require("eldritch").setup(opts)
-      vim.cmd([[colorscheme eldritch]])
+      -- vim.cmd([[colorscheme eldritch]])
     end,
   },
 
@@ -539,9 +539,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function(opts)
-      vim.cmd([[
-        :hi NormalFloat guibg=#a6e3a1
-      ]])
+      vim.cmd([[colorscheme moonfly]])
     end,
   },
 }

@@ -1,3 +1,4 @@
+
 # Reference: https://github.com/i3/i3/blob/next/etc/config
 
 config-version = 2
@@ -150,3 +151,8 @@ exec-on-workspace-change = ['/bin/bash', '-c',
 [[on-window-detected]]
     if.app-id = 'com.microsoft.Outlook'
     run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+    if.app-id = 'com.bitwarden.desktop'
+    run = 'layout floating'
+   run = 'move-node-to-workspace 3'

@@ -125,6 +125,7 @@ export FZF_TMUX=0
 export FZF_DEFAULT_OPTS='--height=~30% --layout reverse --border rounded --color=fg:#ebfafa,hl:#37f499 --color=fg+:#ebfafa,bg+:#212337,hl+:#37f499 --color=info:#f7c67f,prompt:#04d1f9,pointer:#7081d0 --color=marker:#7081d0,spinner:#f7c67f,header:#323449'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'"
 export FZF_CTRL_T_OPTS="--preview '([[ -d {} ]] && eza -l --color=always {} || bat --theme=Eldritch --style=numbers --color=always --line-range=:500 {}) 2> /dev/null | head -200'"
+export SSH_AUTH_SOCK=/Users/amir/.bitwarden-ssh-agent.sock
 
 # Prompt
 #PROMPT='%F{blue}%1~ %B%f%F{green}%f%b '
