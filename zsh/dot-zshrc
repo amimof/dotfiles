@@ -301,7 +301,7 @@ source $(brew --prefix)/share/zsh-autopair/autopair.zsh
 
 # Load own plugins
 [ -f ~/.zsh/vpn.zsh ] && source ~/.zsh/vpn.zsh
-[ -f ~/.zsh/workspaces.zsh ] && source ~/.zsh/workspaces.zsh
+# [ -f ~/.zsh/workspaces.zsh ] && source ~/.zsh/workspaces.zsh
 [ -f ~/.zsh/gitproj.zsh ] && source ~/.zsh/gitproj.zsh
 
 # Starship prompt

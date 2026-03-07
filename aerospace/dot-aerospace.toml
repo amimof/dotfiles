@@ -1,6 +1,4 @@
-
 # Reference: https://github.com/i3/i3/blob/next/etc/config
-
 config-version = 2
 
 # In i3, all workspaces are phantom
@@ -34,9 +32,6 @@ default-root-container-orientation = 'auto'
 # so it won't be run twice on AeroSpace restart
 after-startup-command = ['exec-and-forget sketchybar']
 
-
-
-
 # Notify Sketchybar about workspace change
 exec-on-workspace-change = ['/bin/bash', '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
@@ -62,54 +57,32 @@ exec-on-workspace-change = ['/bin/bash', '-c',
     # cmd-h = [] # Disable "hide application"
     cmd-alt-h = [] # Disable "hide others"
 
-    # i3 wraps focus by default
     cmd-h = 'focus left'
     cmd-j = 'focus down'
     cmd-k = 'focus up'
     cmd-l = 'focus right'
 
-    cmd-alt-u = 'move left'
-    cmd-alt-i = 'move right'
-    # alt-shift-k = 'move up'
-    # alt-shift-l = 'move right'
-
-    # Consider using 'join-with'a command as a 'split' replacement if you want to enable
-    # normalizations
-    # alt-h = 'split horizontal'
-    # alt-v = 'split vertical'
+    cmd-u = 'move left'
+    cmd-i = 'move right'
 
     cmd-alt-f = 'fullscreen'
 
-    # alt-s = 'layout v_accordion' # 'layout stacking' in i3
-    # alt-w = 'layout h_accordion' # 'layout tabbed' in i3
-    cmd-alt-n = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
+    cmd-o = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
+    cmd-y = 'layout floating tiling' # 'floating toggle' in i3
 
-    cmd-alt-y = 'layout floating tiling' # 'floating toggle' in i3
+    cmd-1 = 'workspace 1'
+    cmd-2 = 'workspace 2'
+    cmd-3 = 'workspace 3'
+    cmd-4 = 'workspace 4'
+    cmd-5 = 'workspace 5'
 
-    # Not supported, because this command is redundant in AeroSpace mental model.
-    # See: https://nikitabobko.github.io/AeroSpace/guide#floating-windows
-    #alt-space = 'focus toggle_tiling_floating'
+    cmd-alt-1 = 'move-node-to-workspace 1'
+    cmd-alt-2 = 'move-node-to-workspace 2'
+    cmd-alt-3 = 'move-node-to-workspace 3'
+    cmd-alt-4 = 'move-node-to-workspace 4'
+    cmd-alt-5 = 'move-node-to-workspace 5'
 
-    # `focus parent`/`focus child` are not yet supported, and it's not clear whether they
-    # should be supported at all https://github.com/nikitabobko/AeroSpace/issues/5
-    # alt-a = 'focus parent'
-
-    # alt-minus = 'resize smart -50'
-    # alt-equal = 'resize smart +50'
-
-    cmd-alt-1 = 'workspace 1'
-    cmd-alt-2 = 'workspace 2'
-    cmd-alt-3 = 'workspace 3'
-    cmd-alt-4 = 'workspace 4'
-    cmd-alt-5 = 'workspace 5'
-
-    cmd-alt-shift-1 = 'move-node-to-workspace 1'
-    cmd-alt-shift-2 = 'move-node-to-workspace 2'
-    cmd-alt-shift-3 = 'move-node-to-workspace 3'
-    cmd-alt-shift-4 = 'move-node-to-workspace 4'
-    cmd-alt-shift-5 = 'move-node-to-workspace 5'
-
-    alt-shift-c = 'reload-config'
+    cmd-alt-c = 'reload-config'
 
     cmd-alt-r = 'mode resize'
 
@@ -155,4 +128,3 @@ exec-on-workspace-change = ['/bin/bash', '-c',
 [[on-window-detected]]
     if.app-id = 'com.bitwarden.desktop'
     run = 'layout floating'
-   run = 'move-node-to-workspace 3'

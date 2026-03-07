@@ -512,19 +512,19 @@ return {
     end,
   },
 
-  {
-    "mrjones2014/smart-splits.nvim",
-    lazy = false,
-    config = function(opts)
-      opts.disable_multiplexer_nav_when_zoomed = false
-      require("smart-splits").setup(opts)
-      -- moving between wezterm splits
-      vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left)
-      vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
-      vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
-      vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
-    end,
-  },
+  -- {
+  --   "mrjones2014/smart-splits.nvim",
+  --   lazy = false,
+  --   config = function(opts)
+  --     opts.disable_multiplexer_nav_when_zoomed = false
+  --     require("smart-splits").setup(opts)
+  --     -- moving between wezterm splits
+  --     vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left)
+  --     vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
+  --     vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
+  --     vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
+  --   end,
+  -- },
 
   {
     "tpope/vim-fugitive",
@@ -540,6 +540,23 @@ return {
     priority = 1000,
     config = function(opts)
       vim.cmd([[colorscheme moonfly]])
+    end,
+  },
+
+  {
+    "mikesmithgh/kitty-scrollback.nvim",
+    enabled = true,
+    lazy = true,
+    cmd = {
+      "KittyScrollbackGenerateKittens",
+      "KittyScrollbackCheckHealth",
+      "KittyScrollbackGenerateCommandLineEditing",
+    },
+    event = { "User KittyScrollbackLaunch" },
+    -- version = '*', -- latest stable version, may have breaking changes if major version changed
+    -- version = '^6.0.0', -- pin major version, include fixes and features that do not have breaking changes
+    config = function()
+      require("kitty-scrollback").setup()
     end,
   },
 }
