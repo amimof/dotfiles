@@ -27,14 +27,21 @@ def draw_tab(
 
     layout_icon = ""
     if tab.layout_name == "stack":
-        layout_icon = ""
+        layout_icon = " "
+
+    proc_icon = ""
+    if tab.title == "vim":
+        proc_icon = " "
+    elif tab.title == "zsh":
+        proc_icon = ""
 
     new_draw_data = draw_data._replace(
         title_template="{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}"
-        + "{index}"
+        + "{index} "
         + layout_icon
         + "{tab.last_focused_progress_percent}"
-        + " {title}"
+        + proc_icon
+        + "{title}"
         # active_title_template inherits title_template if nil
     )
 

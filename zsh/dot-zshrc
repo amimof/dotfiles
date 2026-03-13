@@ -300,7 +300,7 @@ source <(fzf --zsh)
 source $(brew --prefix)/share/zsh-autopair/autopair.zsh
 
 # Load own plugins
-[ -f ~/.zsh/vpn.zsh ] && source ~/.zsh/vpn.zsh
+[ -f ~/.zsh/vpn/vpn.sh ] && source ~/.zsh/vpn/vpn.sh
 # [ -f ~/.zsh/workspaces.zsh ] && source ~/.zsh/workspaces.zsh
 [ -f ~/.zsh/gitproj.zsh ] && source ~/.zsh/gitproj.zsh
 

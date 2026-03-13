@@ -5,18 +5,17 @@ local config = wezterm.config_builder()
 -- Colors & Font
 -- config.color_scheme = "Tokyo Night"
 config.leader = { key = "z", mods = "CTRL" }
-config.color_scheme = "moonfly"
+config.color_scheme = "Moonfly (Gogh)"
 config.font_size = 14.2
 config.font = wezterm.font("FiraMono Nerd Font")
 config.colors = {
-	background = "#11121D",
+	background = "#0b0d11",
 	tab_bar = {
-		background = "#16161e",
+		background = "#0b0d11",
 	},
 }
 
 config.max_fps = 170
-
 -- Tabs
 config.tab_max_width = 26
 config.enable_tab_bar = true
@@ -120,7 +119,8 @@ wezterm.on("trigger-vim-with-scrollback", function(window, pane)
 end)
 
 -- Global modifier key
-local mod = "LEADER"
+local mod = "ALT"
+local leader = "LEADER"
 
 -- Workspace management
 local home = wezterm.home_dir
@@ -159,9 +159,7 @@ config.keys = {
 
 	-- CMD+Left/right goes to end/beginning of line
 	{ key = "LeftArrow", mods = "SUPER", action = act.SendString("\001") },
-	{ key = "RightArrow", mods = "SUPER", action = act.SendString("\005") },
-
-	-- Override new-tab to always start in HOME
+	{ key = "RightArrow", mods = "SUPER", action = act.SendString("\005") }, -- Override new-tab to always start in HOME
 	-- { key = "t", mods = "SUPER", action = act.EmitEvent("spawn-new-tab") },
 	{ key = "t", mods = "SUPER", action = act.SpawnTab("CurrentPaneDomain") },
 	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
@@ -211,14 +209,14 @@ config.keys = {
 
 	-- Cycle tabs forwards
 	{ mods = mod, key = "l", action = act.ActivateTabRelative(1) },
-	{ mods = mod, key = "n", action = act.ActivateTabRelative(1) },
+	-- { mods = mod, key = "n", action = act.ActivateTabRelative(1) },
 
 	-- Cycle tabs backwards
 	{ mods = mod, key = "h", action = act.ActivateTabRelative(-1) },
-	{ mods = mod, key = "p", action = act.ActivateTabRelative(-1) },
+	-- { mods = mod, key = "p", action = act.ActivateTabRelative(-1) },
 
 	-- Go to previously active pane
-	{ mods = "LEADER|CTRL", key = "z", action = act.ActivateLastTab },
+	{ mods = mod, key = "a", action = act.ActivateLastTab },
 
 	-- Split panes
 	{ mods = mod, key = "-", action = act.SplitHorizontal },
@@ -406,7 +404,7 @@ config.quick_select_patterns = {
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 tabline.setup({
 	options = {
-		-- theme = "Moonfly",
+		theme = "Moonfly (Gogh)",
 		tab_separators = {
 			left = "",
 			right = "",
@@ -420,9 +418,7 @@ tabline.setup({
 	},
 	sections = {
 		tab_active = {
-			{ Attribute = { Intensity = "Normal" } },
-			{ Background = { Color = "#ffc777" } },
-			{ Foreground = { Color = "#1f2335" } },
+			{ Foreground = { Color = "#ffc777" } },
 			"▎",
 			"ResetAttributes",
 			"index",
@@ -430,9 +426,7 @@ tabline.setup({
 			{ "process", padding = { left = 0, right = 2 } },
 		},
 		tab_inactive = {
-			{ Attribute = { Intensity = "Normal" } },
-			{ Background = { Color = "grey" } },
-			{ Foreground = { Color = "#1f2335" } },
+			{ Foreground = { Color = "grey" } },
 			"▎",
 			"ResetAttributes",
 			"index",

@@ -1,7 +1,7 @@
 return {
 
   -- Disable plugins
-  { "ggandor/leap.nvim", enabled = false },
+  { "https://codeberg.org/andyg/leap.nvim.git", enabled = false },
   { "folke/noice.nvim", enabled = false },
   { "folke/flash.nvim", enabled = false },
   { "nvim-mini/mini.icons", enabled = false },
@@ -153,6 +153,21 @@ return {
       opts.default_component_configs.modified = {
         symbol = "",
       }
+      opts.filesystem.follow_current_file = {
+        leave_dirs_open = true,
+        enabled = true,
+        show_unloaded = false,
+        group_empty_dirs = true,
+      }
+
+      opts.buffers = opts.buffers or {}
+      opts.buffers.show_unloaded = false
+      opts.buffers.group_empty_dirs = false
+      opts.buffers.follow_current_file = {
+        leave_dirs_open = true,
+        enabled = true,
+      }
+
       opts.window.width = 30
       require("neo-tree").setup(opts)
       vim.cmd([[
@@ -203,7 +218,38 @@ return {
   {
     "akinsho/bufferline.nvim",
     opts = {
+      highlights = {
+        fill = { bg = "#16161e" },
+        background = { bg = "#16161e" },
+        buffer = { bg = "#16161e" },
+        separator = { bg = "#16161e" },
+        separator_visible = { bg = "#16161e" },
+        error = { bg = "#16161e" },
+        error_visible = { bg = "#16161e" },
+
+        warning = { bg = "#16161e" },
+        warning_visible = { bg = "#16161e" },
+
+        info = { bg = "#16161e" },
+        info_visible = { bg = "#16161e" },
+
+        hint = { bg = "#16161e" },
+        hint_visible = { bg = "#16161e" },
+
+        diagnostic = { bg = "#16161e" },
+        diagnostic_visible = { bg = "#16161e" },
+
+        error_diagnostic = { bg = "#16161e" },
+        warning_diagnostic = { bg = "#16161e" },
+        info_diagnostic = { bg = "#16161e" },
+        hint_diagnostic = { bg = "#16161e" },
+        close_button = { bg = "#16161e" },
+      },
       options = {
+        indicator = {
+          style = "icon",
+          icon = "▎",
+        },
         style_preset = require("bufferline").style_preset.no_italic,
         offsets = {
           {
@@ -376,7 +422,12 @@ return {
               hint = LazyVim.config.icons.diagnostics.Hint,
             },
           },
-          { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+          {
+            "filetype",
+            icon_only = true,
+            separator = "",
+            padding = { left = 1, right = 0 },
+          },
           { LazyVim.lualine.pretty_path() },
         },
         lualine_y = { "encoding", "filetype", "progress" },
@@ -512,19 +563,19 @@ return {
     end,
   },
 
-  -- {
-  --   "mrjones2014/smart-splits.nvim",
-  --   lazy = false,
-  --   config = function(opts)
-  --     opts.disable_multiplexer_nav_when_zoomed = false
-  --     require("smart-splits").setup(opts)
-  --     -- moving between wezterm splits
-  --     vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left)
-  --     vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
-  --     vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
-  --     vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
-  --   end,
-  -- },
+  {
+    "mrjones2014/smart-splits.nvim",
+    lazy = false,
+    config = function(opts)
+      opts.disable_multiplexer_nav_when_zoomed = false
+      require("smart-splits").setup(opts)
+      -- moving between wezterm splits
+      vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left)
+      vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
+      vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
+      vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
+    end,
+  },
 
   {
     "tpope/vim-fugitive",
@@ -538,8 +589,13 @@ return {
     name = "moonfly",
     lazy = false,
     priority = 1000,
-    config = function(opts)
+    config = function()
       vim.cmd([[colorscheme moonfly]])
+      vim.cmd([[
+        :hi NeoTreeNormal guibg=#08090c
+        :hi NeoTreeNormalNC guibg=#08090c
+        :hi NeoTreeEndOfBuffer guibg=#08090c
+      ]])
     end,
   },
 

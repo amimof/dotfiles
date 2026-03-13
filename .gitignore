@@ -1,3 +1,4 @@
 *~
 bin/
 .gitconfig-local
+zsh/dot-zsh/vpn/vpn.*.sh
