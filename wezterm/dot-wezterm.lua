@@ -11,8 +11,13 @@ config.font = wezterm.font("FiraMono Nerd Font")
 config.colors = {
 	background = "#0b0d11",
 	tab_bar = {
-		background = "#0b0d11",
+		background = "#16161e",
 	},
+}
+
+config.inactive_pane_hsb = {
+	saturation = 0.6,
+	brightness = 0.6,
 }
 
 config.max_fps = 170
@@ -39,8 +44,8 @@ config.initial_rows = 75
 
 config.adjust_window_size_when_changing_font_size = false
 
---config.send_composed_key_when_left_alt_is_pressed = true
---config.send_composed_key_when_right_alt_is_pressed = true
+-- config.send_composed_key_when_left_alt_is_pressed = true
+-- config.send_composed_key_when_right_alt_is_pressed = false
 
 -- Debugging
 --config.debug_key_events = true
@@ -234,6 +239,9 @@ config.keys = {
 	-- Show the launcher in fuzzy selection mode and have it list all workspaces and allow activating one.
 	{ mods = mod, key = "f", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
 
+	{ key = ".", mods = mod, action = act.MoveTabRelative(1) },
+	{ key = ",", mods = mod, action = act.MoveTabRelative(-1) },
+
 	{
 		mods = mod,
 		key = "w",
@@ -321,13 +329,16 @@ config.keys = {
 	split_nav("move", "CTRL", "j", "Down"),
 	split_nav("move", "CTRL", "k", "Up"),
 	split_nav("move", "CTRL", "l", "Right"),
+
+	{ key = "UpArrow", mods = mod, action = act.ScrollToPrompt(-1) },
+	{ key = "DownArrow", mods = mod, action = act.ScrollToPrompt(1) },
 }
 
 -- This loop would add keybindings which will allow us to activate a specific tab by its number from 1 to 9.
 for i = 1, 9 do
 	table.insert(config.keys, {
 		key = tostring(i),
-		mods = "LEADER",
+		mods = mod .. "|SHIFT",
 		action = act.ActivateTab(i - 1),
 	})
 end
@@ -411,8 +422,9 @@ tabline.setup({
 		},
 		theme_overrides = {
 			tab = {
-				active = { bg = "#212234", fg = "white" },
+				active = { bg = "#0b0d11", fg = "white" },
 				inactive = { bg = "#16161e", fg = "grey" },
+				inactive_hover = { Attribute = { Italic = false } },
 			},
 		},
 	},

@@ -107,6 +107,7 @@ export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                          # Add colors to 
 export GPG_TTY=$(tty)                                           # Tell gpg agent which TTY we are in
 export COMPLETION_WAITING_DOTS="true"
 export PATH="/usr/local/bin:$PATH"
+export OLLAMA_KEEP_ALIVE="-1"                                   # Set ollama keepalive to indefinite
 
 # Color man pages
 export LESS_TERMCAP_mb=$'\E[01;32m'
@@ -295,6 +296,9 @@ source <(fzf --zsh)
 
 # Load fzf tab completion plugin
 [ -f ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh ] && source ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh
+
+# Load fzf tab completion plugin
+[ -f ~/.config/wezterm/shell-integration.sh ] && source ~/.config/wezterm/shell-integration.sh
 
 # Load zsh auto pairs plugin
 source $(brew --prefix)/share/zsh-autopair/autopair.zsh
