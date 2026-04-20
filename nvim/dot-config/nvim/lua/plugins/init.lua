@@ -1,618 +1,356 @@
-return {
+local icons = require("config.icons")
 
-  -- Disable plugins
-  { "https://codeberg.org/andyg/leap.nvim.git", enabled = false },
-  { "folke/noice.nvim", enabled = false },
-  { "folke/flash.nvim", enabled = false },
-  { "nvim-mini/mini.icons", enabled = false },
-  { "MagicDuck/grug-far.nvim", enabled = false },
-  -- { "MeanderingProgrammer/render-markdown.nvim", enabled = false },
-  -- { "williamboman/mason-lspconfig.nvim", config = function(_, opts) end, enabled = true },
+vim.pack.add({
+	"https://github.com/nvim-mini/mini.nvim",
+	"https://github.com/neovim/nvim-lspconfig",
+	"https://github.com/nvim-treesitter/nvim-treesitter",
+	"https://github.com/mason-org/mason.nvim",
+	"https://github.com/ibhagwan/fzf-lua",
+	"https://github.com/lewis6991/gitsigns.nvim",
+	"https://github.com/tpope/vim-fugitive",
+	"https://github.com/folke/which-key.nvim",
+	{
+		src = "https://github.com/nvim-neo-tree/neo-tree.nvim",
+		version = vim.version.range("3"),
+	},
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/MunifTanjim/nui.nvim",
+	"https://github.com/nvim-tree/nvim-web-devicons",
+	"https://github.com/saghen/blink.cmp",
+	"https://github.com/bluz71/vim-moonfly-colors",
+	"https://github.com/sindrets/diffview.nvim",
+	"https://github.com/nvim-lualine/lualine.nvim",
+	"https://github.com/akinsho/bufferline.nvim",
+	"https://github.com/folke/snacks.nvim",
+	"https://github.com/lukas-reineke/indent-blankline.nvim",
+	"https://github.com/windwp/nvim-autopairs",
+})
 
-  { "nvim-tree/nvim-web-devicons" },
+require("nvim-treesitter").setup({
+	indent = { enable = true }, ---@type lazyvim.TSFeat
+	highlight = { enable = true }, ---@type lazyvim.TSFeat
+	folds = { enable = true }, ---@type lazyvim.TSFeat
+	install_dir = vim.fn.stdpath("data") .. "/site",
+})
+require("nvim-treesitter")
+	.install({
+		"bash",
+		"c",
+		"diff",
+		"go",
+		"gomod",
+		"gowork",
+		"gosum",
+		"typescript",
+		"vue",
+		"html",
+		"javascript",
+		"jsdoc",
+		"json",
+		"lua",
+		"luadoc",
+		"luap",
+		"markdown",
+		"markdown_inline",
+		"printf",
+		"proto",
+		"python",
+		"query",
+		"regex",
+		"toml",
+		"tsx",
+		"typescript",
+		"vim",
+		"vimdoc",
+		"xml",
+		"yaml",
+	})
+	:wait(300000) -- wait max. 5 minutes
 
-  {
-    "folke/snacks.nvim",
-    opts = {
-      dashboard = {
-        enabled = true,
-        sections = {
-          { section = "header" },
-          {
-            icon = " ",
-            title = "Keymaps",
-            section = "keys",
-            indent = 2,
-            padding = 1,
-          },
-          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-          { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-          { section = "startup" },
-        },
-        change_to_vcs_root = true,
-        preset = {
-          header = [[
-          ⢰⣶⣶⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣶⣶⣶⣶⣶⣶
-          ⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿
-          ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿
-          ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿
-          ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿
-          ⢸⣿⣿⣿⠀⠀⠀⠀⠀⢰⣶⣶⣶⠀⠀⠀⢰⣶⣶⣶⡆⠀⣿⣿⣿
-          ⢸⣿⣿⣿⠀⠀⠀⠀⠀⢸⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⡇⠀⣿⣿⣿
-          ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿
-          ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿
-          ⢸⣿⣿⣿⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣶⣶⣶⣿⣿⣿
-          ⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿
-          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-          ⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⠀⠀⠀
-          ⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⡀⠀⠀
-          ⠀⠀⠀⣸⣿⣿⣿⠇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠘⣿⣿⣿⣇⠀⠀
-          ⢠⣤⣶⣿⣿⣿⡟⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠹⣿⣿⣿⣶⣤
-          ⢸⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠀⠙⠿⣿⣿⣿
-          ]],
-        },
-      },
-    },
-  },
+require("mason").setup()
 
-  {
-    "mason-org/mason.nvim",
-    opts = function(_, opts)
-      opts.ui = {
-        border = "rounded",
-      }
-      opts.registries = {
-        "github:mason-org/mason-registry",
-        "github:Crashdummyy/mason-registry",
-      }
-    end,
-  },
+require("nvim-autopairs").setup()
 
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "markdown" })
-        vim.treesitter.language.register("markdown", "mdx")
-      end
-    end,
-  },
+require("neo-tree").setup({
+	default_component_configs = {
+		git_status = {
+			symbols = {
+				modified = icons.git.modified,
+				unstaged = icons.git.unstaged,
+				staged = icons.git.staged,
+			},
+		},
+		modified = {
+			symbol = icons.git.modified,
+		},
+		indent = {
+			with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+			expander_collapsed = "",
+			expander_expanded = "",
+			expander_highlight = "NeoTreeExpander",
+		},
+	},
+	filesystem = {
+		use_libuv_file_watcher = true,
+		follow_current_file = {
+			leave_dirs_open = true,
+			enabled = true,
+			show_unloaded = false,
+			group_empty_dirs = true,
+		},
+	},
+	buffers = {
+		show_unloaded = false,
+		group_empty_dirs = false,
+		follow_current_file = {
+			leave_dirs_open = true,
+			enabled = true,
+		},
+	},
+	window = {
+		width = 30,
+	},
+})
 
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        buf_ls = {
-          cmd = { "buf", "beta", "lsp", "--timeout", "0", "--log-format=text" },
-          -- root_dir = require("lspconfig.util").root_pattern("buf.yaml", "buf.work.yaml", ".git"),
-          -- root_dir = function(fname)
-          --   local util = require("lspconfig.util")
-          --   return util.root_pattern("buf.work.yaml", ".git")(fname)
-          -- end,
-          filetypes = { "proto" },
-          settings = {
-            buf = {
-              semanticTokens = true,
-            },
-          },
-        },
-      },
-      diagnostics = {
-        float = {
-          border = "rounded",
-        },
-      },
-      inlay_hints = {
-        enabled = false,
-      },
-      setup = {
-        gopls = function(_, opts)
-          opts.settings.gopls = {
-            gofumpt = true,
-            codelenses = {
-              gc_details = false,
-              generate = true,
-              regenerate_cgo = true,
-              run_govulncheck = true,
-              test = true,
-              tidy = true,
-              upgrade_dependency = true,
-              vendor = true,
-            },
-            analyses = {
-              nilness = true,
-              unusedparams = true,
-              unusedwrite = true,
-              useany = true,
-            },
-            usePlaceholders = false,
-            completeUnimported = true,
-            staticcheck = true,
-            directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
-            semanticTokens = true,
-          }
-        end,
-      },
-    },
-  },
+require("ibl").setup({
+	indent = {
+		char = "│",
+		tab_char = "│",
+	},
+	scope = { show_start = false, show_end = false },
+	exclude = {
+		filetypes = {
+			"Trouble",
+			"alpha",
+			"dashboard",
+			"help",
+			"lazy",
+			"mason",
+			"neo-tree",
+			"notify",
+			"snacks_dashboard",
+			"snacks_notif",
+			"snacks_terminal",
+			"snacks_win",
+			"toggleterm",
+			"trouble",
+		},
+	},
+})
 
-  {
-    "stevearc/conform.nvim",
-    optional = true,
-    opts = {
-      formatters_by_ft = {
-        html = { "htmlbeautifier", "gofumpt" },
-      },
-    },
-  },
+require("which-key").setup({
+	preset = "helix",
+})
 
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    config = function(_, opts)
-      opts.default_component_configs.git_status.symbols.modified = "!"
-      opts.default_component_configs.modified = {
-        symbol = "",
-      }
-      opts.filesystem.follow_current_file = {
-        leave_dirs_open = true,
-        enabled = true,
-        show_unloaded = false,
-        group_empty_dirs = true,
-      }
+require("mini.ai").setup()
+require("mini.basics").setup()
+require("mini.surround").setup({
+	mappings = {
+		add = "gsa", -- Add surrounding in Normal and Visual modes
+		delete = "gsd", -- Delete surrounding
+		find = "gsf", -- Find surrounding (to the right)
+		find_left = "gsF", -- Find surrounding (to the left)
+		highlight = "gsh", -- Highlight surrounding
+		replace = "gsr", -- Replace surrounding
 
-      opts.buffers = opts.buffers or {}
-      opts.buffers.show_unloaded = false
-      opts.buffers.group_empty_dirs = false
-      opts.buffers.follow_current_file = {
-        leave_dirs_open = true,
-        enabled = true,
-      }
+		suffix_last = "l", -- Suffix to search with "prev" method
+		suffix_next = "n", -- Suffix to search with "next" method
+	},
+})
 
-      opts.window.width = 30
-      require("neo-tree").setup(opts)
-      vim.cmd([[
-        " :hi NvimTreeGitFileNewHL guifg=#a6e3a1
-        " :hi NvimTreeGitNewIcon guifg=#a6e3a1
-        " :hi NvimTreeGitFolderNewHL guifg=#a6e3a1
-        "
-        " :hi NvimTreeGitFileDirtyHL guifg=#f9e2af
-        " :hi NvimTreeGitDirtyIcon guifg=#f9e2af
-        " :hi NvimTreeGitFolderDirtyFolder guifg=#f9e2af
-        "
-        " :hi NvimTreeGitFileIgnoredHL guifg=#585b70
-        " :hi NvimTreeGitFolderIgnoredHL guifg=#585b70
-        " :hi NvimTreeGitIgnoredIcon guifg=#585b70
-        "
-        " :hi NvimTreeGitStagedIcon guifg=#a6e3a1 gui=bold
-        " :hi NvimTreeGitFileStagedHL guifg=#a6e3a1 gui=bold
-        " :hi NvimTreeGitFolderStagedHL guifg=#a6e3a1 gui=bold
-        "
-        " :hi NeoTreeGitModified guifg=#f9e2af
-        " :hi NeoTreeGitDeleted guifg=#ee6d85
+require("snacks").setup({
+	statuscolumn = {},
+	input = { enabled = true }, -- for vim.ui.input
+	picker = {
+		enabled = true,
+		ui_select = true, -- replaces vim.ui.select
+		sources = {
+			select = {
+				layout = { preset = "select" },
+			},
+		},
+	},
+})
 
-        " :hi NeoTreeGitAdded guifg=#a6e3a1
-        " :hi NeoTreeDirectoryName guifg=cleared
-        " :hi NeoTreeGitConflict guifg=#a6e3a1
-        " :hi NeoTreeGitIgnored guifg=#a6e3a1
-        " :hi NeoTreeGitUnstaged guifg=#a6e3a1
-        " :hi NeoTreeGitUntracked guifg=#a6e3a1
-        " :hi NeoTreeGitStaged guifg=#a6e3a1
-        " :hi NeoTreeHiddenByName guifg=#a6e3a1
-        " :hi NeoTreeIndentMarker guifg=#a6e3a1
+require("gitsigns").setup({
+	signs = {
+		add = { text = "▎" },
+		change = { text = "▎" },
+		delete = { text = "" },
+		topdelete = { text = "" },
+		changedelete = { text = "▎" },
+		untracked = { text = "▎" },
+	},
+	signs_staged = {
+		add = { text = "▎" },
+		change = { text = "▎" },
+		delete = { text = "" },
+		topdelete = { text = "" },
+		changedelete = { text = "▎" },
+	},
+})
 
+require("bufferline").setup({
+	highlights = {
+		fill = { bg = "#16161e" },
+		background = { bg = "#16161e" },
 
-      ]])
-    end,
-  },
+		buffer = { bg = "#16161e" },
+		buffer_visible = { bg = "#0b0d11" },
+		buffer_selected = { bg = "#0b0d11" },
 
-  {
-    "lewis6991/gitsigns.nvim",
-    config = function(_, opts)
-      require("gitsigns").setup(opts)
-      vim.cmd([[
-        :hi GitSignsChange guifg=#f9e2af
-      ]])
-    end,
-  },
+		separator = { bg = "#16161e" },
+		separator_visible = { bg = "#16161e" },
 
-  {
-    "akinsho/bufferline.nvim",
-    opts = {
-      highlights = {
-        fill = { bg = "#16161e" },
-        background = { bg = "#16161e" },
-        buffer = { bg = "#16161e" },
-        separator = { bg = "#16161e" },
-        separator_visible = { bg = "#16161e" },
-        error = { bg = "#16161e" },
-        error_visible = { bg = "#16161e" },
+		error = { bg = "#16161e" },
+		error_visible = { bg = "#0b0d11" },
 
-        warning = { bg = "#16161e" },
-        warning_visible = { bg = "#16161e" },
+		warning = { bg = "#16161e" },
+		warning_visible = { bg = "#0b0d11" },
 
-        info = { bg = "#16161e" },
-        info_visible = { bg = "#16161e" },
+		info = { bg = "#16161e" },
+		info_visible = { bg = "#0b0d11" },
 
-        hint = { bg = "#16161e" },
-        hint_visible = { bg = "#16161e" },
+		hint = { bg = "#16161e" },
+		hint_visible = { bg = "#0b0d11" },
 
-        diagnostic = { bg = "#16161e" },
-        diagnostic_visible = { bg = "#16161e" },
+		diagnostic = { bg = "#16161e" },
+		diagnostic_visible = { bg = "#0b0d11" },
 
-        error_diagnostic = { bg = "#16161e" },
-        warning_diagnostic = { bg = "#16161e" },
-        info_diagnostic = { bg = "#16161e" },
-        hint_diagnostic = { bg = "#16161e" },
-        close_button = { bg = "#16161e" },
-      },
-      options = {
-        indicator = {
-          style = "icon",
-          icon = "▎",
-        },
-        style_preset = require("bufferline").style_preset.no_italic,
-        offsets = {
-          {
-            filetype = "neo-tree",
-            text = "",
-            highlight = "BufferLineBackground",
-            text_align = "left",
-          },
-        },
-        sort_by = "insert_at_end",
-      },
-    },
-  },
+		modified = { bg = "#16161e" },
+		modified_visible = { bg = "#0b0d11" },
 
-  {
-    "tiagovla/tokyodark.nvim",
-    opts = {
-      styles = {
-        comments = { italic = true }, -- style for comments
-        keywords = { italic = true }, -- style for keywords
-        identifiers = { italic = true }, -- style for identifiers
-        functions = {}, -- style for functions
-        variables = {}, -- style for variables
-      },
-    },
-    -- config = function(_, opts)
-    --   opts.custom_palette = function(_)
-    --     return {
-    --       base00 = "#11121d",
-    --       base01 = "#1b1c27",
-    --       base02 = "#21222d",
-    --       base03 = "#282934",
-    --       base04 = "#30313c",
-    --       base05 = "#abb2bf",
-    --       base06 = "#b2b9c6",
-    --       base07 = "#A0A8CD",
-    --       base08 = "#ee6d85",
-    --       base09 = "#7199ee",
-    --       base0A = "#7199ee",
-    --       base0B = "#dfae67",
-    --       base0C = "#a485dd",
-    --       base0D = "#95c561",
-    --       base0E = "#a485dd",
-    --       base0F = "#f3627a",
-    --       darker_black = "#0c0d18",
-    --     }
-    --   end
-    --   opts.custom_highlights = function(_, p)
-    --     return {
-    --       CursorLine = { bg = p.base02 },
-    --       WinSeparator = { fg = p.darker_black },
-    --       IndentBlanklineChar = { fg = p.bg4 },
-    --       IndentBlanklineContextChar = { fg = p.fg },
-    --       IblIndent = { fg = p.bg4 },
-    --       IblScope = { fg = p.fg },
-    --       LazyProgressDone = { bold = true, fg = p.magenta2 },
-    --       LazyProgressTodo = { bold = true, fg = p.fg_gutter },
-    --       GitSignsChange = { fg = p.yellow },
-    --       GitSignsChangeLn = { fg = p.yellow },
-    --       GitSignsChangeNr = { fg = p.yellow },
-    --       GitGutterDelete = { fg = p.diff_red },
-    --       DiagnosticSignError = { fg = p.red },
-    --       DiagnosticError = { fg = p.red },
-    --
-    --       BlinkCmpKindConstant = { fg = p.base09 },
-    --       BlinkCmpKindFunction = { fg = p.base0D },
-    --       BlinkCmpKindIdentifier = { fg = p.base08 },
-    --       BlinkCmpKindField = { fg = p.base08 },
-    --       BlinkCmpKindVariable = { fg = p.base0E },
-    --       BlinkCmpKindSnippet = { fg = p.red },
-    --       BlinkCmpKindText = { fg = p.base0B },
-    --       BlinkCmpKindStructure = { fg = p.base0E },
-    --       BlinkCmpKindType = { fg = p.base0A },
-    --       BlinkCmpKindKeyword = { fg = p.base07 },
-    --       BlinkCmpKindMethod = { fg = p.base0D },
-    --       BlinkCmpKindConstructor = { fg = p.blue },
-    --       BlinkCmpKindFolder = { fg = p.base07 },
-    --       BlinkCmpKindModule = { fg = p.base0A },
-    --       BlinkCmpKindProperty = { fg = p.base08 },
-    --       BlinkCmpKindEnum = { fg = p.blue },
-    --       BlinkCmpKindUnit = { fg = p.base0E },
-    --       BlinkCmpKindClass = { fg = p.teal },
-    --       BlinkCmpKindFile = { fg = p.base07 },
-    --       BlinkCmpKindInterface = { fg = p.green },
-    --       BlinkCmpKindColor = { fg = p.white },
-    --       BlinkCmpKindReference = { fg = p.base05 },
-    --       BlinkCmpKindEnumMember = { fg = p.purple },
-    --       BlinkCmpKindStruct = { fg = p.base0E },
-    --       BlinkCmpKindValue = { fg = p.cyan },
-    --       BlinkCmpKindEvent = { fg = p.yellow },
-    --       BlinkCmpKindOperator = { fg = p.base05 },
-    --       BlinkCmpKindTypeParameter = { fg = p.base08 },
-    --       BlinkCmpKindCopilot = { fg = p.green },
-    --       BlinkCmpKindCodeium = { fg = p.vibrant_green },
-    --       BlinkCmpKindTabNine = { fg = p.baby_pink },
-    --       BlinkCmpKindSuperMaven = { fg = p.yellow },
-    --
-    --       ["@variable"] = { fg = p.base05 },
-    --       ["@variable.builtin"] = { fg = p.base09 },
-    --       ["@variable.parameter"] = { fg = p.base08 },
-    --       ["@variable.member"] = { fg = p.base08 },
-    --       ["@variable.member.key"] = { fg = p.base08 },
-    --     }
-    --   end
-    --   require("tokyodark").setup(opts) -- calling setup is optional
-    --   -- vim.cmd([[colorscheme tokyodark]])
-    -- end,
-  },
+		error_diagnostic = { bg = "#16161e" },
+		warning_diagnostic = { bg = "#16161e" },
+		info_diagnostic = { bg = "#16161e" },
+		hint_diagnostic = { bg = "#16161e" },
+		close_button = { bg = "#16161e" },
+	},
+	options = {
+		diagnostics = "nvim_lsp",
+		indicator = {
+			style = "icon",
+			icon = "▎",
+		},
+		style_preset = require("bufferline").style_preset.no_italic,
+		offsets = {
+			{
+				filetype = "neo-tree",
+				text = "",
+				highlight = "BufferLineBackground",
+				text_align = "left",
+			},
+		},
+		sort_by = "insert_at_end",
+	},
+})
 
-  {
-    "jake-stewart/multicursor.nvim",
-    branch = "1.0",
-    config = function()
-      local mc = require("multicursor-nvim")
-      local map = LazyVim.safe_keymap_set
-      mc.setup()
+require("lualine").setup({
+	options = {
+		theme = "auto",
+		globalstatus = vim.o.laststatus == 3,
+		disabled_filetypes = { statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" } },
+	},
+	sections = {
+		lualine_a = {
+			{
+				"mode",
+				fmt = function(res)
+					return " " .. res
+				end,
+			},
+		},
+		lualine_b = { "branch" },
+		lualine_c = {
+			{
+				"diagnostics",
+				symbols = {
+					error = icons.diagnostics.Error,
+					warn = icons.diagnostics.Warn,
+					info = icons.diagnostics.Info,
+					hint = icons.diagnostics.Hint,
+				},
+			},
+			{
+				"filetype",
+				icon_only = true,
+				separator = "",
+				padding = { left = 1, right = 0 },
+			},
+			{ "filename" },
+		},
+		lualine_x = {
+			{
+				"diff",
+				symbols = {
+					added = icons.git.added,
+					modified = icons.git.modified,
+					removed = icons.git.removed,
+				},
+				source = {
+					added = icons.git.added,
+					modified = icons.git.changed,
+					removed = icons.git.removed,
+				},
+			},
+		},
+		lualine_y = { "encoding", "filetype", "progress" },
+		lualine_z = { "location" },
+	},
+})
 
-      map({ "n", "v" }, "<c-n>", function()
-        mc.addCursor("*")
-      end)
-      map({ "n" }, "<C-M-j>", function()
-        mc.addCursor("j")
-      end, { desc = "Add cursor downwards" })
-      map({ "n" }, "<C-M-k>", function()
-        mc.addCursor("k")
-      end, { desc = "Add cursor upwards" })
-    end,
-  },
-
-  {
-    "christoomey/vim-tmux-navigator",
-    cmd = {
-      "TmuxNavigateLeft",
-      "TmuxNavigateDown",
-      "TmuxNavigateUp",
-      "TmuxNavigateRight",
-      "TmuxNavigatePrevious",
-    },
-    keys = {
-      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-    },
-  },
-
-  {
-    "nvim-lualine/lualine.nvim",
-    config = function(_, opts)
-      opts.sections.lualine_a = {
-        {
-          "mode",
-          fmt = function(res)
-            return " " .. res
-          end,
-        },
-      }
-      require("lualine").setup(opts)
-    end,
-    opts = {
-      sections = {
-        lualine_c = {
-          LazyVim.lualine.root_dir(),
-          {
-            "diagnostics",
-            symbols = {
-              error = LazyVim.config.icons.diagnostics.Error,
-              warn = LazyVim.config.icons.diagnostics.Warn,
-              info = LazyVim.config.icons.diagnostics.Info,
-              hint = LazyVim.config.icons.diagnostics.Hint,
-            },
-          },
-          {
-            "filetype",
-            icon_only = true,
-            separator = "",
-            padding = { left = 1, right = 0 },
-          },
-          { LazyVim.lualine.pretty_path() },
-        },
-        lualine_y = { "encoding", "filetype", "progress" },
-        lualine_z = { "location" },
-      },
-    },
-  },
-
-  {
-    "saghen/blink.cmp",
-    opts = {
-      fuzzy = {
-        implementation = "prefer_rust_with_warning",
-      },
-      completion = {
-        trigger = {
-          show_on_trigger_character = true,
-          show_on_keyword = false,
-        },
-        ghost_text = { enabled = false },
-        menu = {
-          --auto_show = false,
-          winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
-          draw = {
-            columns = {
-              { "label", "label_description", gap = 2 },
-              { "kind_icon", "kind" },
-            },
-          },
-        },
-        documentation = {
-          auto_show_delay_ms = 500,
-          auto_show = false,
-          window = {
-            border = "rounded",
-          },
-        },
-      },
-    },
-  },
-
-  {
-    "ibhagwan/fzf-lua",
-    config = function(opts)
-      opts = { "skim" }
-      opts.fzf_opts = {
-        ["--header"] = false,
-      }
-    end,
-    keys = {
-      { "<leader>gs", false }, -- Disable in favor of fugitive
-    },
-  },
-
-  {
-    "seblyng/roslyn.nvim",
-    ft = "cs",
-    ---@module 'roslyn.config'
-    ---@type RoslynNvimConfig
-    opts = {
-      -- your configuration comes here; leave empty for default settings
-      -- NOTE: You must configure `cmd` in `config.cmd` unless you have installed via mason
-    },
-  },
-
-  {
-    "EdenEast/nightfox.nvim",
-  },
-
-  {
-    "eldritch-theme/eldritch.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-    config = function(opts)
-      local p = require("tokyodark.palette")
-      local darker_black = "#0c0d18"
-
-      opts.on_colors = function(colors)
-        colors.bg_highlight = p.bg2
-      end
-      opts.on_highlights = function(h, c)
-        h.NeoTreeNormal = { bg = "#0c0d18" }
-        h.NeoTreeNormalNC = { bg = "#0c0d18" }
-        h.NeoTreeEndOfBuffer = { bg = "#0c0d18" }
-
-        h.SnacksIndent = { fg = p.bg2 }
-        h.SnacksIndentScope = { fg = p.bg4 }
-
-        h.BlinkCmpMenu = { bg = p.base }
-        h.BlinkCmpMenuBorder = { bg = p.base, fg = c.bright_green }
-        h.BlinkCmpDoc = { bg = p.base }
-        h.BlinkCmpDocBorder = { bg = p.base, fg = c.bright_green }
-        h.BlinkCmpKindConstant = { fg = c.yellow }
-        h.BlinkCmpKindFunction = { fg = c.yellow }
-        -- h.BlinkCmpKindIdentifier = { fg = p.base08 }
-        h.BlinkCmpKindField = { fg = c.orange }
-        h.BlinkCmpKindVariable = { fg = c.red }
-        h.BlinkCmpKindSnippet = { fg = c.red }
-        h.BlinkCmpKindText = { fg = c.fg }
-        h.BlinkCmpKindStructure = { fg = c.yellow }
-        -- h.BlinkCmpKindType = { fg = c.bright_green }
-        h.BlinkCmpKindKeyword = { fg = c.cyan }
-        h.BlinkCmpKindMethod = { fg = c.purple }
-        h.BlinkCmpKindConstructor = { fg = c.cyan }
-        h.BlinkCmpKindFolder = { fg = c.cyan }
-        h.BlinkCmpKindModule = { fg = c.orange }
-        h.BlinkCmpKindProperty = { fg = c.bright_green }
-        h.BlinkCmpKindEnum = { fg = c.cyan }
-        -- h.BlinkCmpKindUnit = { fg = p.base0E }
-        h.BlinkCmpKindClass = { fg = c.cyan }
-        -- h.BlinkCmpKindFile = { fg = p.base07 }
-        h.BlinkCmpKindInterface = { fg = c.cyan }
-        -- h.BlinkCmpKindColor = { fg = p.white }
-        h.BlinkCmpKindReference = { fg = c.orange }
-        h.BlinkCmpKindEnumMember = { fg = c.green }
-        h.BlinkCmpKindStruct = { fg = c.cyan }
-        h.BlinkCmpKindValue = { fg = c.orange }
-        h.BlinkCmpKindEvent = { fg = c.cyan }
-        h.BlinkCmpKindOperator = { fg = c.green }
-        h.BlinkCmpKindTypeParameter = { fg = c.cyan }
-        -- h.BlinkCmpKindCopilot = { fg = p.green }
-        -- h.BlinkCmpKindCodeium = { fg = p.vibrant_green }
-        -- h.BlinkCmpKindTabNine = { fg = p.baby_pink }
-        -- h.BlinkCmpKindSuperMaven = { fg = p.yellow }
-        h.DiffText = { bg = "#244246" }
-      end
-
-      opts.transparent = true
-
-      require("eldritch").setup(opts)
-      -- vim.cmd([[colorscheme eldritch]])
-    end,
-  },
-
-  {
-    "mrjones2014/smart-splits.nvim",
-    lazy = false,
-    config = function(opts)
-      opts.disable_multiplexer_nav_when_zoomed = false
-      require("smart-splits").setup(opts)
-      -- moving between wezterm splits
-      vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left)
-      vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
-      vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
-      vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
-    end,
-  },
-
-  {
-    "tpope/vim-fugitive",
-    config = function(opts)
-      vim.keymap.set("n", "<leader>gs", ":vertical Git<CR>", { desc = "Git Status (Fugitive)" })
-    end,
-  },
-
-  {
-    "bluz71/vim-moonfly-colors",
-    name = "moonfly",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd([[colorscheme moonfly]])
-      vim.cmd([[
-        :hi NeoTreeNormal guibg=#08090c
-        :hi NeoTreeNormalNC guibg=#08090c
-        :hi NeoTreeEndOfBuffer guibg=#08090c
-      ]])
-    end,
-  },
-
-  {
-    "mikesmithgh/kitty-scrollback.nvim",
-    enabled = true,
-    lazy = true,
-    cmd = {
-      "KittyScrollbackGenerateKittens",
-      "KittyScrollbackCheckHealth",
-      "KittyScrollbackGenerateCommandLineEditing",
-    },
-    event = { "User KittyScrollbackLaunch" },
-    -- version = '*', -- latest stable version, may have breaking changes if major version changed
-    -- version = '^6.0.0', -- pin major version, include fixes and features that do not have breaking changes
-    config = function()
-      require("kitty-scrollback").setup()
-    end,
-  },
-}
+require("blink-cmp").setup({
+	keymap = {
+		preset = "enter",
+		["<C-y>"] = { "select_and_accept" },
+	},
+	fuzzy = {
+		implementation = "lua",
+	},
+	appearance = {
+		nerd_font_variant = "mono",
+		use_nvim_cmp_as_default = false,
+	},
+	completion = {
+		trigger = {
+			show_on_trigger_character = true,
+			show_on_keyword = false,
+		},
+		ghost_text = { enabled = false },
+		menu = {
+			--auto_show = false,
+			winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
+			draw = {
+				treesitter = { "lsp" },
+				columns = {
+					{ "label", "label_description", gap = 2 },
+					{ "kind_icon", "kind" },
+				},
+			},
+		},
+		documentation = {
+			auto_show_delay_ms = 500,
+			auto_show = false,
+			window = {
+				border = "rounded",
+			},
+		},
+	},
+	cmdline = {
+		enabled = true,
+		keymap = {
+			preset = "cmdline",
+			["<Right>"] = false,
+			["<Left>"] = false,
+		},
+		completion = {
+			list = { selection = { preselect = false } },
+			menu = {
+				auto_show = function(ctx)
+					return vim.fn.getcmdtype() == ":"
+				end,
+			},
+			ghost_text = { enabled = true },
+		},
+	},
+})

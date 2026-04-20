@@ -34,6 +34,14 @@
   s = status -sb
   co = checkout
   cob = checkout -b
+  new = "!f() { \
+    ts=$(date +\"%y%m%d-%H%M\"); \
+    rand=$(LC_ALL=C tr -dc a-z0-9 </dev/urandom | head -c 4); \
+    prefix=${1:-branch}; \
+    name=\"$prefix/$ts-$rand\"; \
+    echo \"Creating branch: $name\"; \
+    git checkout -b \"$name\"; \
+  }; f"
   com = commit
   del = branch -D 
   br = !git --no-pager branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
