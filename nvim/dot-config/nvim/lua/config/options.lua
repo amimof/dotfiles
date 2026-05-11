@@ -96,7 +96,7 @@ vim.diagnostic.config({
 	underline = { severity = { min = vim.diagnostic.severity.WARN } },
 
 	-- Can switch between these as you prefer
-	virtual_text = true, -- Text shows up at the end of the line
+	virtual_text = true,  -- Text shows up at the end of the line
 	virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
 	-- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
@@ -134,19 +134,8 @@ vim.g.moonflyNormalPmenu = true
 vim.g.moonflyNormalFloat = true
 vim.g.moonflyCursorColor = true
 
--- local signs = {
--- 	Error = " ",
--- 	Warn = " ",
--- 	Hint = " ",
--- 	Info = " ",
--- }
---
--- for type, icon in pairs(signs) do
--- 	local hl = "DiagnosticSign" .. type
--- 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
--- end
-
 vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.wo[0][0].foldmethod = "expr"
+vim.wo[0][0].foldlevel = 9
 
 vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"

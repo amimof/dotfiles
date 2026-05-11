@@ -72,7 +72,7 @@ alias kc="kubecfg"                                              # Alias kubecfg 
 alias diff="diff --color"                                       # Add colors to diff command
 alias ls="ls --color=tty"                                       # Enable ls colors
 alias ll="ls -latrh"
-alias vim="nvim"                                                # Use NeoVim over Vim
+alias vim="/Users/amir/.local/share/bob/v0.12.1/bin/nvim"                                                # Use NeoVim over Vim
 alias ls="eza --git --icons=always --hyperlink"
 alias cat="bat --theme=Eldritch"
 alias capply="cat <<EOF | kubectl apply -f -"
@@ -107,7 +107,6 @@ export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd                          # Add colors to 
 export GPG_TTY=$(tty)                                           # Tell gpg agent which TTY we are in
 export COMPLETION_WAITING_DOTS="true"
 export PATH="/usr/local/bin:$PATH"
-export OLLAMA_KEEP_ALIVE="-1"                                   # Set ollama keepalive to indefinite
 
 # Color man pages
 export LESS_TERMCAP_mb=$'\E[01;32m'

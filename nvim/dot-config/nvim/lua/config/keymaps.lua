@@ -96,12 +96,12 @@ map("n", "<leader>fa", search_files_in_directory, { desc = "Search files in any 
 
 -- Clear search with <esc> and also reset cursors
 map({ "n" }, "<esc>", function()
-	local mc = require("multicursor-nvim")
-	if not mc.cursorsEnabled() then
-		mc.enableCursors()
-	else
-		mc.clearCursors()
-	end
+	-- local mc = require("multicursor-nvim")
+	-- if not mc.cursorsEnabled() then
+	-- 	mc.enableCursors()
+	-- else
+	-- 	mc.clearCursors()
+	-- end
 	vim.cmd("nohlsearch") -- Equivalent to <cmd>noh<cr>
 	vim.cmd("stopinsert") -- Equivalent to <esc>, only needed if you're in insert mode
 end, { desc = "Escape and Clear hlsearch" })

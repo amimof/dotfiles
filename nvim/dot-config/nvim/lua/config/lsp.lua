@@ -3,12 +3,10 @@ local icons = require("config.icons")
 vim.lsp.config("lua_ls", require("lsp.lua_ls"))
 vim.lsp.config("vtsls", require("lsp.vtsls"))
 vim.lsp.config("vue_ls", require("lsp.vue_ls"))
-
 vim.lsp.config("gopls", require("lsp.gopls"))
 vim.lsp.config("gofumpt", require("lsp.gofumpt"))
 vim.lsp.config("goimports", require("lsp.goimports"))
 vim.lsp.config("golangci-lint", require("lsp.golangci-lint"))
-
 vim.lsp.config("buf_ls", require("lsp.buf_ls"))
 
 vim.lsp.enable({
@@ -21,6 +19,7 @@ vim.lsp.enable({
 	"vtsls",
 	"vue_ls",
 	"buf_ls",
+	"marksman",
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -30,8 +29,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- Usually not needed if server supports "textDocument/willSaveWaitUntil".
 		local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
 		if
-			not client:supports_method("textDocument/willSaveWaitUntil")
-			and client:supports_method("textDocument/formatting")
+				not client:supports_method("textDocument/willSaveWaitUntil")
+				and client:supports_method("textDocument/formatting")
 		then
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				group = vim.api.nvim_create_augroup("my.lsp", { clear = false }),

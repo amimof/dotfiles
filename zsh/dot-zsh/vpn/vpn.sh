@@ -211,6 +211,9 @@ __vpn_status() {
 # Experimental. This adds a host to /etc/hosts as well as a static route while the tunnel is up.
 # Currently only tested on in MacOS
 __vpn_add_host() {
+  local vpn hostname ip blob dns_server
+  local -a DNS
+
   if [[ $# < 2 ]]; then
     {
       p="$(basename $0)"
@@ -231,20 +234,28 @@ __vpn_add_host() {
   fi
   vpn="$1"
   shift 1
-  BLOB=$(perl -ne 'print if /\bdns\d+\.$vpn\b.+\#.+/' /etc/hosts | cut -d\# -f2 | tail -n1)
-  declare -a DNS=($(perl -ne 'print if /\bdns\d+\.$vpn/' /etc/hosts | sort | uniq))
-  if [[ ! "$DNS[*]" ]]; then
+  DNS=("${(@f)$(awk -v vpn="$vpn" '$2 ~ ("^dns[0-9]+\\." vpn "$") { print $1 }' /etc/hosts | sort -u)}")
+  if (( ${#DNS[@]} == 0 )); then
     echo "ERROR: can't find dnsX.${vpn} in /etc/hosts -- is ${vpn} VPN up?" >&2
     return
   fi
+  blob="# vpn-slice-${vpn} AUTOCREATED"
+
   for hostname in "$@"; do
-    ip=$(dig +short ${DNS[@]/#/@} "$hostname" | tail -n1)
-    if [[ ! "$?" || -z "$ip" ]]; then
+    ip=""
+    for dns_server in "${DNS[@]}"; do
+      ip=$(dig +short @"$dns_server" "$hostname" | tail -n1)
+      if [[ $? -eq 0 && -n "$ip" ]]; then
+        break
+      fi
+    done
+
+    if [[ -z "$ip" ]]; then
       echo "ERROR: couldn't find $hostname on $vpn DNS servers" >&2
     else
       echo "Found $hostname at IP address $ip on $vpn DNS servers" >&2
-      sudo route add -host "$ip" -interface "$vpn" && echo "$ip $hostname $BLOB" | sudo tee -a /etc/hosts >/dev/null
-      if [[ ! "$?" ]]; then
+      sudo route add -host "$ip" -interface "$vpn" && echo "$ip $hostname $blob" | sudo tee -a /etc/hosts >/dev/null
+      if [[ $? -ne 0 ]]; then
         echo "ERROR: couldn't configure $hostname properly" >&2
       fi
     fi
@@ -312,7 +323,7 @@ vpn() {
     __vpn_reload
     ;;
   'add-host')
-    __vpn_add_host $2 $3
+    __vpn_add_host "${@:2}"
     ;;
   *)
     __vpn_usage

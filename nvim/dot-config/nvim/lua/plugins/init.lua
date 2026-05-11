@@ -32,40 +32,39 @@ require("nvim-treesitter").setup({
 	folds = { enable = true }, ---@type lazyvim.TSFeat
 	install_dir = vim.fn.stdpath("data") .. "/site",
 })
-require("nvim-treesitter")
-	.install({
-		"bash",
-		"c",
-		"diff",
-		"go",
-		"gomod",
-		"gowork",
-		"gosum",
-		"typescript",
-		"vue",
-		"html",
-		"javascript",
-		"jsdoc",
-		"json",
-		"lua",
-		"luadoc",
-		"luap",
-		"markdown",
-		"markdown_inline",
-		"printf",
-		"proto",
-		"python",
-		"query",
-		"regex",
-		"toml",
-		"tsx",
-		"typescript",
-		"vim",
-		"vimdoc",
-		"xml",
-		"yaml",
-	})
-	:wait(300000) -- wait max. 5 minutes
+
+require("nvim-treesitter").install({
+	"bash",
+	"c",
+	"diff",
+	"go",
+	"gomod",
+	"gowork",
+	"gosum",
+	"typescript",
+	"vue",
+	"html",
+	"javascript",
+	"jsdoc",
+	"json",
+	"lua",
+	"luadoc",
+	"luap",
+	"markdown",
+	"markdown_inline",
+	"printf",
+	"proto",
+	"python",
+	"query",
+	"regex",
+	"toml",
+	"tsx",
+	"typescript",
+	"vim",
+	"vimdoc",
+	"xml",
+	"yaml",
+}):wait(300000) -- wait max. 5 minutes
 
 require("mason").setup()
 
@@ -146,9 +145,9 @@ require("mini.ai").setup()
 require("mini.basics").setup()
 require("mini.surround").setup({
 	mappings = {
-		add = "gsa", -- Add surrounding in Normal and Visual modes
-		delete = "gsd", -- Delete surrounding
-		find = "gsf", -- Find surrounding (to the right)
+		add = "gsa",     -- Add surrounding in Normal and Visual modes
+		delete = "gsd",  -- Delete surrounding
+		find = "gsf",    -- Find surrounding (to the right)
 		find_left = "gsF", -- Find surrounding (to the left)
 		highlight = "gsh", -- Highlight surrounding
 		replace = "gsr", -- Replace surrounding
@@ -169,7 +168,68 @@ require("snacks").setup({
 				layout = { preset = "select" },
 			},
 		},
+		win = {
+			-- input window
+			input = {
+				keys = {
+					-- to close the picker on ESC instead of going to normal mode,
+					-- add the following keymap to your config
+					["<Esc>"] = { "close", mode = { "n", "i" } },
+				}
+			}
+		}
 	},
+	dashboard = {
+		enabled = true,
+		sections = {
+			{ section = "header" },
+			{
+				icon = " ",
+				title = "Keymaps",
+				section = "keys",
+				indent = 2,
+				padding = 1,
+			},
+			{ icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+			{ icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+			{
+				pane = 1,
+				icon = " ",
+				title = "Git Status",
+				section = "terminal",
+				enabled = function()
+					return Snacks.git.get_root() ~= nil
+				end,
+				cmd = "git status --short --branch --renames",
+				height = 5,
+				padding = 1,
+				ttl = 5 * 60,
+				indent = 3,
+			},
+		},
+		change_to_vcs_root = true,
+		preset = {
+			header = [[
+		        ⢰⣶⣶⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣶⣶⣶⣶⣶⣶
+		        ⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿
+		        ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿
+		        ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿
+		        ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿
+		        ⢸⣿⣿⣿⠀⠀⠀⠀⠀⢰⣶⣶⣶⠀⠀⠀⢰⣶⣶⣶⡆⠀⣿⣿⣿
+		        ⢸⣿⣿⣿⠀⠀⠀⠀⠀⢸⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⡇⠀⣿⣿⣿
+		        ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿
+		        ⢸⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿
+		        ⢸⣿⣿⣿⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣶⣶⣶⣿⣿⣿
+		        ⢸⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿
+		        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		        ⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⠀⠀⠀
+		        ⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⢸⣿⣿⣿⡀⠀⠀
+		        ⠀⠀⠀⣸⣿⣿⣿⠇⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠘⣿⣿⣿⣇⠀⠀
+		        ⢠⣤⣶⣿⣿⣿⡟⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠹⣿⣿⣿⣶⣤
+		        ⢸⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⣿⣿⣿⣿⠀⠀⠀⠀⠀⠙⠿⣿⣿⣿
+		        ]],
+		},
+	}
 })
 
 require("gitsigns").setup({
@@ -323,7 +383,7 @@ require("blink-cmp").setup({
 			draw = {
 				treesitter = { "lsp" },
 				columns = {
-					{ "label", "label_description", gap = 2 },
+					{ "label",     "label_description", gap = 2 },
 					{ "kind_icon", "kind" },
 				},
 			},
