@@ -1,0 +1,3 @@
+# theme = "blur"
+ext_background_effect_blur = true
+force_keyboard_focus = true

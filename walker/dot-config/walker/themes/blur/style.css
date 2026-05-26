@@ -1,0 +1,20 @@
+
+.normal-icons {
+  -gtk-icon-size: 16px;
+}
+
+.large-icons {
+  -gtk-icon-size: 32px;
+}
+
+scrollbar {
+  opacity: 0;
+}
+
+.box-wrapper {
+  background: color-mix(in srgb, var(--window-bg-color) 80%, transparent);
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  color: var(--window-fg-color);
+}
