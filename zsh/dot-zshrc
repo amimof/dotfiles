@@ -289,6 +289,7 @@ source <(fzf --zsh)
 
 # Load other plugins
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
+[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
 # Load syntax highlighting plugin
 [ -f ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
@@ -300,7 +301,8 @@ source <(fzf --zsh)
 [ -f ~/.config/wezterm/shell-integration.sh ] && source ~/.config/wezterm/shell-integration.sh
 
 # Load zsh auto pairs plugin
-source $(brew --prefix)/share/zsh-autopair/autopair.zsh
+# source $(brew --prefix)/share/zsh-autopair/autopair.zsh
+[ -f /usr/share/zsh/plugins/zsh-autopair/autopair.zsh ] && source /usr/share/zsh/plugins/zsh-autopair/autopair.zsh
 
 # Load own plugins
 [ -f ~/.zsh/vpn/vpn.sh ] && source ~/.zsh/vpn/vpn.sh

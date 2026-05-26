@@ -1,10 +1,10 @@
 local icons = require("config.icons")
 
 vim.pack.add({
+	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/nvim-mini/mini.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/nvim-treesitter/nvim-treesitter",
-	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/ibhagwan/fzf-lua",
 	"https://github.com/lewis6991/gitsigns.nvim",
 	"https://github.com/tpope/vim-fugitive",
@@ -16,7 +16,10 @@ vim.pack.add({
 	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/MunifTanjim/nui.nvim",
 	"https://github.com/nvim-tree/nvim-web-devicons",
-	"https://github.com/saghen/blink.cmp",
+	{
+		src = "https://github.com/saghen/blink.cmp",
+		version = vim.version.range("^1"),
+	},
 	"https://github.com/bluz71/vim-moonfly-colors",
 	"https://github.com/sindrets/diffview.nvim",
 	"https://github.com/nvim-lualine/lualine.nvim",
@@ -25,6 +28,8 @@ vim.pack.add({
 	"https://github.com/lukas-reineke/indent-blankline.nvim",
 	"https://github.com/windwp/nvim-autopairs",
 })
+
+require("mason").setup()
 
 require("nvim-treesitter").setup({
 	indent = { enable = true }, ---@type lazyvim.TSFeat
@@ -66,7 +71,6 @@ require("nvim-treesitter").install({
 	"yaml",
 }):wait(300000) -- wait max. 5 minutes
 
-require("mason").setup()
 
 require("nvim-autopairs").setup()
 
@@ -359,7 +363,7 @@ require("lualine").setup({
 	},
 })
 
-require("blink-cmp").setup({
+require("blink.cmp").setup({
 	keymap = {
 		preset = "enter",
 		["<C-y>"] = { "select_and_accept" },
