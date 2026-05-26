@@ -1,0 +1,3 @@
+# vim: filetype=sshconfig
+Host *
+	IdentityAgent ~/.bitwarden-ssh-agent.sock
