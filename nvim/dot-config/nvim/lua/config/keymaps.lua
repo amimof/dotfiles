@@ -304,3 +304,9 @@ map("n", "<leader>ghD", function()
 	gs.diffthis("~")
 end, { desc = "Diff This ~" })
 map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "GitSigns Select Hunk" })
+
+-- Smart splits navigation
+map("n", "<C-h>", require("smart-splits").move_cursor_left, { desc = "Move cursor left (smart-splits)" })
+map("n", "<C-j>", require("smart-splits").move_cursor_down, { desc = "Move cursor down (smart-splits)" })
+map("n", "<C-k>", require("smart-splits").move_cursor_up, { desc = "Move cursor up (smart-splits)" })
+map("n", "<C-l>", require("smart-splits").move_cursor_right, { desc = "Move cursor right (smart-splits)" })

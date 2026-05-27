@@ -27,6 +27,10 @@ vim.pack.add({
 	"https://github.com/folke/snacks.nvim",
 	"https://github.com/lukas-reineke/indent-blankline.nvim",
 	"https://github.com/windwp/nvim-autopairs",
+	"https://github.com/mrjones2014/smart-splits.nvim",
+
+
+	"https://github.com/EdenEast/nightfox.nvim"
 })
 
 require("mason").setup()
@@ -417,4 +421,8 @@ require("blink.cmp").setup({
 			ghost_text = { enabled = true },
 		},
 	},
+})
+
+require("smart-splits").setup({
+	disable_multiplexer_nav_when_zoomed = false,
 })
