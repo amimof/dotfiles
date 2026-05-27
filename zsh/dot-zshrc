@@ -83,6 +83,7 @@ alias gn='cd "/Users/amir/Library/Mobile Documents/iCloud~md~obsidian/Documents/
 alias get_idf='. $HOME/git/github.com/espressif/esp-idf/export.sh'
 alias b=bbctl
 alias gp=gitproj
+alias kevents='k get events --sort-by=".lastTimestamp"'
 
 # Completion
 autoload -U compinit colors zcalc
