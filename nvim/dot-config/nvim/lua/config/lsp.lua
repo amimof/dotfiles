@@ -1,14 +1,5 @@
 local icons = require("config.icons")
 
-vim.lsp.config("lua_ls", require("lsp.lua_ls"))
-vim.lsp.config("vtsls", require("lsp.vtsls"))
-vim.lsp.config("vue_ls", require("lsp.vue_ls"))
-vim.lsp.config("gopls", require("lsp.gopls"))
-vim.lsp.config("gofumpt", require("lsp.gofumpt"))
-vim.lsp.config("goimports", require("lsp.goimports"))
-vim.lsp.config("golangci-lint", require("lsp.golangci-lint"))
-vim.lsp.config("buf_ls", require("lsp.buf_ls"))
-
 vim.lsp.enable({
 	"lua_ls",
 	"gopls",
@@ -20,6 +11,7 @@ vim.lsp.enable({
 	"vue_ls",
 	"buf_ls",
 	"marksman",
+	"yamlls",
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {

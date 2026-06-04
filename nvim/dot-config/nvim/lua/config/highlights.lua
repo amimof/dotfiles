@@ -8,7 +8,7 @@ function M.apply()
 
 	-- NeoTree
 	vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#08090c", })
-	vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#08090c", })
+	vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#08090c", })
 	vim.api.nvim_set_hl(0, "NeoTreeEndOfBuffer", { bg = "#08090c", })
 
 	-- Blink
