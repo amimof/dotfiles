@@ -29,7 +29,7 @@ for i in "${!SPACE_ICONS[@]}"; do
     icon="${SPACE_ICONS[i]}"
     icon.padding_left=7
     icon.padding_right=7
-    background.color=0x40ffffff
+    background.color=$ITEM_BG_COLOR
     background.corner_radius=5
     background.height=25
     label.drawing=off

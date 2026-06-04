@@ -1,11 +1,12 @@
 #!/bin/bash
 
 export WHITE=0xffffffff
+export BLACK=0xff000000
 
 # -- Teal Scheme --
-export BAR_COLOR=0xff001f30
+export BAR_COLOR=0xff04d1f9 
 # export ITEM_BG_COLOR=0xff003547
-export ITEM_BG_COLOR=0xff1f2530
+export ITEM_BG_COLOR=0xff04d1f9 
 export ACCENT_COLOR=0xff8c9ef8
 
 export COLOR_BACKGROUND=0xe01d2021

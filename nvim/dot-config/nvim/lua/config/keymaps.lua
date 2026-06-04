@@ -106,8 +106,10 @@ map({ "n" }, "<esc>", function()
 	vim.cmd("stopinsert") -- Equivalent to <esc>, only needed if you're in insert mode
 end, { desc = "Escape and Clear hlsearch" })
 
-local Snacks = require("snacks")
+-- Toggle neo-tree file explorer
+map("n", "<c-b>", "<cmd>Neotree toggle show<cr>", { desc = "Neotree Toggle" })
 
+local Snacks = require("snacks")
 map("n", "<leader>,", function()
 	Snacks.picker.buffers()
 end, { desc = "Buffers" })

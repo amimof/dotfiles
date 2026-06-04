@@ -23,9 +23,9 @@ sketchybar --bar height=37 \
 # For a full list of all available item properties see:
 # https://felixkratz.github.io/SketchyBar/config/items
 sketchybar --default icon.font="Hack Nerd Font:Bold:14.0" \
-  icon.color=$WHITE \
+  icon.color=$BLACK \
   label.font="Hack Nerd Font:Semi:12.0" \
-  label.color=$WHITE \
+  label.color=$BLACK \
   background.color=$ITEM_BG_COLOR \
   background.corner_radius=5 \
   background.height=24 \

@@ -3,9 +3,8 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- Colors & Font
--- config.color_scheme = "Tokyo Night"
 config.leader = { key = "z", mods = "CTRL" }
-config.color_scheme = "Moonfly (Gogh)"
+config.color_scheme = "Eldritch"
 config.font_size = 12
 -- config.font = wezterm.font("FiraCode Nerd Font")
 config.font = wezterm.font_with_fallback {
@@ -38,7 +37,7 @@ config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
 
 -- Window
-config.window_decorations = "NONE"
+config.window_decorations = "RESIZE"
 config.window_padding = {
 	left = 0,
 	right = 0,
@@ -424,7 +423,7 @@ config.quick_select_patterns = {
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 tabline.setup({
 	options = {
-		theme = "Moonfly (Gogh)",
+		theme = "Eldritch",
 		tab_separators = {
 			left = "",
 			right = "",

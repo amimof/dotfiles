@@ -42,7 +42,7 @@ exec-on-workspace-change = ['/bin/bash', '-c',
     inner.vertical =   10
     outer.left =       10
     outer.bottom =     10
-    outer.top =        40
+    outer.top =        10 
     outer.right =      10
 
 [mode.main.binding]

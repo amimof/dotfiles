@@ -30,7 +30,10 @@ vim.pack.add({
 	"https://github.com/mrjones2014/smart-splits.nvim",
 
 
-	"https://github.com/EdenEast/nightfox.nvim"
+	"https://github.com/EdenEast/nightfox.nvim",
+	"https://github.com/eldritch-theme/eldritch.nvim",
+	"https://github.com/nyoom-engineering/oxocarbon.nvim"
+
 })
 
 require("mason").setup()
@@ -199,7 +202,6 @@ require("snacks").setup({
 				padding = 1,
 			},
 			{ icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-			{ icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
 			{
 				pane = 1,
 				icon = " ",
@@ -267,17 +269,34 @@ require("bufferline").setup({
 		buffer_visible = { bg = "#0b0d11" },
 		buffer_selected = { bg = "#0b0d11" },
 
-		separator = { bg = "#16161e" },
-		separator_visible = { bg = "#16161e" },
+		-- separator = { bg = "#0b0d11" },
+		-- separator_visible = { bg = "#0b0d11" },
+		-- separator_selected = { bg = "#0b0d11" },
+
+		numbers = { bg = "#0b0d11" },
+		numbers_visible = { bg = "#0b0d11" },
+		numbers_selected = { bg = "#0b0d11" },
+
+		indicator_visible = { bg = "#0b0d11" },
+		indicator_selected = { bg = "#0b0d11" },
+
+		pick = { bg = "#0b0d11" },
+		pick_visible = { bg = "#0b0d11" },
+
+		offset_separator = { bg = "#0b0d11" },
+		trunc_marker = { bg = "#0b0d11" },
 
 		error = { bg = "#16161e" },
 		error_visible = { bg = "#0b0d11" },
+		error_selected = { bg = "#0b0d11" },
 
 		warning = { bg = "#16161e" },
 		warning_visible = { bg = "#0b0d11" },
+		warning_selected = { bg = "#0b0d11" },
 
 		info = { bg = "#16161e" },
 		info_visible = { bg = "#0b0d11" },
+		info_selected = { bg = "#0b0d11" },
 
 		hint = { bg = "#16161e" },
 		hint_visible = { bg = "#0b0d11" },
@@ -287,18 +306,23 @@ require("bufferline").setup({
 
 		modified = { bg = "#16161e" },
 		modified_visible = { bg = "#0b0d11" },
+		modified_selected = { bg = "#0b0d11" },
 
 		error_diagnostic = { bg = "#16161e" },
 		warning_diagnostic = { bg = "#16161e" },
 		info_diagnostic = { bg = "#16161e" },
 		hint_diagnostic = { bg = "#16161e" },
 		close_button = { bg = "#16161e" },
+		close_button_visible = { bg = "#16161e" },
+		close_button_selected = { bg = "#0b0d11" },
 	},
 	options = {
+		separator_style = { "│", "│" },
 		diagnostics = "nvim_lsp",
 		indicator = {
-			style = "icon",
-			icon = "▎",
+			style = "none",
+			-- icon = "▎",
+
 		},
 		style_preset = require("bufferline").style_preset.no_italic,
 		offsets = {
@@ -387,7 +411,7 @@ require("blink.cmp").setup({
 		ghost_text = { enabled = false },
 		menu = {
 			--auto_show = false,
-			winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
+			-- winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
 			draw = {
 				treesitter = { "lsp" },
 				columns = {
@@ -421,6 +445,16 @@ require("blink.cmp").setup({
 			ghost_text = { enabled = true },
 		},
 	},
+})
+
+require('nightfox').setup({
+	options = {
+		transparent = true
+	}
+})
+
+require('eldritch').setup({
+	transparent = true
 })
 
 require("smart-splits").setup({
