@@ -1,0 +1,22 @@
+
+layer-rule {
+    match namespace="^vibepanel.*$"
+    exclude namespace="^vibepanel$"
+    background-effect {
+        xray false
+    }
+    popups {
+        background-effect {
+            xray false
+        }
+    }
+}
+
+
+layer-rule {
+	match namespace="^walker$"
+	background-effect {
+		blur true
+		xray false
+	}
+}

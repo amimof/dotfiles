@@ -11,29 +11,35 @@ VPN_USERAGENT="AnyConnect"
 VPN_PROTOCOL="anyconnect"
 
 # Path to the pid file
-# PIDFILE=/var/run/openconnect.pid
-PIDFILE=/private/var/run/openconnect.pid
+# MacOS
+# PIDFILE=/private/var/run/openconnect.pid
+# Linux
+PIDFILE=/var/run/openconnect.pid
 
 # Path to you openssl configuration
 # Linux
-# OPENSSL_CONF=/usr/share/openconnect/openssl.conf
+OPENSSL_CONF=/usr/share/openconnect/openssl.conf
 # MacOS
-OPENSSL_CONF=/private/var/openconnect/openssl.conf
+# OPENSSL_CONF=/private/var/openconnect/openssl.conf
 
 # Path to the csd-post script
 # Linux
-#CSD_WRAPPER=/usr/share/openconnect/csd-post.sh
+CSD_WRAPPER=/usr/share/openconnect/csd-post.sh
 # MacOS
-CSD_WRAPPER=/private/var/openconnect/csd-post.sh
+# CSD_WRAPPER=/private/var/openconnect/csd-post.sh
 
 # Path to the vpn-slice plugin
 # Linux
-VPN_SLICE=/usr/local/bin/vpn-slice
+# VPN_SLICE=/usr/local/bin/vpn-slice
+VPN_SLICE=~/.local/bin/vpn-slice
 # MacOS
 #VPN_SLICE=/opt/homebrew/bin/vpn-slice
 
 # Default profile to use if not provided
 DEFAULT_PROFILE=""
+
+# Set key passphrase or TPM SRK PIN
+VPN_KEY_PASSWORD="PASS"
 
 # Protocol to use with openconnect (e.g. anyconnect, fortinet, gp, pulse).
 # Leave unset to let openconnect auto-detect.
@@ -143,7 +149,8 @@ __vpn_connect() {
   if [[ -z "${VPN_PASSWORD}" ]]; then
     OPENSSL_CONF=$OPENSSL_CONF sudo openconnect -v $REMOTE --user $VPN_USER --csd-wrapper $CSD_WRAPPER --background --useragent=$VPN_USERAGENT --protocol=$VPN_PROTOCOL --pid-file $PIDFILE --quiet -s "${slice_cmd}"
   else
-    echo $VPN_PASSWORD | OPENSSL_CONF=$OPENSSL_CONF sudo openconnect -v $REMOTE --user $VPN_USER --passwd-on-stdin --csd-wrapper $CSD_WRAPPER --background --useragent=$VPN_USERAGENT --protocol=$VPN_PROTOCOL --pid-file $PIDFILE --quiet -s "${slice_cmd}"
+    # echo $VPN_PASSWORD | OPENSSL_CONF=$OPENSSL_CONF sudo openconnect -v $REMOTE --user $VPN_USER --passwd-on-stdin --csd-wrapper $CSD_WRAPPER --background --useragent=$VPN_USERAGENT --protocol=$VPN_PROTOCOL --pid-file $PIDFILE --quiet -s "${slice_cmd}"
+    echo $VPN_PASSWORD | OPENSSL_CONF=$OPENSSL_CONF sudo openconnect -v $REMOTE --user $VPN_USER --passwd-on-stdin --background --useragent=$VPN_USERAGENT --protocol=$VPN_PROTOCOL --pid-file $PIDFILE --quiet
   fi
 
 }

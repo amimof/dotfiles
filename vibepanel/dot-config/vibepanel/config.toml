@@ -92,7 +92,7 @@ theme = "material" # "material" or "gtk"
 weight = 400       # Material icon stroke weight (100-700)
 
 [theme.typography]
-font_family = "Inter Variable"
+font_family = "NotoSans Nerd Font"
 
 [osd]
 enabled = true

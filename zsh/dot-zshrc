@@ -127,7 +127,8 @@ export FZF_DEFAULT_OPTS='--height=~30% --layout reverse --border rounded --color
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'"
 export FZF_CTRL_T_OPTS="--preview '([[ -d {} ]] && eza -l --color=always {} || bat --theme=Eldritch --style=numbers --color=always --line-range=:500 {}) 2> /dev/null | head -200'"
 # export SSH_AUTH_SOCK=/Users/amir/.bitwarden-ssh-agent.sock
-export SSH_AUTH_SOCK="$HOME//.bitwarden-ssh-agent.sock"
+# export SSH_AUTH_SOCK="$HOME//.bitwarden-ssh-agent.sock"
+export SSH_AUTH_SOCK="/home/amir/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock"
 
 # Prompt
 #PROMPT='%F{blue}%1~ %B%f%F{green}%f%b '
@@ -289,12 +290,13 @@ fi
 # Load fzf 
 source <(fzf --zsh)
 
-# Load other plugins
+# Syntax highlighting
+# MacOS
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
+# Arch
 [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-
-# Load syntax highlighting plugin
-[ -f ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh ] && source ~/.zsh/catppuccin-zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
+# Fedora
+[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Load fzf tab completion plugin
 [ -f ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh ] && source ~/.zsh/fzf-tab-completion/zsh/fzf-zsh-completion.sh
@@ -303,8 +305,12 @@ source <(fzf --zsh)
 [ -f ~/.config/wezterm/shell-integration.sh ] && source ~/.config/wezterm/shell-integration.sh
 
 # Load zsh auto pairs plugin
+# MacOS
 # source $(brew --prefix)/share/zsh-autopair/autopair.zsh
+# Arch
 [ -f /usr/share/zsh/plugins/zsh-autopair/autopair.zsh ] && source /usr/share/zsh/plugins/zsh-autopair/autopair.zsh
+# Fedora
+[ -f ~/.zsh/zsh-autopair/autopair.zsh ] && source ~/.zsh/zsh-autopair/autopair.zsh
 
 # Load own plugins
 [ -f ~/.zsh/vpn/vpn.sh ] && source ~/.zsh/vpn/vpn.sh
@@ -319,3 +325,6 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$PATH:/Users/amir/.dotnet/tools"
 export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
+
+# opencode
+export PATH=/home/amir/.opencode/bin:$PATH

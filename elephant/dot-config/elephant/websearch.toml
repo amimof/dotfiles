@@ -1,0 +1,5 @@
+[[entries]]
+default = true
+name = "Google"
+url = "https://www.duckduckgo.com/?q=%TERM%"
+

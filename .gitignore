@@ -2,3 +2,6 @@
 bin/
 .gitconfig-local
 zsh/dot-zsh/vpn/vpn.*.sh
+zsh/dot-zsh/cache
+zsh/dot-zsh/fzf-tab-completion
+zsh/dot-zsh/zsh-autopair
