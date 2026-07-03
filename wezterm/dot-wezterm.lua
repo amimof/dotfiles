@@ -3,10 +3,9 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- Colors & Font
-config.leader = { key = "z", mods = "CTRL" }
+config.leader = { mods = 'ALT', key = 'a' }
 config.color_scheme = "Eldritch"
 config.font_size = 12
--- config.font = wezterm.font("FiraCode Nerd Font")
 config.font = wezterm.font_with_fallback {
 	'FiraCode Nerd Font',
 	'JetBrains Mono',
@@ -18,9 +17,7 @@ config.colors = {
 	},
 }
 
-
--- config.window_background_opacity = 0.5
-
+-- Removes ligatures
 config.harfbuzz_features = { 'calt = 0', 'clig = 0', 'liga = 0' }
 
 config.inactive_pane_hsb = {
@@ -29,6 +26,8 @@ config.inactive_pane_hsb = {
 }
 
 config.max_fps = 170
+config.warn_about_missing_glyphs = false
+
 -- Tabs
 config.tab_max_width = 26
 config.enable_tab_bar = true
@@ -37,7 +36,7 @@ config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
 
 -- Window
-config.window_decorations = "RESIZE"
+config.window_decorations = "NONE"
 config.window_padding = {
 	left = 0,
 	right = 0,
@@ -52,12 +51,11 @@ config.initial_rows = 75
 
 config.adjust_window_size_when_changing_font_size = false
 
+-- Debugging
 -- config.send_composed_key_when_left_alt_is_pressed = true
 -- config.send_composed_key_when_right_alt_is_pressed = false
-
--- Debugging
---config.debug_key_events = true
---config.disable_default_key_bindings = true
+-- config.debug_key_events = true
+-- config.disable_default_key_bindings = true
 
 local act = wezterm.action
 
@@ -137,24 +135,6 @@ local leader = "LEADER"
 
 -- Workspace management
 local home = wezterm.home_dir
-local workspaces = {
-	{
-		label = "Home",
-		cwd = home .. "/git/github.com/amimof",
-	},
-	{
-		label = "Västtrafik",
-		cwd = home .. "/git/github.com/devtrafik",
-	},
-	{
-		label = "VGR",
-		cwd = home .. "/git/git.vgregion.se",
-	},
-	{
-		label = "Education",
-		cwd = home .. "/git/github.com/middlewaregruppen/education",
-	},
-}
 
 -- Key mappings
 config.keys = {
@@ -174,7 +154,7 @@ config.keys = {
 	{ key = "LeftArrow",  mods = "SUPER",  action = act.SendString("\001") },
 	{ key = "RightArrow", mods = "SUPER",  action = act.SendString("\005") }, -- Override new-tab to always start in HOME
 	-- { key = "t", mods = "SUPER", action = act.EmitEvent("spawn-new-tab") },
-	{ key = "t",          mods = "SUPER",  action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "t",          mods = mod,  action = act.SpawnTab("CurrentPaneDomain") },
 	{ key = "c",          mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
 
 	-- Switch to the default workspace
@@ -186,31 +166,15 @@ config.keys = {
 		}),
 	},
 
-	-- Puts you in copy mode
-	{
-		mods = "CTRL",
-		key = "u",
-		action = wezterm.action_callback(function(window, pane)
-			if is_nvim(pane) then
-				window:perform_action(act.SendKey({ key = "u", mods = "CTRL" }), pane)
-			else
-				-- window:perform_action(act.ActivateKeyTable({ name = "copy_mode", one_shot = false }), pane)
-				-- window:perform_action(act.ScrollByPage(-0.5), pane)
-				-- window:perform_action(act.CopyMode("ClearSelectionMode"), pane)
-				window:perform_action(act.ActivateCopyMode, pane)
-			end
-		end),
-	},
-
 	-- Quick select
 	{ mods = mod, key = "s",     action = act.QuickSelect },
 
 	-- Enter search mode
 	-- search for the string "hash" matching regardless of case
 	{
-		mods = mod,
-		key = "/",
-		action = act.Search({ CaseInSensitiveString = "" }),
+		key = "u",
+		mods = leader .. "|CTRL",
+		action = act.ActivateCopyMode
 	},
 
 	-- Cycle workspaces
@@ -222,14 +186,12 @@ config.keys = {
 
 	-- Cycle tabs forwards
 	{ mods = mod, key = "l",     action = act.ActivateTabRelative(1) },
-	-- { mods = mod, key = "n", action = act.ActivateTabRelative(1) },
 
 	-- Cycle tabs backwards
 	{ mods = mod, key = "h",     action = act.ActivateTabRelative(-1) },
-	-- { mods = mod, key = "p", action = act.ActivateTabRelative(-1) },
 
 	-- Go to previously active pane
-	{ mods = mod, key = "a",     action = act.ActivateLastTab },
+	{ mods = leader .. "|ALT", key = "a",     action = act.ActivateLastTab },
 
 	-- Split panes
 	{ mods = mod, key = "-",     action = act.SplitHorizontal },
@@ -241,73 +203,17 @@ config.keys = {
 	-- Puts you in resize mode
 	{ mods = mod, key = "r",     action = act.ActivateKeyTable({ name = "resize_mode", one_shot = false }) },
 
-	-- Copy mode
-	{ mods = mod, key = "x",     action = wezterm.action.ActivateCopyMode },
-
 	-- Show the launcher in fuzzy selection mode and have it list all workspaces and allow activating one.
-	{ mods = mod, key = "f",     action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+	{ mods = mod, key = "w",     action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
 
 	{ key = ".",  mods = mod,    action = act.MoveTabRelative(1) },
 	{ key = ",",  mods = mod,    action = act.MoveTabRelative(-1) },
 
-	{
-		mods = mod,
-		key = "w",
-		action = wezterm.action_callback(function(window, pane)
-			local function workspaceName(str)
-				for _, v in ipairs(wezterm.mux.get_workspace_names()) do
-					if v == str then
-						return str .. " *"
-					end
-				end
-				return str
-			end
-			local choices = function()
-				local ret = {}
-				for i, v in ipairs(workspaces) do
-					ret[i] = { id = v.cwd, label = workspaceName(v.label) }
-				end
-				return ret
-			end
-
-			window:perform_action(
-				act.InputSelector({
-					action = wezterm.action_callback(function(inner_window, inner_pane, id, label)
-						wezterm.log_info("Workspace", workspaces)
-						if not id and not label then
-							wezterm.log_info("cancelled")
-						else
-							wezterm.log_info("id = " .. id)
-							wezterm.log_info("label = " .. label)
-							inner_window:perform_action(
-								act.SwitchToWorkspace({
-									name = string.gsub(label, " %*", ""),
-									spawn = {
-										label = workspaceName(label),
-										cwd = id,
-									},
-								}),
-								inner_pane
-							)
-						end
-					end),
-					title = "Choose Workspace",
-					choices = choices(),
-					fuzzy = true,
-					fuzzy_description = wezterm.format({
-						{ Attribute = { Intensity = "Bold" } },
-						{ Foreground = { AnsiColor = "Fuchsia" } },
-						{ Text = "Fuzzy find and/or make a workspace: " },
-					}),
-				}),
-				pane
-			)
-		end),
-	},
+	
 	-- Prompt for a name to use for a new workspace and switch to it.
 	{
-		mods = mod .. "|SHIFT",
-		key = "n",
+		mods = mod,
+		key = "N",
 		action = act.PromptInputLine({
 			description = wezterm.format({
 				{ Attribute = { Intensity = "Bold" } },
@@ -338,8 +244,8 @@ config.keys = {
 	split_nav("move", "CTRL", "k", "Up"),
 	split_nav("move", "CTRL", "l", "Right"),
 
-	{ key = "UpArrow",   mods = mod, action = act.ScrollToPrompt(-1) },
-	{ key = "DownArrow", mods = mod, action = act.ScrollToPrompt(1) },
+	{ mods = mod, key = "UpArrow", action = act.ScrollToPrompt(-1) },
+	{ mods = mod, key = "DownArrow", action = act.ScrollToPrompt(1) },
 }
 
 -- This loop would add keybindings which will allow us to activate a specific tab by its number from 1 to 9.

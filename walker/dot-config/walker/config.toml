@@ -1,4 +1,4 @@
-# theme = "blur"
+theme = "blur"
 ext_background_effect_blur = true
 force_keyboard_focus = true
 
@@ -6,8 +6,7 @@ force_keyboard_focus = true
 close = ["Escape", "ctrl c"]
 next = ["ctrl n"]
 previous = ["ctrl p"]
-down = ["ctrl n"]
-up = ["ctrl p"]
+pin = []
 
 [providers]
 default = [
@@ -16,5 +15,20 @@ default = [
   "runner",
   "menus",
   "websearch",
-	"files"
+	"files",
+	"clipboard"
 ]
+
+[providers.actions]
+
+desktopapplications = [
+  { action = "start", default = true, bind = "Return" },
+  { action = "start:keep", label = "open+next", bind = "shift Return", after = "KeepOpen" },
+  { action = "new_instance", label = "new instance", bind = "ctrl Return" },
+  { action = "new_instance:keep", label = "new+next", bind = "ctrl alt Return", after = "KeepOpen" },
+  { action = "pin" },
+  { action = "unpin" },
+  { action = "pinup" },
+  { action = "pindown" },
+]
+
