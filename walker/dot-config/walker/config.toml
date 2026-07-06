@@ -2,11 +2,14 @@ theme = "blur"
 ext_background_effect_blur = true
 force_keyboard_focus = true
 
+hide_action_hints = true
+
 [keybinds]
 close = ["Escape", "ctrl c"]
 next = ["ctrl n"]
 previous = ["ctrl p"]
 pin = []
+quick_activate = []
 
 [providers]
 default = [
@@ -26,9 +29,9 @@ desktopapplications = [
   { action = "start:keep", label = "open+next", bind = "shift Return", after = "KeepOpen" },
   { action = "new_instance", label = "new instance", bind = "ctrl Return" },
   { action = "new_instance:keep", label = "new+next", bind = "ctrl alt Return", after = "KeepOpen" },
-  { action = "pin" },
-  { action = "unpin" },
-  { action = "pinup" },
-  { action = "pindown" },
+  { action = "pin", bind = "ctrl shift p" },
+  { action = "unpin", bind = "ctrl shift n"},
+  { action = "pinup", bind = "ctrl shift a"},
+  { action = "pindown", bind = "ctrl shift x"},
 ]
 

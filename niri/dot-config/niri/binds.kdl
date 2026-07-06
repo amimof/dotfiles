@@ -149,9 +149,9 @@ binds {
 
     Mod+D hotkey-overlay-title="Launcher" { spawn-sh "nc -U /run/user/1000/walker/walker.sock"; }
     
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+		Mod+Shift+2 { screenshot-screen; }
+		Mod+Shift+3 { screenshot-window; }
+    Mod+Shift+4 { screenshot; }
 
     // It's a good idea to bind an escape hatch to toggle the inhibitor,
     // so a buggy application can't hold your session hostage.

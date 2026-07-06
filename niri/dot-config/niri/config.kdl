@@ -19,6 +19,7 @@ input {
     touchpad {
 				dwt
         natural-scroll
+				accel-speed 0.37
     }
 }
 
@@ -58,6 +59,12 @@ layout {
     //     left 64
     //     right 64
     // }
+}
+
+recent-windows {
+	highlight {
+		corner-radius 12
+	}
 }
 
 cursor {

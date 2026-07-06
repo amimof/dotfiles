@@ -1,0 +1,224 @@
+{
+  "$schema": "https://opencode.ai/theme.json",
+  "defs": {
+    "sunkenDepthsGrey": "#212337",
+    "shallowDepthsGrey": "#16161e",
+    "lighthouseWhite": "#ebfafa",
+    "oldOnePurple": "#7081d0",
+    "wateryTombBlue": "#04d1f9",
+    "greatOldOneGreen": "#37f499",
+    "dreamingOrange": "#f7c67f",
+    "pustulePink": "#f265b5",
+    "lovecraftPurple": "#a48cf2",
+    "rlyehRed": "#f16c75",
+    "goldOfYuggoth": "#f1fc79"
+  },
+  "theme": {
+    "primary": {
+      "dark": "wateryTombBlue",
+      "light": "oldOnePurple"
+    },
+    "secondary": {
+      "dark": "lovecraftPurple",
+      "light": "oldOnePurple"
+    },
+    "accent": {
+      "dark": "greatOldOneGreen",
+      "light": "wateryTombBlue"
+    },
+
+    "error": {
+      "dark": "rlyehRed",
+      "light": "rlyehRed"
+    },
+    "warning": {
+      "dark": "dreamingOrange",
+      "light": "dreamingOrange"
+    },
+    "success": {
+      "dark": "greatOldOneGreen",
+      "light": "greatOldOneGreen"
+    },
+    "info": {
+      "dark": "wateryTombBlue",
+      "light": "oldOnePurple"
+    },
+
+    "text": {
+      "dark": "lighthouseWhite",
+      "light": "sunkenDepthsGrey"
+    },
+    "textMuted": {
+      "dark": "oldOnePurple",
+      "light": "shallowDepthsGrey"
+    },
+    "background": {
+      "dark": "none",
+      "light": "none"
+    },
+    "backgroundPanel": {
+      "dark": "shallowDepthsGrey",
+      "light": "#dbeaea"
+    },
+    "backgroundElement": {
+      "dark": "shallowDepthsGrey",
+      "light": "#cfe0e0"
+    },
+
+    "border": {
+      "dark": "shallowDepthsGrey",
+      "light": "#b7c8c8"
+    },
+    "borderActive": {
+      "dark": "wateryTombBlue",
+      "light": "oldOnePurple"
+    },
+    "borderSubtle": {
+      "dark": "shallowDepthsGrey",
+      "light": "#dbeaea"
+    },
+
+    "diffAdded": {
+      "dark": "greatOldOneGreen",
+      "light": "greatOldOneGreen"
+    },
+    "diffRemoved": {
+      "dark": "rlyehRed",
+      "light": "rlyehRed"
+    },
+    "diffContext": {
+      "dark": "oldOnePurple",
+      "light": "shallowDepthsGrey"
+    },
+    "diffHunkHeader": {
+      "dark": "wateryTombBlue",
+      "light": "oldOnePurple"
+    },
+    "diffHighlightAdded": {
+      "dark": "greatOldOneGreen",
+      "light": "greatOldOneGreen"
+    },
+    "diffHighlightRemoved": {
+      "dark": "rlyehRed",
+      "light": "rlyehRed"
+    },
+    "diffAddedBg": {
+      "dark": "#253a3b",
+      "light": "#d9f7e8"
+    },
+    "diffRemovedBg": {
+      "dark": "#3b2836",
+      "light": "#fde0e3"
+    },
+    "diffContextBg": {
+      "dark": "sunkenDepthsGrey",
+      "light": "lighthouseWhite"
+    },
+    "diffLineNumber": {
+      "dark": "oldOnePurple",
+      "light": "shallowDepthsGrey"
+    },
+    "diffAddedLineNumberBg": {
+      "dark": "#253a3b",
+      "light": "#d9f7e8"
+    },
+    "diffRemovedLineNumberBg": {
+      "dark": "#3b2836",
+      "light": "#fde0e3"
+    },
+
+    "markdownText": {
+      "dark": "lighthouseWhite",
+      "light": "sunkenDepthsGrey"
+    },
+    "markdownHeading": {
+      "dark": "wateryTombBlue",
+      "light": "oldOnePurple"
+    },
+    "markdownLink": {
+      "dark": "greatOldOneGreen",
+      "light": "oldOnePurple"
+    },
+    "markdownLinkText": {
+      "dark": "wateryTombBlue",
+      "light": "wateryTombBlue"
+    },
+    "markdownCode": {
+      "dark": "goldOfYuggoth",
+      "light": "oldOnePurple"
+    },
+    "markdownBlockQuote": {
+      "dark": "oldOnePurple",
+      "light": "shallowDepthsGrey"
+    },
+    "markdownEmph": {
+      "dark": "pustulePink",
+      "light": "pustulePink"
+    },
+    "markdownStrong": {
+      "dark": "goldOfYuggoth",
+      "light": "oldOnePurple"
+    },
+    "markdownHorizontalRule": {
+      "dark": "shallowDepthsGrey",
+      "light": "#b7c8c8"
+    },
+    "markdownListItem": {
+      "dark": "greatOldOneGreen",
+      "light": "oldOnePurple"
+    },
+    "markdownListEnumeration": {
+      "dark": "wateryTombBlue",
+      "light": "wateryTombBlue"
+    },
+    "markdownImage": {
+      "dark": "lovecraftPurple",
+      "light": "oldOnePurple"
+    },
+    "markdownImageText": {
+      "dark": "pustulePink",
+      "light": "pustulePink"
+    },
+    "markdownCodeBlock": {
+      "dark": "lighthouseWhite",
+      "light": "sunkenDepthsGrey"
+    },
+
+    "syntaxComment": {
+      "dark": "oldOnePurple",
+      "light": "shallowDepthsGrey"
+    },
+    "syntaxKeyword": {
+      "dark": "lovecraftPurple",
+      "light": "oldOnePurple"
+    },
+    "syntaxFunction": {
+      "dark": "wateryTombBlue",
+      "light": "oldOnePurple"
+    },
+    "syntaxVariable": {
+      "dark": "lighthouseWhite",
+      "light": "sunkenDepthsGrey"
+    },
+    "syntaxString": {
+      "dark": "greatOldOneGreen",
+      "light": "greatOldOneGreen"
+    },
+    "syntaxNumber": {
+      "dark": "dreamingOrange",
+      "light": "dreamingOrange"
+    },
+    "syntaxType": {
+      "dark": "goldOfYuggoth",
+      "light": "oldOnePurple"
+    },
+    "syntaxOperator": {
+      "dark": "pustulePink",
+      "light": "pustulePink"
+    },
+    "syntaxPunctuation": {
+      "dark": "lighthouseWhite",
+      "light": "sunkenDepthsGrey"
+    }
+  }
+}
