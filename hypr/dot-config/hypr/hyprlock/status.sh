@@ -4,6 +4,9 @@
 enable_battery=true
 battery_charging=false
 
+color_disabled="#808080"
+color_red="#ff3434"
+
 ####### Check availability ########
 for battery in /sys/class/power_supply/*-battery; do
   if [[ -f "$battery/uevent" ]]; then
@@ -25,9 +28,9 @@ battery_icon() {
 	elif (( charge >= 50)); then
 		echo "  "
 	elif (( charge >= 10)); then
-		echo "  "
+		echo "<span foreground='$color_red'>  </span>"
 	elif (( charge >= 1)); then
-		echo "  "
+		echo "<span foreground='$color_red'>  </span>"
 	else
 		echo " "
 	fi
@@ -45,12 +48,12 @@ network_icon() {
 	# Check for wifi (wl*)
 	for iface in /sys/class/net/wl*; do
 		if [[ -f "$iface/operstate" ]] && [[ $(cat "$iface/operstate") == "up" ]]; then
-			echo -e "󰖩 "
+			echo "󰖩 "
 			return
 		fi
 	done
 	# No connection
-	echo "󰖪 "
+	echo "<span foreground='$color_disabled'>󰖪 </span>"
 }
 
 ############# Output #############

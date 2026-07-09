@@ -73,13 +73,9 @@ cursor {
 }
 
 // Workspaces
-workspace "main" {
-	open-on-output "DP-3"
-} 
-
-workspace "chat" {
-	open-on-output "DP-3"
-} 
+workspace "main"  
+workspace "chat"  
+workspace "mail"  
 
 include "outputs.kdl"
 include "layerrules.kdl"

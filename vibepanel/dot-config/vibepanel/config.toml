@@ -24,7 +24,6 @@ center = ["media"]
 right = [
   "tray",
   "updates",
-  "cpu",
   "quick_settings",
   "battery",
   "clock",

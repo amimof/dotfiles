@@ -38,13 +38,6 @@ vim.pack.add({
 
 require("mason").setup()
 
-require("nvim-treesitter").setup({
-	indent = { enable = true }, ---@type lazyvim.TSFeat
-	highlight = { enable = true }, ---@type lazyvim.TSFeat
-	folds = { enable = true }, ---@type lazyvim.TSFeat
-	install_dir = vim.fn.stdpath("data") .. "/site",
-})
-
 require("nvim-treesitter").install({
 	"bash",
 	"c",
@@ -162,7 +155,6 @@ require("mini.surround").setup({
 		find_left = "gsF", -- Find surrounding (to the left)
 		highlight = "gsh", -- Highlight surrounding
 		replace = "gsr", -- Replace surrounding
-
 		suffix_last = "l", -- Suffix to search with "prev" method
 		suffix_next = "n", -- Suffix to search with "next" method
 	},
