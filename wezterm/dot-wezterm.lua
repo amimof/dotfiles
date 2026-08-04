@@ -8,7 +8,7 @@ config.color_scheme = "Eldritch"
 config.font_size = 12
 config.font = wezterm.font_with_fallback {
 	'FiraCode Nerd Font',
-	'JetBrains Mono',
+	'JetBrainsMono Nerd Font'
 }
 config.colors = {
 	background = "#0b0d11",
@@ -154,7 +154,7 @@ config.keys = {
 	{ key = "LeftArrow",  mods = "SUPER",  action = act.SendString("\001") },
 	{ key = "RightArrow", mods = "SUPER",  action = act.SendString("\005") }, -- Override new-tab to always start in HOME
 	-- { key = "t", mods = "SUPER", action = act.EmitEvent("spawn-new-tab") },
-	{ key = "t",          mods = mod,  action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "t",          mods = mod,      action = act.SpawnTab("CurrentPaneDomain") },
 	{ key = "c",          mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
 
 	-- Switch to the default workspace
@@ -167,7 +167,7 @@ config.keys = {
 	},
 
 	-- Quick select
-	{ mods = mod, key = "s",     action = act.QuickSelect },
+	{ mods = mod,              key = "s",     action = act.QuickSelect },
 
 	-- Enter search mode
 	-- search for the string "hash" matching regardless of case
@@ -182,34 +182,34 @@ config.keys = {
 	-- { mods = mod, key = "å", action = act.SwitchWorkspaceRelative(-1) },
 
 	-- Rotate tabs
-	{ mods = mod, key = "R",     action = act.RotatePanes("Clockwise") },
+	{ mods = mod,              key = "R",     action = act.RotatePanes("Clockwise") },
 
 	-- Cycle tabs forwards
-	{ mods = mod, key = "l",     action = act.ActivateTabRelative(1) },
+	{ mods = mod,              key = "l",     action = act.ActivateTabRelative(1) },
 
 	-- Cycle tabs backwards
-	{ mods = mod, key = "h",     action = act.ActivateTabRelative(-1) },
+	{ mods = mod,              key = "h",     action = act.ActivateTabRelative(-1) },
 
 	-- Go to previously active pane
 	{ mods = leader .. "|ALT", key = "a",     action = act.ActivateLastTab },
 
 	-- Split panes
-	{ mods = mod, key = "-",     action = act.SplitHorizontal },
-	{ mods = mod, key = "v",     action = act.SplitVertical },
+	{ mods = mod,              key = "-",     action = act.SplitHorizontal },
+	{ mods = mod,              key = "v",     action = act.SplitVertical },
 
 	-- Zoom in on pane
-	{ mods = mod, key = "Enter", action = act.TogglePaneZoomState },
+	{ mods = mod,              key = "Enter", action = act.TogglePaneZoomState },
 
 	-- Puts you in resize mode
-	{ mods = mod, key = "r",     action = act.ActivateKeyTable({ name = "resize_mode", one_shot = false }) },
+	{ mods = mod,              key = "r",     action = act.ActivateKeyTable({ name = "resize_mode", one_shot = false }) },
 
 	-- Show the launcher in fuzzy selection mode and have it list all workspaces and allow activating one.
-	{ mods = mod, key = "w",     action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+	{ mods = mod,              key = "w",     action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
 
-	{ key = ".",  mods = mod,    action = act.MoveTabRelative(1) },
-	{ key = ",",  mods = mod,    action = act.MoveTabRelative(-1) },
+	{ key = ".",               mods = mod,    action = act.MoveTabRelative(1) },
+	{ key = ",",               mods = mod,    action = act.MoveTabRelative(-1) },
 
-	
+
 	-- Prompt for a name to use for a new workspace and switch to it.
 	{
 		mods = mod,
@@ -244,7 +244,7 @@ config.keys = {
 	split_nav("move", "CTRL", "k", "Up"),
 	split_nav("move", "CTRL", "l", "Right"),
 
-	{ mods = mod, key = "UpArrow", action = act.ScrollToPrompt(-1) },
+	{ mods = mod, key = "UpArrow",   action = act.ScrollToPrompt(-1) },
 	{ mods = mod, key = "DownArrow", action = act.ScrollToPrompt(1) },
 }
 

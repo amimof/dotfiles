@@ -1,0 +1,6 @@
+[Unit]
+Description=Play sound when AC connected
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/power-connected.sh

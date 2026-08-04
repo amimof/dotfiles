@@ -1,0 +1,12 @@
+:root {
+	--popover-border: 1px solid red;
+}
+
+.popover {
+  border-radius: 12px;
+  border: 1px solid darker(#7081d0);
+	box-shadow:
+		0 0 8px rgba(0, 0, 0, 0.25),
+		0 0 24px rgba(0, 0, 0, 0.20);
+	padding: 24px;
+}

@@ -6,6 +6,7 @@ battery_charging=false
 
 color_disabled="#808080"
 color_red="#ff3434"
+color_yellow="#ffd700"
 
 ####### Check availability ########
 for battery in /sys/class/power_supply/*-battery; do
@@ -27,8 +28,10 @@ battery_icon() {
 		echo "  "
 	elif (( charge >= 50)); then
 		echo "  "
-	elif (( charge >= 10)); then
-		echo "<span foreground='$color_red'>  </span>"
+	elif (( charge >= 30)); then
+		echo "  "
+	elif (( charge >= 20)); then
+		echo "<span foreground='$color_yellow'>  </span>"
 	elif (( charge >= 1)); then
 		echo "<span foreground='$color_red'>  </span>"
 	else
