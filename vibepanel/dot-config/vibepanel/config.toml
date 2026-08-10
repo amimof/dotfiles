@@ -32,6 +32,7 @@ right = [
 ]
 border_radius = 40
 background_opacity = 0.5
+background_color = "#000000"
 # popover_background_opacity = 0.9  # Override popover opacity (default: max of bar and widget opacity)
 # outline = true                    # Override theme.outline for widgets (omit = inherit)
 
@@ -73,6 +74,7 @@ background_opacity = 0.5
 
 [theme]
 mode = "dark" # "auto", "dark", "light", "gtk"
+accent = "#7081d0"
 #               "auto" = wallpaper-adaptive theming
 #               (detects from hyprpaper, awww/swww, wpaperd, waypaper)
 #scheme = "dark"         # Material You polarity: "dark" or "light" (auto mode only)
@@ -96,7 +98,7 @@ font_family = "NotoSans Nerd Font"
 
 [osd]
 enabled = true
-position = "bottom" # "bottom", "top", "left", "right"
+position = "top" # "bottom", "top", "left", "right"
 show_value = false  # Show current value after the bar
 
 [advanced]

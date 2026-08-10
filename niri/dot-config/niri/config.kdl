@@ -40,7 +40,7 @@ layout {
 
     focus-ring {
         width 2
-        active-gradient from="#80a0ff" to="#cf87e8" angle=180
+        active-gradient from="#37f499" to="#cf87e8" angle=180
         inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
 

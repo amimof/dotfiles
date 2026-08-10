@@ -1,5 +1,14 @@
 
 layer-rule {
+
+    match namespace="^vibepanel$"
+    background-effect {
+        xray false
+				blur false
+    }
+}
+
+layer-rule {
     match namespace="^vibepanel.*$"
     exclude namespace="^vibepanel$"
     background-effect {

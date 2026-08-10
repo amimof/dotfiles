@@ -2,6 +2,22 @@
 	--popover-border: 1px solid red;
 }
 
+.osd {
+
+  border: 1px solid darker(#7081d0);
+  border-radius: 12px;
+}
+
+.notification-toast {
+
+  border: 1px solid darker(#7081d0);
+  border-radius: 12px;
+}
+
+.workspace-indicator.active {
+	background-color: #37f499;
+}
+
 .popover {
   border-radius: 12px;
   border: 1px solid darker(#7081d0);

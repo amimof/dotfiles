@@ -19,7 +19,6 @@ for battery in /sys/class/power_supply/*-battery; do
   fi
 done
 
-
 battery_icon() {
 	local charge="${1:-0}"
 	if (( charge >= 90 )); then
@@ -38,7 +37,6 @@ battery_icon() {
 		echo " "
 	fi
 }
-
 
 network_icon() {
 	# Check for ethernet (en*, eth*)
@@ -59,6 +57,16 @@ network_icon() {
 	echo "<span foreground='$color_disabled'>󰖪 </span>"
 }
 
+notifications_icon() {
+
+	if [ -f $(which vibepanel) ]; then
+		unread_count=$(vibepanel notifications unread)
+		if [[ $unread_count -gt 0 ]]; then
+				echo "  ·  󱅫 $unread_count"
+		fi
+	fi
+}
+
 ############# Output #############
 if [[ $enable_battery == true ]]; then
   if [[ $battery_charging == true ]]; then
@@ -69,6 +77,6 @@ if [[ $enable_battery == true ]]; then
 	echo -n "$icon $charge%"
 fi
 
-echo -n "  ·  $(network_icon)"
+echo -n "  ·  $(network_icon)$(notifications_icon)"
 
 echo ''

@@ -1,41 +1,41 @@
 [shell.panel]
-transparency_mode = "glass"
-control_center_placement = "floating"
-session_placement = "floating"
+transparency_mode 		   			 = "glass"
+control_center_placement 			 = "floating"
+session_placement 					   = "floating"
 open_near_click_control_center = true
-open_near_click_session = true
-floating_layer = "top"
-floating_offset = 0
-
+open_near_click_session 			 = true
+floating_layer 								 = "top"
+floating_offset 							 = 0
 
 [osd]
-background_opacity = 0.6 # background opacity of OSD popups
-offset_y = 36
+enabled = false
+background_opacity = 0.6
+offset_y 				   = 36
 
 [theme]
-mode              = "dark"        # dark | light | auto
-source            = "community"     # builtin | wallpaper | community | custom
-builtin           = "Breeze"    # bundled palette name
+mode            = "dark"
+source          = "custom"
+custom_palette  = "breeze_custom"
 pure_black_dark = true
 
 [bar]
 
-[bar.default]
-font_family = "NotoSans Nerd Font"
-capsule = true
-capsule_fill = "surface"
-capsule_opacity = 0.5
-capsule_radius = 10.0
-capsule_padding = 8
-shadow = false
-background_opacity = 0
-margin_ends = -8
-radius = 0
-thickness = 38
-
-start  = ["workspaces", "active_window"]
-center = ["privacy", "media"]
-end    = ["tray", "notifications", "clipboard", "bluetooth", "network",  "volume", "battery", "clock", "session"]
+	[bar.default]
+	enabled 					 = false
+	font_family        = "NotoSans Nerd Font"
+	capsule            = true
+	capsule_fill       = "surface"
+	capsule_opacity    = 0.5
+	capsule_radius     = 10.0
+	capsule_padding    = 8
+	shadow 					   = false
+	background_opacity = 0
+	margin_ends        = -8
+	radius             = 0
+	thickness 	       = 38
+	start  = ["workspaces", "active_window"]
+	center = ["privacy", "media"]
+	end    = ["sysmon", "tray", "notifications", "clipboard", "bluetooth", "network",  "volume", "battery", "clock", "session"]
 
 [dock]
 enabled = false
@@ -53,16 +53,21 @@ occupied_color = "#808080"
 empty_color = "#505050"
 active_pill_size = 1.6
 
+[widget.media]
+hide_when_no_media = true
+
 [control_center]
 sidebar = "none"
+
+	[control_center.calendar]
+	show_week_numbers = true
 
 [lockscreen]
 enabled = false
 
-
 [notification]
-background_opacity       = 0.6 
-offset_y = 0
+background_opacity = 0.6 
+enable_daemon            = false
 
 [location]
 auto_locate = false
