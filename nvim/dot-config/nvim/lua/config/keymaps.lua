@@ -69,13 +69,13 @@ map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
 -- tabs
-map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
-map("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
-map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
-map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
-map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
-map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
-map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+map("n", "<tab>G", "<cmd>tablast<cr>", { desc = "Last Tab" })
+map("n", "<tab>o", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
+map("n", "<tab>gg", "<cmd>tabfirst<cr>", { desc = "First Tab" })
+map("n", "<tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
+map("n", "<tab>l", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+map("n", "<tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
+map("n", "<tab>h", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- Adds new-lines and stays in Normal mode
 map("n", "<leader>o", "o<Esc>", { desc = "New line below (stay in normal mode)" })
@@ -94,17 +94,11 @@ local function search_files_in_directory()
 end
 map("n", "<leader>fa", search_files_in_directory, { desc = "Search files in any directory" })
 
--- Clear search with <esc> and also reset cursors
-map({ "n" }, "<esc>", function()
-	-- local mc = require("multicursor-nvim")
-	-- if not mc.cursorsEnabled() then
-	-- 	mc.enableCursors()
-	-- else
-	-- 	mc.clearCursors()
-	-- end
-	vim.cmd("nohlsearch") -- Equivalent to <cmd>noh<cr>
-	vim.cmd("stopinsert") -- Equivalent to <esc>, only needed if you're in insert mode
-end, { desc = "Escape and Clear hlsearch" })
+-- <c-l> is used by smart-splits to navigate between windows
+map({ "n", "v", "i" }, "<C-q>", function()
+	local mc_ns = vim.api.nvim_create_namespace('nvim.multicursor')
+	vim.api.nvim_buf_clear_namespace(0, mc_ns, 0, -1)
+end)
 
 -- Toggle neo-tree file explorer
 map("n", "<c-b>", "<cmd>Neotree toggle show<cr>", { desc = "Neotree Toggle" })
@@ -152,6 +146,9 @@ map("n", "<leader>fp", function()
 end, { desc = "Projects" })
 
 -- git
+map("n", "<leader>gb", function()
+	Snacks.picker.git_branches()
+end)
 map("n", "<leader>gd", function()
 	Snacks.picker.git_diff()
 end, { desc = "Git Diff (hunks)" })

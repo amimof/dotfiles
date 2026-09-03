@@ -47,11 +47,12 @@ hide_inactive = true
 format = "{:%a %e %b %H:%M}"
 
 [widget.workspaces]
-display = "none"
+# display = "none"
 focused_color = "#80a0ff"
 occupied_color = "#808080"
 empty_color = "#505050"
 active_pill_size = 1.6
+show_labels = false
 
 [widget.media]
 hide_when_no_media = true

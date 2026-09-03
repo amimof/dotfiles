@@ -1,28 +1,19 @@
 :root {
-	--popover-border: 1px solid red;
+	/* --popover-border: 1px solid red; */
+	--slider-height: 2px;
+	--slider-knob-size: 12px;
 }
 
-.osd {
-
-  border: 1px solid darker(#7081d0);
-  border-radius: 12px;
-}
+/* .osd { */
+/*   border: 1px solid darker(#7081d0); */
+/*   border-radius: 12px; */
+/* } */
 
 .notification-toast {
-
   border: 1px solid darker(#7081d0);
   border-radius: 12px;
 }
 
 .workspace-indicator.active {
 	background-color: #37f499;
-}
-
-.popover {
-  border-radius: 12px;
-  border: 1px solid darker(#7081d0);
-	box-shadow:
-		0 0 8px rgba(0, 0, 0, 0.25),
-		0 0 24px rgba(0, 0, 0, 0.20);
-	padding: 24px;
 }

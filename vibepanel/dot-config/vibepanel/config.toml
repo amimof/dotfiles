@@ -24,6 +24,7 @@ left = ["workspaces", "window_title"]
 center = ["media"]
 right = [
   "tray",
+	"memory",
   "updates",
   "quick_settings",
   "battery",
@@ -31,46 +32,20 @@ right = [
   "notifications",
 ]
 border_radius = 40
-background_opacity = 0.5
+background_opacity = 0.65
 background_color = "#000000"
-# popover_background_opacity = 0.9  # Override popover opacity (default: max of bar and widget opacity)
-# outline = true                    # Override theme.outline for widgets (omit = inherit)
+popover_background_opacity = 0.8  # Override popover opacity (default: max of bar and widget opacity)
+outline = false                    # Override theme.outline for widgets (omit = inherit)
 
-# Per-widget options use [widgets.<name>] sections.
-# Example:
-#   [widgets.clock]
-#   format = "%H:%M"
-#   outline_color = "accent"  # Per-widget outline color: "subtle" | "accent" | "foreground" | "#rrggbb"
-#
-#   [widgets.battery]
-#   disabled = true
-#
-#   [widgets.media]
-#   visualizer = true  # Enable/disable cava audio visualizer (default: true)
-#
-# Custom widgets use the "custom-" prefix for user-defined buttons:
-#   right = ["custom-power", "custom-os", "tray", "clock"]
-#
-#   [widgets.custom-power]
-#   icon = "system-shutdown-symbolic"
-#   label = "Power"
-#   tooltip = "Power menu"
-#   on_click = "wlogout"
-#   on_click_right = "systemctl suspend"
-#
-#   [widgets.custom-os]
-#   image = "/usr/share/pixmaps/distro-logo.svg"  # file path (PNG, SVG, etc.)
-#   tooltip = "My Distro"
-#
-#   [widgets.custom-weather]
-#   exec = "curl -s 'wttr.in/?format=1'"
-#   template = " {output}"
-#   interval = 600
-#   on_click = "xdg-open https://wttr.in"
-#   tooltip = "Weather"
-#   max_chars = 30
-#
-# See documentation for all widget options.
+[widgets.clock]
+show_week_numbers = true
+show_weather = true
+
+[widgets.window_title]
+template = "{content}"
+
+[weather]
+location = "Varberg"
 
 [theme]
 mode = "dark" # "auto", "dark", "light", "gtk"
@@ -81,10 +56,10 @@ accent = "#7081d0"
 #               Omit to auto-derive from wallpaper luminance (bright → light, dark → dark)
 #wallpaper = "/path/to/image.png"  # Explicit wallpaper for auto mode (default: auto-detect)
 #accent = "#adabe0" # "gtk", "none", or hex color (overrides wallpaper accent in auto mode)
-#animations = true  # Enable/disable all CSS transitions and animations
+animations = true  # Enable/disable all CSS transitions and animations
 #ripple = true      # Enable/disable Material Design ripple effect on click
 blur = true       # Enable compositor blur via ext-background-effect-v1 (requires niri with blur)
-#outline = false             # Decorative outline on bar, widgets, and surfaces (CSS border)
+outline = true             # Decorative outline on bar, widgets, and surfaces (CSS border)
 #outline_width = 1           # Outline width in pixels (0..=4; 0 disables visibly)
 #outline_color = "accent"    # "subtle" | "accent" | "foreground" | "#rrggbb"
 #outline_opacity = 1.0        # 0.0 = transparent, 1.0 = opaque

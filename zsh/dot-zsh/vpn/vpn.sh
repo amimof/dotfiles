@@ -107,17 +107,27 @@ __vpn_load_profile() {
   fi
 
   # Reset profile-specific variables before sourcing
-  unset REMOTE VPN_USER VPN_PASSWORD tunnel_nets
+  unset REMOTE VPN_USER VPN_PASSWORD VPN_BACKEND NM_CONNECTION tunnel_nets
 
   source "$profile_file"
 
-  if [[ -z "$REMOTE" || -z "$VPN_USER" ]]; then
-    __vpn_log_warn "Profile '${profile}' must define REMOTE and VPN_USER."
-    return 1
-  fi
+  # Default backend to openconnect if not set by profile
+  : ${VPN_BACKEND:=openconnect}
 
-  TUNNEL_NETWORKS=$(__vpn_join_array "${tunnel_nets[@]}")
-  export TUNNEL_NETWORKS
+  if [[ "$VPN_BACKEND" == "nmcli" ]]; then
+    if [[ -z "$NM_CONNECTION" ]]; then
+      __vpn_log_warn "Profile '${profile}' uses nmcli backend but NM_CONNECTION is not set."
+      return 1
+    fi
+  else
+    if [[ -z "$REMOTE" || -z "$VPN_USER" ]]; then
+      __vpn_log_warn "Profile '${profile}' must define REMOTE and VPN_USER."
+      return 1
+    fi
+
+    TUNNEL_NETWORKS=$(__vpn_join_array "${tunnel_nets[@]}")
+    export TUNNEL_NETWORKS
+  fi
 }
 
 __vpn_list_profiles() {
@@ -149,8 +159,7 @@ __vpn_connect() {
   if [[ -z "${VPN_PASSWORD}" ]]; then
     OPENSSL_CONF=$OPENSSL_CONF sudo openconnect -v $REMOTE --user $VPN_USER --csd-wrapper $CSD_WRAPPER --background --useragent=$VPN_USERAGENT --protocol=$VPN_PROTOCOL --pid-file $PIDFILE --quiet -s "${slice_cmd}"
   else
-    # echo $VPN_PASSWORD | OPENSSL_CONF=$OPENSSL_CONF sudo openconnect -v $REMOTE --user $VPN_USER --passwd-on-stdin --csd-wrapper $CSD_WRAPPER --background --useragent=$VPN_USERAGENT --protocol=$VPN_PROTOCOL --pid-file $PIDFILE --quiet -s "${slice_cmd}"
-    echo $VPN_PASSWORD | OPENSSL_CONF=$OPENSSL_CONF sudo openconnect -v $REMOTE --user $VPN_USER --passwd-on-stdin --background --useragent=$VPN_USERAGENT --protocol=$VPN_PROTOCOL --pid-file $PIDFILE --quiet
+    echo $VPN_PASSWORD | OPENSSL_CONF=$OPENSSL_CONF sudo openconnect -v $REMOTE --user $VPN_USER --passwd-on-stdin --csd-wrapper $CSD_WRAPPER --background --useragent=$VPN_USERAGENT --protocol=$VPN_PROTOCOL --pid-file $PIDFILE --quiet -s "${slice_cmd}"
   fi
 
 }
@@ -269,6 +278,67 @@ __vpn_add_host() {
   done
 }
 
+# ############## #
+# NMCLI BACKEND  #
+# ############## #
+
+__vpn_connect_nmcli() {
+  if [[ -z "$NM_CONNECTION" ]]; then
+    __vpn_log_warn "NM_CONNECTION is not set."
+    return 1
+  fi
+
+  __vpn_log_info "Connecting to ${NM_CONNECTION} via NetworkManager ..."
+  nmcli connection up "$NM_CONNECTION" "$NM_FLAGS"
+}
+
+__vpn_disconnect_nmcli() {
+  if [[ -z "$_VPN_ACTIVE_NM_CONNECTION" ]]; then
+    __vpn_log_info "Not connected"
+    return
+  fi
+
+  __vpn_log_info "Disconnecting ${_VPN_ACTIVE_NM_CONNECTION} ..."
+  nmcli connection down "$_VPN_ACTIVE_NM_CONNECTION"
+}
+
+__vpn_reconnect_nmcli() {
+  if [[ -z "$_VPN_ACTIVE_NM_CONNECTION" ]]; then
+    __vpn_log_info "Not connected"
+    return
+  fi
+
+  __vpn_log_info "Reconnecting ${_VPN_ACTIVE_NM_CONNECTION} ..."
+  nmcli connection down "$_VPN_ACTIVE_NM_CONNECTION" 2>/dev/null
+  nmcli connection up "$_VPN_ACTIVE_NM_CONNECTION"
+}
+
+__vpn_status_nmcli() {
+  if [[ -z "$_VPN_ACTIVE_NM_CONNECTION" ]]; then
+    __vpn_log_info "Not connected"
+    return
+  fi
+
+  local state
+  state=$(nmcli -t -f GENERAL.STATE connection show "$_VPN_ACTIVE_NM_CONNECTION" 2>/dev/null)
+
+  if [[ "$state" == *"activated"* ]]; then
+    local iface ip
+    iface=$(nmcli -t -f IP4.GATEWAY,GENERAL.IP-IFACE connection show "$_VPN_ACTIVE_NM_CONNECTION" 2>/dev/null | awk -F: '/GENERAL.IP-IFACE/{print $2}')
+    ip=$(nmcli -t -f IP4.ADDRESS connection show "$_VPN_ACTIVE_NM_CONNECTION" 2>/dev/null | head -1 | cut -d: -f2)
+
+    __vpn_log_info "Connected (${_VPN_ACTIVE_NM_CONNECTION})"
+    if [[ -n "$iface" ]]; then
+      echo "  Interface: ${iface}"
+    fi
+    if [[ -n "$ip" ]]; then
+      echo "  Address  : ${ip}"
+    fi
+  else
+    __vpn_log_info "Not connected"
+  fi
+}
+
 __vpn_reload() {
   source "$_VPN_SCRIPT_DIR/vpn.sh" && __vpn_log_info "Reloaded $_VPN_SCRIPT_DIR/vpn.sh"
 }
@@ -310,17 +380,37 @@ vpn() {
 
     __vpn_load_profile "$profile" || return 1
 
-    __vpn_connect
+    if [[ "$VPN_BACKEND" == "nmcli" ]]; then
+      __vpn_connect_nmcli
+    else
+      __vpn_connect
+    fi
+
+    # Track the active backend and connection for disconnect/reconnect/status
+    _VPN_ACTIVE_BACKEND="$VPN_BACKEND"
+    _VPN_ACTIVE_NM_CONNECTION="$NM_CONNECTION"
 
     ;;
   'disconnect')
-    __vpn_disconnect $PIDFILE
+    if [[ "$_VPN_ACTIVE_BACKEND" == "nmcli" ]]; then
+      __vpn_disconnect_nmcli
+    else
+      __vpn_disconnect $PIDFILE
+    fi
     ;;
   'reconnect')
-    __vpn_reconnect $PIDFILE
+    if [[ "$_VPN_ACTIVE_BACKEND" == "nmcli" ]]; then
+      __vpn_reconnect_nmcli
+    else
+      __vpn_reconnect $PIDFILE
+    fi
     ;;
   'status')
-    __vpn_status $PIDFILE
+    if [[ "$_VPN_ACTIVE_BACKEND" == "nmcli" ]]; then
+      __vpn_status_nmcli
+    else
+      __vpn_status $PIDFILE
+    fi
     ;;
   'list')
     echo "Available profiles:"

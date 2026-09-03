@@ -7,6 +7,7 @@ hotkey-overlay {
 }
 
 overview {
+		backdrop-color "#16161e"
     workspace-shadow {
         on
     }
@@ -40,7 +41,7 @@ layout {
 
     focus-ring {
         width 2
-        active-gradient from="#37f499" to="#cf87e8" angle=180
+        active-gradient from="#04d1f9" to="#04d1f9" angle=180
         inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
 
@@ -54,11 +55,26 @@ layout {
         offset x=0 y=5
         color "#0007"
     }
+    struts {
+        left 16 
+        right 16
+				// left-on-overflow
+				// right-on-overflow true
+				// overflow true
+    }
 
-    // struts {
-    //     left 64
-    //     right 64
-    // }
+		// Make the tab indicator wider and match the window height,
+		// also put it at the top and within the column.
+		tab-indicator {
+			  position "top"
+				width 6
+				gap 4
+				length total-proportion=0.1
+				gaps-between-tabs 2
+				place-within-column
+				corner-radius 4
+				active-color "#f7c67f"
+		}
 }
 
 recent-windows {

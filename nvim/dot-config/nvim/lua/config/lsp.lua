@@ -12,6 +12,7 @@ vim.lsp.enable({
 	"buf_ls",
 	"marksman",
 	"yamlls",
+	"rust_analyzer",
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {

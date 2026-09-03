@@ -53,3 +53,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		})
 	end,
 })
+
+
+-- Copy the kitten after install/update using the PackChanged event
+vim.api.nvim_create_autocmd("PackChanged", {
+	callback = function(ev)
+		if ev.data.spec.name == "kitty-navigator.nvim" then
+			vim.system({ "cp", "-r", ev.data.path .. "/kitty/.", vim.fn.expand("~/.config/kitty/") })
+		end
+	end,
+})

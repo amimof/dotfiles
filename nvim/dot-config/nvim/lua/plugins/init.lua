@@ -32,8 +32,8 @@ vim.pack.add({
 
 	"https://github.com/EdenEast/nightfox.nvim",
 	"https://github.com/eldritch-theme/eldritch.nvim",
-	"https://github.com/nyoom-engineering/oxocarbon.nvim"
-
+	"https://github.com/nyoom-engineering/oxocarbon.nvim",
+	"https://github.com/knubie/vim-kitty-navigator",
 })
 
 require("mason").setup()
@@ -62,6 +62,7 @@ require("nvim-treesitter").install({
 	"python",
 	"query",
 	"regex",
+	"rust",
 	"toml",
 	"tsx",
 	"typescript",

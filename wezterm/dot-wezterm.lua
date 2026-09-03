@@ -157,6 +157,13 @@ config.keys = {
 	{ key = "t",          mods = mod,      action = act.SpawnTab("CurrentPaneDomain") },
 	{ key = "c",          mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
 
+	-- Shift+Insert is equivalent to Ctrl+v
+	{
+		key = "Insert",
+		mods = "SHIFT",
+		action = wezterm.action.PasteFrom("Clipboard"),
+	},
+
 	-- Switch to the default workspace
 	{
 		key = "y",
@@ -167,7 +174,10 @@ config.keys = {
 	},
 
 	-- Quick select
-	{ mods = mod,              key = "s",     action = act.QuickSelect },
+	{ mods = mod, key = "s", action = act.QuickSelect },
+
+	-- Search
+	{ mods = mod, key = "f", action = act.Search({ CaseInSensitiveString = "" }) },
 
 	-- Enter search mode
 	-- search for the string "hash" matching regardless of case
@@ -252,7 +262,7 @@ config.keys = {
 for i = 1, 9 do
 	table.insert(config.keys, {
 		key = tostring(i),
-		mods = mod .. "|SHIFT",
+		mods = leader,
 		action = act.ActivateTab(i - 1),
 	})
 end

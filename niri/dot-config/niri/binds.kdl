@@ -3,7 +3,7 @@ binds {
     Mod+Shift+7 { show-hotkey-overlay; }
 
     // Binds for running programs
-    Mod+T hotkey-overlay-title="Open a Terminal: WezTerm" { spawn "~/.config/niri/run-or-raise.sh" "org.wezfurlong.wezterm" "wezterm"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: WezTerm" { spawn "~/.config/niri/run-or-raise.sh" "kitty" "kitty"; }
     Mod+B hotkey-overlay-title="Open a Browser: Zen" { spawn "~/.config/niri/run-or-raise.sh" "app.zen_browser.zen" "flatpak run app.zen_browser.zen"; }
 		Mod+E hotkey-overlay-title="Open File Browser" { spawn-sh "dolphin"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn-sh "hyprlock"; }
@@ -100,15 +100,13 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
-    Mod+Ctrl+1 { move-column-to-workspace 1; }
-    Mod+Ctrl+2 { move-column-to-workspace 2; }
-    Mod+Ctrl+3 { move-column-to-workspace 3; }
-    Mod+Ctrl+4 { move-column-to-workspace 4; }
-    Mod+Ctrl+5 { move-column-to-workspace 5; }
-    Mod+Ctrl+6 { move-column-to-workspace 6; }
-    Mod+Ctrl+7 { move-column-to-workspace 7; }
-    Mod+Ctrl+8 { move-column-to-workspace 8; }
-    Mod+Ctrl+9 { move-column-to-workspace 9; }
+
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
 
     // Switches focus between the current and the previous workspace.
     Mod+Tab { focus-workspace-previous; }
@@ -147,11 +145,12 @@ binds {
 
     Mod+W { toggle-column-tabbed-display; }
 
+		//Mod+D hotkey-overlay-title="Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
     Mod+D hotkey-overlay-title="Launcher" { spawn-sh "nc -U /run/user/1000/walker/walker.sock"; }
     
-		Mod+Shift+2 { screenshot-screen; }
-		Mod+Shift+3 { screenshot-window; }
-    Mod+Shift+4 { screenshot; }
+		Mod+Shift+F2 { screenshot-screen; }
+		Mod+Shift+F3 { screenshot-window; }
+    Mod+Shift+F4 { screenshot; }
 
     // It's a good idea to bind an escape hatch to toggle the inhibitor,
     // so a buggy application can't hold your session hostage.
