@@ -16,6 +16,9 @@ function M.apply()
 	vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { bg = "#0b0d11", })
 	vim.api.nvim_set_hl(0, "BlinkCmpDoc", { bg = "#0b0d11", })
 	vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { bg = "#0b0d11", })
+
+	-- Make strings less bright
+	vim.api.nvim_set_hl(0, "String", { fg = "#C6C684" })
 end
 
 return M

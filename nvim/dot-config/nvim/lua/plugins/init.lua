@@ -5,6 +5,7 @@ vim.pack.add({
 	"https://github.com/nvim-mini/mini.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/nvim-treesitter/nvim-treesitter",
+	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
 	"https://github.com/ibhagwan/fzf-lua",
 	"https://github.com/lewis6991/gitsigns.nvim",
 	"https://github.com/tpope/vim-fugitive",
@@ -28,8 +29,6 @@ vim.pack.add({
 	"https://github.com/lukas-reineke/indent-blankline.nvim",
 	"https://github.com/windwp/nvim-autopairs",
 	"https://github.com/mrjones2014/smart-splits.nvim",
-
-
 	"https://github.com/EdenEast/nightfox.nvim",
 	"https://github.com/eldritch-theme/eldritch.nvim",
 	"https://github.com/nyoom-engineering/oxocarbon.nvim",
@@ -142,11 +141,29 @@ require("ibl").setup({
 	},
 })
 
-require("which-key").setup({
-	preset = "helix",
+
+local ai = require("mini.ai")
+ai.setup({
+	n_lines = 500,
+	custom_textobjects = {
+		o = ai.gen_spec.treesitter({ -- code block
+			a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+			i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+		}),
+		f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
+		c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),     -- class
+		t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },         -- tags
+		d = { "%f[%d]%d+" },                                                        -- digits
+		e = {                                                                       -- Word with case
+			{ "%u[%l%d]+%f[^%l%d]", "%f[%S][%l%d]+%f[^%l%d]", "%f[%P][%l%d]+%f[^%l%d]", "^[%l%d]+%f[^%l%d]" },
+			"^().*()$",
+		},
+		-- g = LazyVim.mini.ai_buffer,                              -- buffer
+		u = ai.gen_spec.function_call(),                         -- u for "Usage"
+		U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
+	},
 })
 
-require("mini.ai").setup()
 require("mini.basics").setup()
 require("mini.surround").setup({
 	mappings = {
@@ -161,6 +178,22 @@ require("mini.surround").setup({
 	},
 })
 
+local wk = require("which-key")
+wk.add({
+	{ "a",  group = "around textobject" },
+	{ "i",  group = "inside" },
+
+	{ "ao", desc = "around code block" },
+	{ "io", desc = "inside code block" },
+	{ "af", desc = "around function" },
+	{ "if", desc = "inside function" },
+	{ "ac", desc = "around class" },
+	{ "ic", desc = "inside class" },
+})
+
+wk.setup({
+	preset = "helix",
+})
 require("snacks").setup({
 	statuscolumn = {},
 	input = { enabled = true }, -- for vim.ui.input
@@ -236,6 +269,12 @@ require("snacks").setup({
 })
 
 require("gitsigns").setup({
+	blame = {
+		keymaps = {
+			next = "]c",
+			prev = "[c",
+		},
+	},
 	signs = {
 		add = { text = "▎" },
 		change = { text = "▎" },

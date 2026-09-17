@@ -31,7 +31,7 @@ scrollbar {
   box-shadow:
     0 19px 38px rgba(0, 0, 0, 0.3),
     0 15px 12px rgba(0, 0, 0, 0.22);
-  background: alpha(@window_bg_color, 0.65);
+  background: alpha(@window_bg_color, 0.2);
   padding: 20px;
   border-radius: 12px;
   border: 1px solid darker(@accent_bg_color);
@@ -56,14 +56,15 @@ scrollbar {
 }
 
 .input selection {
-  background: lighter(lighter(lighter(@window_bg_color)));
+  /* background: lighter(lighter(lighter(@window_bg_color))); */
 }
 
 .input {
   caret-color: @theme_fg_color;
-  background: lighter(@window_bg_color);
+  background: "#ffffff";
   padding: 10px;
   color: @theme_fg_color;
+	font-size: 18px;
 }
 
 .input:focus,

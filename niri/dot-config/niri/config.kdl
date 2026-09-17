@@ -6,6 +6,10 @@ hotkey-overlay {
     skip-at-startup
 }
 
+blur {
+	offset 6
+}
+
 overview {
 		backdrop-color "#16161e"
     workspace-shadow {

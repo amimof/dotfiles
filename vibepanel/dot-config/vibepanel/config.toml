@@ -32,9 +32,9 @@ right = [
   "notifications",
 ]
 border_radius = 40
-background_opacity = 0.65
-background_color = "#000000"
-popover_background_opacity = 0.8  # Override popover opacity (default: max of bar and widget opacity)
+background_opacity = 0.5
+# background_color = "#000000"
+popover_background_opacity = 0.2  # Override popover opacity (default: max of bar and widget opacity)
 outline = false                    # Override theme.outline for widgets (omit = inherit)
 
 [widgets.clock]

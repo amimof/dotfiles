@@ -2,9 +2,10 @@
 layer-rule {
 
     match namespace="^vibepanel$"
+    match namespace="^zen$"
     background-effect {
         xray false
-				blur false
+				blur true
     }
 }
 

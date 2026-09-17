@@ -25,6 +25,24 @@ map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move Down" })
 map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
 
+map({ "n", "v" }, "<leader>cQ", "1Q", {
+	noremap = true,
+	silent = true,
+	desc = "Create cursors at search matches",
+})
+
+-- Replace all occurenses of word under cursor in normal and selection in visual. Case (sensitive)
+map("n", "<leader>cw", '"hy:%s/\\C<C-r><C-w>/<C-r><C-w>/g<left><left>',
+	{ noremap = true, silent = false, desc = "Replace word" })
+map("v", "<leader>cw", '"hy:%s/\\C<C-r>h/<C-r>h/g<left><left>',
+	{ noremap = true, silent = false, desc = "Replace selection" })
+
+-- <c-l> is used by smart-splits to navigate between windows
+map({ "n", "v", "i" }, "<C-q>", function()
+	local mc_ns = vim.api.nvim_create_namespace('nvim.multicursor')
+	vim.api.nvim_buf_clear_namespace(0, mc_ns, 0, -1)
+end)
+
 -- buffers
 map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
@@ -69,13 +87,13 @@ map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
 -- tabs
-map("n", "<tab>G", "<cmd>tablast<cr>", { desc = "Last Tab" })
-map("n", "<tab>o", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
-map("n", "<tab>gg", "<cmd>tabfirst<cr>", { desc = "First Tab" })
-map("n", "<tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
-map("n", "<tab>l", "<cmd>tabnext<cr>", { desc = "Next Tab" })
-map("n", "<tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
-map("n", "<tab>h", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+map("n", "<leader><tab>G", "<cmd>tablast<cr>", { desc = "Last Tab" })
+map("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
+map("n", "<leader><tab>gg", "<cmd>tabfirst<cr>", { desc = "First Tab" })
+map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
+map("n", "<leader><tab>l", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
+map("n", "<leader><tab>h", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- Adds new-lines and stays in Normal mode
 map("n", "<leader>o", "o<Esc>", { desc = "New line below (stay in normal mode)" })
@@ -93,12 +111,6 @@ local function search_files_in_directory()
 	end)
 end
 map("n", "<leader>fa", search_files_in_directory, { desc = "Search files in any directory" })
-
--- <c-l> is used by smart-splits to navigate between windows
-map({ "n", "v", "i" }, "<C-q>", function()
-	local mc_ns = vim.api.nvim_create_namespace('nvim.multicursor')
-	vim.api.nvim_buf_clear_namespace(0, mc_ns, 0, -1)
-end)
 
 -- Toggle neo-tree file explorer
 map("n", "<c-b>", "<cmd>Neotree toggle show<cr>", { desc = "Neotree Toggle" })

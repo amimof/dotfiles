@@ -2,6 +2,10 @@ window-rule {
 	geometry-corner-radius 12
 	clip-to-geometry true
 	draw-border-with-background false
+    background-effect {
+        xray false
+				blur true
+    }
 }
 
 window-rule {
@@ -19,6 +23,7 @@ window-rule {
 
 window-rule {
 	match app-id=r#"zen$"#
+	match app-id=r#"^kitty$"#
 	match app-id=r#"^org\.wezfurlong\.wezterm$"#
 	open-on-workspace "main"
 }

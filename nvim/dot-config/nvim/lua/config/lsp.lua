@@ -13,6 +13,7 @@ vim.lsp.enable({
 	"marksman",
 	"yamlls",
 	"rust_analyzer",
+	"terraformls"
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
