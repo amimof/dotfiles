@@ -7,9 +7,9 @@ function M.apply()
 	vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 
 	-- NeoTree
-	vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#08090c", })
-	vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#08090c", })
-	vim.api.nvim_set_hl(0, "NeoTreeEndOfBuffer", { bg = "#08090c", })
+	-- vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#16161e", })
+	-- vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#16161e", })
+	-- vim.api.nvim_set_hl(0, "NeoTreeEndOfBuffer", { bg = "#16161e", })
 
 	-- Blink
 	vim.api.nvim_set_hl(0, "BlinkCmpMenu", { bg = "#0b0d11", })
@@ -18,7 +18,7 @@ function M.apply()
 	vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { bg = "#0b0d11", })
 
 	-- Make strings less bright
-	vim.api.nvim_set_hl(0, "String", { fg = "#C6C684" })
+	-- vim.api.nvim_set_hl(0, "String", { fg = "#C6C684" })
 end
 
 return M

@@ -22,7 +22,7 @@ pure_black_dark = true
 
 	[bar.default]
 	enabled 					 = false
-	font_family        = "NotoSans Nerd Font"
+	font_family        = "Ubuntu Nerd Font Propo"
 	capsule            = true
 	capsule_fill       = "surface"
 	capsule_opacity    = 0.5
