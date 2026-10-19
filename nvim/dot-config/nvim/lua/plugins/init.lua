@@ -3,7 +3,6 @@ local icons = require("config.icons")
 vim.pack.add({
 	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/nvim-mini/mini.nvim",
-	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
 	"https://github.com/ibhagwan/fzf-lua",
@@ -28,11 +27,10 @@ vim.pack.add({
 	"https://github.com/folke/snacks.nvim",
 	"https://github.com/lukas-reineke/indent-blankline.nvim",
 	"https://github.com/windwp/nvim-autopairs",
-	"https://github.com/mrjones2014/smart-splits.nvim",
+	"https://github.com/smart-splits-nvim/smart-splits.nvim",
 	"https://github.com/EdenEast/nightfox.nvim",
 	"https://github.com/eldritch-theme/eldritch.nvim",
 	"https://github.com/nyoom-engineering/oxocarbon.nvim",
-	"https://github.com/knubie/vim-kitty-navigator",
 })
 
 require("mason").setup()
@@ -293,63 +291,9 @@ require("gitsigns").setup({
 })
 
 require("bufferline").setup({
-	highlights = {
-		fill = { bg = "#16161e" },
-		background = { bg = "#16161e" },
-
-		buffer = { bg = "#16161e" },
-		buffer_visible = { bg = "#0b0d11" },
-		buffer_selected = { bg = "#0b0d11" },
-
-		-- separator = { bg = "#0b0d11" },
-		-- separator_visible = { bg = "#0b0d11" },
-		-- separator_selected = { bg = "#0b0d11" },
-
-		numbers = { bg = "#0b0d11" },
-		numbers_visible = { bg = "#0b0d11" },
-		numbers_selected = { bg = "#0b0d11" },
-
-		indicator_visible = { bg = "#0b0d11" },
-		indicator_selected = { bg = "#0b0d11" },
-
-		pick = { bg = "#0b0d11" },
-		pick_visible = { bg = "#0b0d11" },
-
-		offset_separator = { bg = "#0b0d11" },
-		trunc_marker = { bg = "#0b0d11" },
-
-		error = { bg = "#16161e" },
-		error_visible = { bg = "#0b0d11" },
-		error_selected = { bg = "#0b0d11" },
-
-		warning = { bg = "#16161e" },
-		warning_visible = { bg = "#0b0d11" },
-		warning_selected = { bg = "#0b0d11" },
-
-		info = { bg = "#16161e" },
-		info_visible = { bg = "#0b0d11" },
-		info_selected = { bg = "#0b0d11" },
-
-		hint = { bg = "#16161e" },
-		hint_visible = { bg = "#0b0d11" },
-
-		diagnostic = { bg = "#16161e" },
-		diagnostic_visible = { bg = "#0b0d11" },
-
-		modified = { bg = "#16161e" },
-		modified_visible = { bg = "#0b0d11" },
-		modified_selected = { bg = "#0b0d11" },
-
-		error_diagnostic = { bg = "#16161e" },
-		warning_diagnostic = { bg = "#16161e" },
-		info_diagnostic = { bg = "#16161e" },
-		hint_diagnostic = { bg = "#16161e" },
-		close_button = { bg = "#16161e" },
-		close_button_visible = { bg = "#16161e" },
-		close_button_selected = { bg = "#0b0d11" },
-	},
 	options = {
 		separator_style = { "│", "│" },
+		always_show_bufferline = false,
 		diagnostics = "nvim_lsp",
 		indicator = {
 			style = "none",
@@ -361,13 +305,16 @@ require("bufferline").setup({
 			{
 				filetype = "neo-tree",
 				text = "",
-				highlight = "BufferLineBackground",
+				highlight = "NeoTreeNormal",
 				text_align = "left",
+				separator = true,
 			},
 		},
 		sort_by = "insert_at_end",
 	},
 })
+
+
 
 require("lualine").setup({
 	options = {
@@ -491,4 +438,5 @@ require('eldritch').setup({
 
 require("smart-splits").setup({
 	disable_multiplexer_nav_when_zoomed = false,
+	multiplexer_intergration = "kitty",
 })
