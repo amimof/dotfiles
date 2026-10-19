@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 from kitty.fast_data_types import Screen
 from kitty.boss import get_boss
 from kitty.tab_bar import (
@@ -14,20 +17,45 @@ icons = {
     "nvim": " ",
     "vim": " ",
     "zsh": " ",
-    "~": " ",
+    "sh": " ",
+    "bash": " ",
     "docker": "󰡨 ",
     "kubectl": " ",
     "git": " ",
+    "claude": " ",
 }
 
-def _rewrite_title(title: str) -> str:
-    print(title)
-    proc_icon = ""
+HOME = str(Path.home())
 
-    if icons.get(title) is not None:
-        proc_icon = icons.get(title)
 
-    return proc_icon
+def _format_cwd(cwd: str) -> str:
+    if not cwd or cwd == HOME:
+        return "~"
+
+    parts = [p for p in cwd.split(os.sep) if p]
+    if not parts:
+        return os.sep
+
+    short = "/".join(parts[-2:])
+    if len(short) > 20:
+        return parts[-1]
+    return short
+
+
+def _tab_label(tab_id: int) -> str:
+    tab_obj = get_boss().tab_for_id(tab_id)
+    if tab_obj is None:
+        return ""
+
+    window = tab_obj.active_window
+    if window is None or window.at_prompt:
+        return _format_cwd(tab_obj.get_cwd_of_active_window() or "")
+
+    exe = os.path.basename(tab_obj.get_exe_of_active_window(oldest=True) or "")
+    icon = icons.get(exe)
+    if icon is not None:
+        return f"{icon}{exe}"
+    return exe
 
 def draw_tab(
     draw_data: DrawData,
@@ -51,7 +79,7 @@ def draw_tab(
     if tab.layout_name == "stack":
         layout_icon = " "
 
-    new_title = _rewrite_title(tab.title)
+    new_title = _tab_label(tab.tab_id)
     tab = tab._replace(title=new_title)
 
     active_id = get_boss().active_tab.id

@@ -97,3 +97,5 @@
 # Untracked gitconfig
 [include]
   path = ~/.gitconfig-local
+[init]
+	defaultBranch = main

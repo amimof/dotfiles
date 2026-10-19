@@ -69,7 +69,7 @@ theme = "material" # "material" or "gtk"
 weight = 400       # Material icon stroke weight (100-700)
 
 [theme.typography]
-font_family = "NotoSans Nerd Font"
+font_family = "Ubuntu Nerd Font Propo"
 
 [osd]
 enabled = true

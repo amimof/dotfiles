@@ -35,7 +35,7 @@ scrollbar {
   padding: 20px;
   border-radius: 12px;
   border: 1px solid darker(@accent_bg_color);
-	font-family: NotoSans Nerd Font;
+	font-family: Ubuntu Nerd Font Propo;
 }
 
 .preview-box,
