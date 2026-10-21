@@ -1,75 +1,135 @@
-[shell.panel]
-transparency_mode 		   			 = "glass"
-control_center_placement 			 = "floating"
-session_placement 					   = "floating"
-open_near_click_control_center = true
-open_near_click_session 			 = true
-floating_layer 								 = "top"
-floating_offset 							 = 0
+[bar.default]
+background_opacity = 0
+capsule = true
+capsule_fill = "surface"
+capsule_opacity = 0.64999998547136784
+capsule_padding = 8
+capsule_radius = 12
+capsule_thickness = 0.69999998807907104
+center = [ "privacy", "media" ]
+enabled = true
+end = [ "sysmon", "tray", "notifications", "clipboard", "bluetooth", "network", "volume", "battery", "clock", "session" ]
+font_family = "Ubuntu Nerd Font Propo"
+margin_ends = -8
+radius = 0
+shadow = false
+start = [ "workspaces", "active_window" ]
+thickness = 42
 
-[osd]
-enabled = false
-background_opacity = 0.6
-offset_y 				   = 36
+[brightness]
+enable_ddcutil = true
 
-[theme]
-mode            = "dark"
-source          = "custom"
-custom_palette  = "breeze_custom"
-pure_black_dark = true
-
-[bar]
-
-	[bar.default]
-	enabled 					 = true
-	font_family        = "Ubuntu Nerd Font Propo"
-	capsule            = true
-	capsule_fill       = "surface"
-	capsule_opacity    = 0.5
-	capsule_radius     = 10.0
-	capsule_padding    = 8
-	shadow 					   = false
-	background_opacity = 0
-	margin_ends        = -8
-	radius             = 0
-	thickness 	       = 38
-	start  = ["workspaces", "active_window"]
-	center = ["privacy", "media"]
-	end    = ["sysmon", "tray", "notifications", "clipboard", "bluetooth", "network",  "volume", "battery", "clock", "session"]
-
-[dock]
-enabled = false
-
-[widget.privacy]
-hide_inactive = true
-
-[widget.clock]
-format = "{:%a %e %b %H:%M}"
-
-[widget.workspaces]
-# display = "none"
-focused_color = "#80a0ff"
-occupied_color = "#808080"
-empty_color = "#505050"
-active_pill_size = 1.6
-show_labels = false
-
-[widget.media]
-hide_when_no_media = true
+[calendar]
 
 [control_center]
 sidebar = "none"
 
-	[control_center.calendar]
-	show_week_numbers = true
+    [control_center.calendar]
+    show_week_numbers = true
 
-[lockscreen]
+[dock]
 enabled = false
 
-[notification]
-background_opacity = 0.6 
-enable_daemon            = false
-
 [location]
+address = "Varberg, Sweden"
 auto_locate = false
-address     = "Varberg, Sweden"    # geocoded when auto_locate = false and non-empty
+
+[lockscreen]
+enabled = true
+
+[lockscreen_widgets]
+enabled = true
+schema_version = 2
+widget_order = [ "lockscreen-login-box@eDP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 720.0
+    cy = 778.0
+    output = "eDP-1"
+    placement_height = 960.0
+    placement_width = 1440.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+[notification]
+background_opacity = 0.59999999999999998
+enable_daemon = false
+position = "top_center"
+
+[osd]
+background_opacity = 0.59999999999999998
+enabled = true
+offset_y = 36
+position = "bottom_center"
+
+[shell]
+font_family = "Ubuntu Nerd Font"
+
+    [shell.panel]
+    control_center_placement = "floating"
+    floating_layer = "top"
+    floating_offset = 0
+    open_near_click_control_center = true
+    open_near_click_session = true
+    session_placement = "floating"
+    transparency_mode = "glass"
+
+[theme]
+builtin = "Tokyo-Night"
+community_palette = "Oxocarbon"
+custom_palette = "breeze_custom"
+mode = "dark"
+pure_black_dark = false
+source = "builtin"
+
+    [theme.templates]
+    builtin_ids = [ "gtk3", "gtk4", "kcolorscheme", "qt" ]
+
+[wallpaper.default]
+path = "/home/amir/Pictures/Wallpapers/nasa-space-3840x2160-15925.jpg"
+
+[wallpaper.last]
+path = "/home/amir/Pictures/Wallpapers/nasa-space-3840x2160-15925.jpg"
+
+[wallpaper.monitors.eDP-1]
+path = "/home/amir/Pictures/Wallpapers/nasa-space-3840x2160-15925.jpg"
+
+[widget.clock]
+format = "{:%a %e %b %H:%M}"
+
+[widget.media]
+hide_when_no_media = true
+
+[widget.privacy]
+hide_inactive = true
+
+[widget.workspaces]
+active_pill_size = 1.6000000000000001
+empty_color = "#505050"
+focused_color = "#80a0ff"
+occupied_color = "#808080"
+show_labels = false

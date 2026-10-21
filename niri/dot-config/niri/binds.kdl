@@ -145,8 +145,7 @@ binds {
 
     Mod+W { toggle-column-tabbed-display; }
 
-		//Mod+D hotkey-overlay-title="Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
-    Mod+D hotkey-overlay-title="Launcher" { spawn-sh "nc -U /run/user/1000/walker/walker.sock"; }
+    Mod+D hotkey-overlay-title="Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
     
 		Mod+Shift+F2 { screenshot-screen; }
 		Mod+Shift+F3 { screenshot-window; }

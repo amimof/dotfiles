@@ -28,6 +28,7 @@ vim.pack.add({
 	"https://github.com/lukas-reineke/indent-blankline.nvim",
 	"https://github.com/windwp/nvim-autopairs",
 	"https://github.com/smart-splits-nvim/smart-splits.nvim",
+	"https://github.com/smart-splits-nvim/backend-kitty",
 	"https://github.com/EdenEast/nightfox.nvim",
 	"https://github.com/eldritch-theme/eldritch.nvim",
 	"https://github.com/nyoom-engineering/oxocarbon.nvim",
@@ -436,7 +437,14 @@ require('eldritch').setup({
 	transparent = true
 })
 
+require("smart-splits-backend-kitty").setup({
+  zoom = {
+    block_nav = false, -- refuse move and resize while the tab layout is 'stack'
+  },
+})
+
 require("smart-splits").setup({
-	disable_multiplexer_nav_when_zoomed = false,
-	multiplexer_intergration = "kitty",
+	mux = {
+		backend = 'smart-splits-backend-kitty',
+	},
 })

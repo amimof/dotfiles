@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "backend-kitty": {
+      "rev": "f892244d69727b8634dd5c085fb041f4e6cc9ef3",
+      "src": "https://github.com/smart-splits-nvim/backend-kitty"
+    },
     "blink.cmp": {
       "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp",
@@ -28,6 +32,10 @@
     "indent-blankline.nvim": {
       "rev": "f1e186e44d3b7f9ae918008e2c28ce37c6023d2d",
       "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
+    },
+    "kitty-navigator.nvim": {
+      "rev": "48d1967c6203b4308f3012b9862ccfb2e76789f9",
+      "src": "https://github.com/its-izhar/kitty-navigator.nvim"
     },
     "lualine.nvim": {
       "rev": "221ce6b2d999187044529f49da6554a92f740a96",
@@ -89,6 +97,10 @@
     "vim-fugitive": {
       "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",
       "src": "https://github.com/tpope/vim-fugitive"
+    },
+    "vim-kitty-navigator": {
+      "rev": "c40c7d6181fa44fade771980952c60c1d89c28ea",
+      "src": "https://github.com/knubie/vim-kitty-navigator"
     },
     "vim-moonfly-colors": {
       "rev": "2c883835f5b7b380a0a9e80695c420f7efebdfe4",
