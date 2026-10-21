@@ -38,5 +38,7 @@ in
 			assertion = cfg.mutable || builtins.pathExists "${self}/${rel}";
       message = "dotfiles: '${rel}' (for ~/${target}) does not exist in the repo";
 		}) cfg.links;
+		systemd.user.tmpfiles.users.${cfg.user}.rules = 
+		  lib.mapAttrsToList (target: rel: "L+ %h/${target} - - - - ${srcFor rel}") cfg.links;
 	};
 }
