@@ -22,7 +22,7 @@ in
 
 		checkoutPath = lib.mkOption {
       type = lib.types.str;
-			default = "/home/${cfg.user}/dotfiles"
+			default = "/home/${cfg.user}/dotfiles";
 		};
 
 		links = lib.mkOption {
