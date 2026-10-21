@@ -35,7 +35,7 @@ in
 
 	config = lib.mkIf (cfg.link != { }) {
     assertions = lib.mapAttrsToList (target: rel: {
-			assertion = cfg.mutable || builltins.pathExists "${self}/${rel}";
+			assertion = cfg.mutable || builtins.pathExists "${self}/${rel}";
       message = "dotfiles: '${rel}' (for ~/${target}) does not exist in the repo";
 		}) cfg.links;
 	};
