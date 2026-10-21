@@ -1,3 +1,4 @@
+# vim: set filetype=zsh :
 # Options section
 setopt correct                                                  # Auto correct mistakes
 setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
@@ -74,7 +75,7 @@ alias ls="ls --color=tty"                                       # Enable ls colo
 alias ll="ls -latrh"
 alias vim="/Users/amir/.local/share/bob/v0.12.1/bin/nvim"                                                # Use NeoVim over Vim
 alias ls="eza --git --icons=always --hyperlink"
-alias cat="bat --theme=rlyeh-depths"
+alias cat="bat --theme=moonfly"
 alias capply="cat <<EOF | kubectl apply -f -"
 alias b64="base64"
 alias b64d="base64 -d"
@@ -123,9 +124,25 @@ export LESS=-R
 export FZF_STYLE="full"
 export FZF_TMUX=0
 # export FZF_DEFAULT_COMMAND='fd . --hidden --color always'
-export FZF_DEFAULT_OPTS='--height=~30% --layout reverse --border rounded --color=fg:#ebfafa,hl:#37f499 --color=fg+:#ebfafa,bg+:#212337,hl+:#37f499 --color=info:#f7c67f,prompt:#04d1f9,pointer:#7081d0 --color=marker:#7081d0,spinner:#f7c67f,header:#323449'
+export FZF_DEFAULT_OPTS='--height=~30% --layout reverse --border rounded'
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+  --color bg:#080808 \
+  --color bg+:#262626 \
+  --color border:#2e2e2e \
+  --color fg:#b2b2b2 \
+  --color fg+:#e4e4e4 \
+  --color gutter:#262626 \
+  --color header:#80a0ff \
+  --color hl+:#f09479 \
+  --color hl:#f09479 \
+  --color info:#cfcfb0 \
+  --color marker:#f09479 \
+  --color pointer:#ff5189 \
+  --color prompt:#80a0ff \
+  --color spinner:#36c692
+"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'"
-export FZF_CTRL_T_OPTS="--preview '([[ -d {} ]] && eza -l --color=always {} || bat --theme=Eldritch --style=numbers --color=always --line-range=:500 {}) 2> /dev/null | head -200'"
+export FZF_CTRL_T_OPTS="--preview '([[ -d {} ]] && eza -l --color=always {} || bat --theme=moonfly --style=numbers --color=always --line-range=:500 {}) 2> /dev/null | head -200'"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/rbw/ssh-agent-socket"
 
 # Prompt
