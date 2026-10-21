@@ -28,7 +28,7 @@ in
 		links = lib.mkOption {
 			type = lib.types.attrsOf lib.types.str;
 			default = {};
-			example = { ".config/nvim" = "nvim" };
+			example = { ".config/nvim" = "nvim"; };
 			description = "Target (relative to $HOME) -> source (relative to repo root).";
 		};
 	};
