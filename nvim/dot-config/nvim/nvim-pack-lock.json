@@ -18,20 +18,16 @@
       "src": "https://github.com/eldritch-theme/eldritch.nvim"
     },
     "fzf-lua": {
-      "rev": "ed0e0ead1789ee349cbf025900931fb402b1e05e",
+      "rev": "348df165f1773dd08c5d710add3fd0db6d421e6a",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "851a051e2bd2caba97e23314c68d69f1b1cf5d19",
+      "rev": "fd780920613e541cbdfac41bf711583ed49f9249",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "indent-blankline.nvim": {
       "rev": "f1e186e44d3b7f9ae918008e2c28ce37c6023d2d",
       "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
-    },
-    "kitty-navigator.nvim": {
-      "rev": "29c1669be850bccd7b759c6c303aa7516e8720d0",
-      "src": "https://github.com/its-izhar/kitty-navigator.nvim"
     },
     "lualine.nvim": {
       "rev": "221ce6b2d999187044529f49da6554a92f740a96",
@@ -42,7 +38,7 @@
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "fa9037326e9996381e34a14b6350e18168618532",
+      "rev": "4d84086ab334a88201b803d11d1086406fe7e43d",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "neo-tree.nvim": {
@@ -59,11 +55,11 @@
       "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim-autopairs": {
-      "rev": "430522f95fe4fb7c511ec64f8c1a90cc6a66c05c",
+      "rev": "3172f40c16563db871a58f20d205c710ad782311",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-treesitter": {
-      "rev": "e289100ff98969e118c702199d88b764ce9e7fdf",
+      "rev": "29212d826054bb2948fa9d3a99eca9bf6a050eb2",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-textobjects": {
@@ -71,7 +67,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "nvim-web-devicons": {
-      "rev": "58447c1fca354bbf184425e4a8d01deecbd6f3c4",
+      "rev": "ec309a0eaff6ea967e58c275996155ab5c16938d",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oxocarbon.nvim": {
@@ -83,7 +79,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "smart-splits.nvim": {
-      "rev": "ec76708f1617ef9e2ac353357fe52d2c997a0f06",
+      "rev": "3629711db18279843618fda2e908700dcdc4b040",
       "src": "https://github.com/smart-splits-nvim/smart-splits.nvim"
     },
     "snacks.nvim": {
@@ -93,10 +89,6 @@
     "vim-fugitive": {
       "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",
       "src": "https://github.com/tpope/vim-fugitive"
-    },
-    "vim-kitty-navigator": {
-      "rev": "c40c7d6181fa44fade771980952c60c1d89c28ea",
-      "src": "https://github.com/knubie/vim-kitty-navigator"
     },
     "vim-moonfly-colors": {
       "rev": "2c883835f5b7b380a0a9e80695c420f7efebdfe4",

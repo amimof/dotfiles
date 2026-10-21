@@ -21,7 +21,7 @@ pure_black_dark = true
 [bar]
 
 	[bar.default]
-	enabled 					 = false
+	enabled 					 = true
 	font_family        = "Ubuntu Nerd Font Propo"
 	capsule            = true
 	capsule_fill       = "surface"
