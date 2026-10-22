@@ -2,7 +2,7 @@
 # Layout assumed: ~/git/<platform>/<owner>/<repo>
 
 gitproj() {
-  local root=${GIT_PROJ_ROOT:-"$HOME/git"}
+  local root=${GIT_PROJ_ROOT:-"$HOME/Projects"}
   local -a repos choices
   local selection
 

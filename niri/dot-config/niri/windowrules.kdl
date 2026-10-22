@@ -11,7 +11,7 @@ window-rule {
 window-rule {
 		match app-id=r#"org.telegram.desktop$"#
 		match app-id=r#"discord$"#
-		match app-id=r#"chrome-ecfhdkjlahhdahicdpphdpbegnnaihgf-Default"#
+		match app-id=r#"slack"#
 		open-on-workspace "chat"
 }
 
@@ -30,6 +30,7 @@ window-rule {
 
 window-rule {
     match app-id=r#"Bitwarden"#
+		match app-id=r#"zen-beta"# title="^Extension: (Bitwarden Password Manager) - Bitwarden — Zen Browser$"
     block-out-from "screen-capture"
     open-floating true
 }
