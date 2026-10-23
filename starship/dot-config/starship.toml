@@ -1,5 +1,6 @@
 format = """
 $python\
+$nix_shell\
 $username\
 $hostname\
 $directory\
