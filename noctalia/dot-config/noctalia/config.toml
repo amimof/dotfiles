@@ -8,7 +8,7 @@ capsule_radius = 12
 capsule_thickness = 0.69999998807907104
 center = [ "privacy", "media" ]
 enabled = true
-end = [ "sysmon", "tray", "notifications", "clipboard", "bluetooth", "network", "volume", "battery", "clock", "session" ]
+end = [ "sysmon", "tray", "clipboard", "bluetooth", "network", "volume", "battery", "notifications", "clock", "session" ]
 font_family = "Ubuntu Nerd Font Propo"
 margin_ends = -8
 radius = 0
@@ -20,6 +20,7 @@ thickness = 42
 enable_ddcutil = true
 
 [calendar]
+enabled = true
 
 [control_center]
 sidebar = "none"
@@ -27,8 +28,42 @@ sidebar = "none"
     [control_center.calendar]
     show_week_numbers = true
 
+[desktop_widgets]
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
 [dock]
 enabled = false
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+pre_action_fade_seconds = 1
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 120.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = true
+    timeout = 900.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 140.0
+
+[keybinds]
+down = [ "Down", "Ctrl+n" ]
+up = [ "Up", "Ctrl+p" ]
 
 [location]
 address = "Varberg, Sweden"
@@ -36,29 +71,36 @@ auto_locate = false
 
 [lockscreen]
 enabled = true
+transition = [ "diamond", "disc", "fade", "golden", "honeycomb", "melt", "pixel", "stripes", "vortex", "wipe", "zoom" ]
 
 [lockscreen_widgets]
 enabled = true
 schema_version = 2
-widget_order = [ "lockscreen-login-box@eDP-1" ]
+widget_order = [
+    "lockscreen-login-box@eDP-1",
+    "lockscreen-login-box@DP-1",
+    "lockscreen-widget-0000000000000001",
+    "lockscreen-widget-0000000000000002",
+    "lockscreen-widget-0000000000000003"
+]
 
     [lockscreen_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
 
-    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
     box_height = 196.0
     box_width = 810.0
-    cx = 720.0
-    cy = 778.0
-    output = "eDP-1"
-    placement_height = 960.0
-    placement_width = 1440.0
+    cx = 1720.0
+    cy = 1258.0
+    output = "DP-1"
+    placement_height = 1440.0
+    placement_width = 3440.0
     rotation = 0.0
     type = "login_box"
 
-        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
         background_color = "surface_variant"
         background_opacity = 0.88
         background_radius = 12.0
@@ -75,9 +117,88 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
         show_unlock_hint = true
         show_weather = true
 
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 70.0
+    box_width = 256.0
+    cx = 712.0
+    cy = 752.0
+    output = "eDP-1"
+    placement_height = 960.0
+    placement_width = 1440.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "on_primary"
+        background_opacity = 0.0
+        background_radius = 12.0
+        center_password_text = true
+        input_opacity = 0.70000000000000007
+        input_radius = 12.0
+        layout = "compact"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = false
+        show_media = true
+        show_password_reveal = false
+        show_session_buttons = true
+        show_unlock_hint = false
+        show_weather = true
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 48.0
+    box_width = 112.0
+    cx = 720.0
+    cy = 312.0
+    output = "eDP-1"
+    placement_height = 960.0
+    placement_width = 1440.0
+    rotation = 0.0
+    type = "weather"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
+        background = false
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
+    box_height = 96.0
+    box_width = 336.0
+    cx = 720.0
+    cy = 187.0
+    output = "eDP-1"
+    placement_height = 960.0
+    placement_width = 1440.0
+    rotation = 0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000002.settings]
+        background = false
+        background_opacity = 0.80000000000000004
+        clock_style = "digital"
+        font_family = ""
+        format = "{:%H:%M }"
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000003]
+    box_height = 32.0
+    box_width = 144.0
+    cx = 720.0
+    cy = 251.0
+    output = "eDP-1"
+    placement_height = 960.0
+    placement_width = 1440.0
+    rotation = -0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000003.settings]
+        background = false
+        background_color = "primary"
+        color = "on_surface"
+        format = "{:%Y-%m-%d}"
+
 [notification]
 background_opacity = 0.59999999999999998
-enable_daemon = false
+enable_daemon = true
+history_retention_hours = 72
+offset_y = 0
 position = "top_center"
 
 [osd]
@@ -86,8 +207,18 @@ enabled = true
 offset_y = 36
 position = "bottom_center"
 
+[plugins]
+enabled = []
+
 [shell]
 font_family = "Ubuntu Nerd Font"
+polkit_agent = true
+
+    [shell.launcher]
+    layout = "simple"
+
+        [shell.launcher.providers.windows]
+        global = false
 
     [shell.panel]
     control_center_placement = "floating"
@@ -118,17 +249,35 @@ path = "/home/amir/Pictures/Wallpapers/nasa-space-3840x2160-15925.jpg"
 [wallpaper.monitors.eDP-1]
 path = "/home/amir/Pictures/Wallpapers/nasa-space-3840x2160-15925.jpg"
 
+[widget.active_window]
+title_scroll = "on_hover"
+
+[widget.audio_visualizer]
+color_2 = "secondary"
+
+[widget.clipboard]
+enabled = false
+
 [widget.clock]
 format = "{:%a %e %b %H:%M}"
 
 [widget.media]
 hide_when_no_media = true
+title_scroll = "on_hover"
+
+[widget.network]
+show_label = false
+vpn_status = "both"
 
 [widget.privacy]
 hide_inactive = true
 
+[widget.sysmon]
+enabled = false
+
 [widget.workspaces]
 active_pill_size = 1.6000000000000001
+capsule_radius = "auto"
 empty_color = "#505050"
 focused_color = "#80a0ff"
 occupied_color = "#808080"

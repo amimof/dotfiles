@@ -4,7 +4,7 @@ binds {
 
     // Binds for running programs
     Mod+T hotkey-overlay-title="Open a Terminal: WezTerm" { spawn "~/.config/niri/run-or-raise.sh" "kitty" "kitty"; }
-    Mod+B hotkey-overlay-title="Open a Browser: Zen" { spawn "~/.config/niri/run-or-raise.sh" "app.zen_browser.zen" "flatpak run app.zen_browser.zen"; }
+    Mod+B hotkey-overlay-title="Open a Browser: Zen" { spawn "~/.config/niri/run-or-raise.sh" "zen-beta" "zen-beta"; }
 		Mod+E hotkey-overlay-title="Open File Browser" { spawn-sh "dolphin"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn-sh "noctalia msg session lock"; }
 
