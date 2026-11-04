@@ -23,20 +23,24 @@ overview {
 }
 
 input {
+	  warp-mouse-to-focus
+		focus-follows-mouse
     workspace-auto-back-and-forth
     keyboard {
         numlock
     }
     touchpad {
 				dwt
+				middle-emulation
         natural-scroll
 				accel-speed 0.37
+				click-method "clickfinger"
     }
 }
 
 layout {
 
-    gaps 8
+    gaps 4
 		always-center-single-column
     // center-focused-column "on-overflow"
     center-focused-column "never"
@@ -66,8 +70,8 @@ layout {
         color "#0007"
     }
     struts {
-        left 16 
-        right 16
+        // left 16 
+        // right 16
 				// left-on-overflow
 				// right-on-overflow true
 				// overflow true

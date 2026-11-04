@@ -32,6 +32,7 @@ vim.pack.add({
 	"https://github.com/EdenEast/nightfox.nvim",
 	"https://github.com/eldritch-theme/eldritch.nvim",
 	"https://github.com/nyoom-engineering/oxocarbon.nvim",
+	"https://github.com/mikesmithgh/kitty-scrollback.nvim",
 })
 
 require("mason").setup()
@@ -268,12 +269,6 @@ require("snacks").setup({
 })
 
 require("gitsigns").setup({
-	blame = {
-		keymaps = {
-			next = "]c",
-			prev = "[c",
-		},
-	},
 	signs = {
 		add = { text = "▎" },
 		change = { text = "▎" },
@@ -448,3 +443,5 @@ require("smart-splits").setup({
 		backend = 'smart-splits-backend-kitty',
 	},
 })
+
+require('kitty-scrollback').setup()

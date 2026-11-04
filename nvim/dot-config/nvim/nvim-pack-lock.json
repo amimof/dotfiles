@@ -37,6 +37,10 @@
       "rev": "48d1967c6203b4308f3012b9862ccfb2e76789f9",
       "src": "https://github.com/its-izhar/kitty-navigator.nvim"
     },
+    "kitty-scrollback.nvim": {
+      "rev": "4994c85e0f291598d0748488653c83cb698fd281",
+      "src": "https://github.com/mikesmithgh/kitty-scrollback.nvim"
+    },
     "lualine.nvim": {
       "rev": "221ce6b2d999187044529f49da6554a92f740a96",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
