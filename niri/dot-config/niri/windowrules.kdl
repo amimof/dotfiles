@@ -30,13 +30,9 @@ window-rule {
 
 window-rule {
     match app-id=r#"Bitwarden"#
-		match app-id=r#"zen-beta"# title="^Extension: (Bitwarden Password Manager) - Bitwarden — Zen Browser$"
-    block-out-from "screen-capture"
-    open-floating true
-}
-
-window-rule {
     match app-id=r#"1password"#
+		match app-id=r#"zen-beta"# title="^Extension: (Bitwarden Password Manager) - Bitwarden — Zen Browser$"
+		match app-id=r#"nm-openconnect-auth-dialog"#
     block-out-from "screen-capture"
     open-floating true
 }

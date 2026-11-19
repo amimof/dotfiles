@@ -24,7 +24,6 @@ overview {
 
 input {
 	  warp-mouse-to-focus
-		focus-follows-mouse
     workspace-auto-back-and-forth
     keyboard {
         numlock
@@ -33,7 +32,7 @@ input {
 				dwt
 				middle-emulation
         natural-scroll
-				accel-speed 0.37
+				accel-speed 0.50
 				click-method "clickfinger"
     }
 }
@@ -70,6 +69,7 @@ layout {
         color "#0007"
     }
     struts {
+			top -2
         // left 16 
         // right 16
 				// left-on-overflow
@@ -80,7 +80,7 @@ layout {
 		// Make the tab indicator wider and match the window height,
 		// also put it at the top and within the column.
 		tab-indicator {
-			  position "top"
+			  position "left"
 				width 6
 				gap 4
 				length total-proportion=0.1
@@ -95,10 +95,17 @@ recent-windows {
 	highlight {
 		corner-radius 12
 	}
+
+	binds {
+		Alt+Tab  			{ next-window     scope="workspace" filter="id"; }
+		Alt+Shift+Tab { previous-window scope="workspace"; }
+		Mod+Tab  			{ next-window     scope="output"; }
+		Mod+Shift+Tab { previous-window scope="output"; }
+	}
 }
 
 cursor {
-    xcursor-theme "Pop"
+    xcursor-theme "Bibata-Modern-Classic"
     xcursor-size 24
 }
 

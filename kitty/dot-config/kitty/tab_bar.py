@@ -23,7 +23,11 @@ icons = {
     "kubectl": " ",
     "git": " ",
     "claude": " ",
+    "ssh": "󰣀 ",
 }
+
+# ssh options that take a value as the next argument
+SSH_OPTS_WITH_ARG = set("BbcDEeFIiJLlmOoPpQRSWw")
 
 HOME = str(Path.home())
 
@@ -42,6 +46,53 @@ def _format_cwd(cwd: str) -> str:
     return short
 
 
+def _is_ssh_cmdline(cmdline: list) -> bool:
+    if not cmdline:
+        return False
+    exe = os.path.basename(cmdline[0])
+    if exe == "ssh":
+        return True
+    return exe == "kitten" and len(cmdline) > 1 and cmdline[1] == "ssh"
+
+
+def _ssh_host(cmdline: list) -> str:
+    args = cmdline[1:]
+    if args and os.path.basename(cmdline[0]) == "kitten" and args[0] == "ssh":
+        args = args[1:]
+
+    skip_next = False
+    for arg in args:
+        if skip_next:
+            skip_next = False
+            continue
+        if arg == "--":
+            continue
+        if arg.startswith("-") and len(arg) > 1:
+            # Value-taking option without attached value, e.g. "-p 22"
+            if len(arg) == 2 and arg[1] in SSH_OPTS_WITH_ARG:
+                skip_next = True
+            continue
+        dest = arg
+        if dest.startswith("ssh://"):
+            dest = dest[len("ssh://"):]
+        dest = dest.rsplit("@", 1)[-1]
+        if not dest.startswith("["):
+            dest = dest.split(":", 1)[0]
+        return dest or "ssh"
+    return "ssh"
+
+
+def _ssh_cmdline(window) -> list:
+    try:
+        for proc in window.child.foreground_processes:
+            cmdline = proc.get("cmdline") or []
+            if _is_ssh_cmdline(cmdline):
+                return cmdline
+    except Exception:
+        pass
+    return []
+
+
 def _tab_label(tab_id: int) -> str:
     tab_obj = get_boss().tab_for_id(tab_id)
     if tab_obj is None:
@@ -52,6 +103,17 @@ def _tab_label(tab_id: int) -> str:
         return _format_cwd(tab_obj.get_cwd_of_active_window() or "")
 
     exe = os.path.basename(tab_obj.get_exe_of_active_window(oldest=True) or "")
+
+    if exe in ("nvim", "vim"):
+        cwd = (tab_obj.get_cwd_of_active_window() or "").rstrip(os.sep)
+        project = "~" if not cwd or cwd == HOME else os.path.basename(cwd)
+        return f"{icons[exe]}{project}"
+
+    if exe in ("ssh", "kitten"):
+        cmdline = _ssh_cmdline(window)
+        if cmdline:
+            return f"{icons['ssh']}{_ssh_host(cmdline)}"
+
     icon = icons.get(exe)
     if icon is not None:
         return f"{icon}{exe}"
