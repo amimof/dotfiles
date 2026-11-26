@@ -4,7 +4,7 @@ capsule = true
 capsule_fill = "surface"
 capsule_opacity = 0.64999998547136784
 capsule_padding = 8
-capsule_radius = 12
+capsule_radius = 10
 capsule_thickness = 0.69999998807907104
 center = [ "privacy", "media" ]
 enabled = true
@@ -43,8 +43,15 @@ widget_order = []
 enabled = false
 
 [idle]
-behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
-pre_action_fade_seconds = 1
+behavior_order = [ "lock", "screen-off", "Power Off Monitors", "lock-and-suspend" ]
+pre_action_fade_seconds = 0
+
+    [idle.behavior."Power Off Monitors"]
+    action = "command"
+    command = "niri msg action power-off-monitors"
+    enabled = false
+    resume_command = "niri msg action power-on-monitors"
+    timeout = 140.0
 
     [idle.behavior.lock]
     action = "lock"
@@ -59,6 +66,7 @@ pre_action_fade_seconds = 1
     [idle.behavior.screen-off]
     action = "screen_off"
     enabled = true
+    locked_timeout = 20.0
     timeout = 140.0
 
 [keybinds]
@@ -71,7 +79,9 @@ auto_locate = false
 
 [lockscreen]
 enabled = true
-transition = [ "diamond", "disc", "fade", "golden", "honeycomb", "melt", "pixel", "stripes", "vortex", "wipe", "zoom" ]
+monitors = []
+transition = [ "zoom" ]
+transition_duration = 300
 
 [lockscreen_widgets]
 enabled = true
@@ -81,7 +91,10 @@ widget_order = [
     "lockscreen-login-box@DP-1",
     "lockscreen-widget-0000000000000001",
     "lockscreen-widget-0000000000000002",
-    "lockscreen-widget-0000000000000003"
+    "lockscreen-widget-0000000000000003",
+    "lockscreen-widget-0000000000000004",
+    "lockscreen-widget-0000000000000005",
+    "lockscreen-widget-0000000000000006"
 ]
 
     [lockscreen_widgets.grid]
@@ -90,38 +103,39 @@ widget_order = [
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
-    box_height = 196.0
-    box_width = 810.0
+    box_height = 70.0
+    box_width = 240.0
     cx = 1720.0
-    cy = 1258.0
+    cy = 1232.0
     output = "DP-1"
     placement_height = 1440.0
     placement_width = 3440.0
     rotation = 0.0
     type = "login_box"
 
-        [lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        center_password_text = false
-        input_opacity = 1.0
-        input_radius = 6.0
-        layout = "regular"
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_media = true
-        show_password_reveal = true
-        show_session_buttons = true
-        show_unlock_hint = true
-        show_weather = true
+			[lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
+			background_color = "on_primary"
+			background_opacity = 0.0
+			background_radius = 12.0
+			center_password_text = true
+			input_opacity = 0.70000000000000007
+			input_radius = 12.0
+			layout = "compact"
+			show_caps_lock = true
+			show_keyboard_layout = true
+			show_login_button = false
+			show_media = true
+			show_media_controls = true
+			show_password_reveal = false
+			show_session_buttons = true
+			show_unlock_hint = false
+			show_weather = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 70.0
-    box_width = 256.0
-    cx = 712.0
-    cy = 752.0
+    box_width = 240.0
+    cx = 720.0
+    cy = 755.0
     output = "eDP-1"
     placement_height = 960.0
     placement_width = 1440.0
@@ -140,6 +154,7 @@ widget_order = [
         show_keyboard_layout = true
         show_login_button = false
         show_media = true
+        show_media_controls = true
         show_password_reveal = false
         show_session_buttons = true
         show_unlock_hint = false
@@ -194,6 +209,55 @@ widget_order = [
         color = "on_surface"
         format = "{:%Y-%m-%d}"
 
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000004]
+    box_height = 48.0
+    box_width = 112.0
+    cx = 1720.0
+    cy = 468.0
+    output = "DP-1"
+    placement_height = 1440.0
+    placement_width = 3440.0
+    rotation = 0.0
+    type = "weather"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000004.settings]
+        background = false
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000005]
+    box_height = 96.0
+    box_width = 336.0
+    cx = 1720.0
+    cy = 280.0
+    output = "DP-1"
+    placement_height = 1440.0
+    placement_width = 3440.0
+    rotation = 0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000005.settings]
+        background = false
+        background_opacity = 0.80000000000000004
+        clock_style = "digital"
+        font_family = ""
+        format = "{:%H:%M }"
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000006]
+    box_height = 32.0
+    box_width = 144.0
+    cx = 1720.0
+    cy = 377.0
+    output = "DP-1"
+    placement_height = 1440.0
+    placement_width = 3440.0
+    rotation = 0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000006.settings]
+        background = false
+        background_color = "primary"
+        color = "on_surface"
+        format = "{:%Y-%m-%d}"
+
 [notification]
 background_opacity = 0.59999999999999998
 enable_daemon = true
@@ -231,7 +295,7 @@ polkit_agent = true
 
 [theme]
 builtin = "Tokyo-Night"
-community_palette = "Oxocarbon"
+community_palette = "One Dark Two"
 custom_palette = "breeze_custom"
 mode = "dark"
 pure_black_dark = false
@@ -239,11 +303,15 @@ source = "builtin"
 
     [theme.templates]
     builtin_ids = [ "gtk3", "gtk4", "kcolorscheme", "qt" ]
+    community_ids = [ "thunderbird" ]
 
 [wallpaper.default]
 path = "/home/amir/Pictures/Wallpapers/nasa-space-3840x2160-15925.jpg"
 
 [wallpaper.last]
+path = "/home/amir/Pictures/Wallpapers/nasa-space-3840x2160-15925.jpg"
+
+[wallpaper.monitors.DP-1]
 path = "/home/amir/Pictures/Wallpapers/nasa-space-3840x2160-15925.jpg"
 
 [wallpaper.monitors.eDP-1]
@@ -253,6 +321,7 @@ path = "/home/amir/Pictures/Wallpapers/nasa-space-3840x2160-15925.jpg"
 title_scroll = "on_hover"
 
 [widget.audio_visualizer]
+bands = 8
 color_2 = "secondary"
 
 [widget.clipboard]
@@ -276,7 +345,7 @@ hide_inactive = true
 enabled = false
 
 [widget.workspaces]
-active_pill_size = 1.6000000000000001
+active_pill_size = 1.5
 capsule_radius = "auto"
 empty_color = "#505050"
 focused_color = "#80a0ff"

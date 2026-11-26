@@ -1,0 +1,26 @@
+# Crossfade the tab content area when switching tabs.
+# The persist texture holds the previous frame's output, the fade group blends
+# it toward the new frame, so the old tab dissolves into the new one.
+textures persist
+
+# Crossfade, only active for a short while after the tab changes
+startgroup
+    animation_start tab-change
+    animation_stop 200
+    animation_step 8
+    shaders tab-fade
+endgroup
+
+# Save this frame's output so the next frame can fade from it.
+# static, redraw only when kitty renders anyway
+startgroup
+    animation_step 0
+    shaders tab-fade-snapshot
+    output_texture persist
+endgroup
+
+# The final group must write to the default output
+startgroup
+    animation_step 0
+    shaders tab-fade-passthrough
+endgroup

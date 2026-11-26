@@ -1,0 +1,10 @@
+# Dim inactive windows like wezterm's inactive_pane_hsb, by scaling their
+# hue, saturation and brightness. Tune the factors here, see dim-inactive.slang.
+startgroup
+    # static effect, redraw only when the active window changes
+    animation_step 0
+    var float HUE = 1.0
+    var float SATURATION = 0.9
+    var float BRIGHTNESS = 0.75
+    shaders dim-inactive
+endgroup
